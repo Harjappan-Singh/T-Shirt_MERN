@@ -39,9 +39,7 @@ export default class App extends Component
                     <Route exact path="/Login" component={Login} />
                     <LoggedInRoute exact path="/Logout" component={Logout} />
                     <LoggedInRoute exact path="/AddCar" component={AddCar} />
-                
                     <Route exact path="/EditTshirt/:id" component={EditTshirt} />
-             
                     <LoggedInRoute exact path="/DeleteCar/:id" component={DeleteCar} />
                     <Route exact path="/DisplayTshirts" component={DisplayTshirts}/> 
                                      

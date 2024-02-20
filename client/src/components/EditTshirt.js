@@ -19,6 +19,8 @@ export default class EditTshirt extends Component {
             product_image: "",
             sizes: [],
             price: "",
+            countInStock:"", 
+            rating: "",
             redirectToDisplayAllTshirts: false,
             wasSubmittedAtLeastOnce: false,
             errorMessage: ""
@@ -43,7 +45,8 @@ export default class EditTshirt extends Component {
                             color: res.data.color,
                             product_image: res.data.product_image,
                             sizes: res.data.sizes,
-                            price: res.data.price
+                            price: res.data.price,
+                            countInStock: res.data.countInStock,
                         });
                     }
                 } else {
@@ -76,38 +79,90 @@ export default class EditTshirt extends Component {
 
         this.setState({ wasSubmittedAtLeastOnce: true });
 
-        const tshirtObject = {
-            brand: this.state.brand,
-            name: this.state.name,
-            description: this.state.description,
-            category: this.state.category,
-            type: this.state.type,
-            color: this.state.color,
-            product_image: this.state.product_image,
-            sizes: this.state.sizes,
-            price: this.state.price
-        };
+        const formInputsState = this.validate();
 
-        axios.put(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, tshirtObject)
-            .then(res => {
-                if (res.data) {
-                    if (res.data.errorMessage) {
-                        console.log(res.data.errorMessage);
+        if (Object.keys(formInputsState).every(index => formInputsState[index])) {
+            const tshirtObject = {
+                brand: this.state.brand,
+                name: this.state.name,
+                description: this.state.description,
+                category: this.state.category,
+                type: this.state.type,
+                color: this.state.color,
+                product_image: this.state.product_image,
+                sizes: this.state.sizes,
+                price: this.state.price,
+                countInStock: this.state.countInStock
+            };
+
+            axios.put(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, tshirtObject)
+                .then(res => {
+                    if (res.data) {
+                        if (res.data.errorMessage) {
+                            console.log(res.data.errorMessage);
+                        } else {
+                            console.log(`Record updated`);
+                            this.setState({ redirectToDisplayAllTshirts: true });
+                        }
                     } else {
-                        console.log(`Record updated`);
-                        this.setState({ redirectToDisplayAllTshirts: true });
+                        console.log(`Record not updated`);
                     }
-                } else {
-                    console.log(`Record not updated`);
-                }
-            });
+                });
+        }
     }
-    
+
+    validateBrand() {
+        return this.state.brand.trim() !== "";
+    }
+
+    validateName() {
+        return this.state.name.trim() !== "";
+    }
+
+    validateDescription() {
+        return this.state.description.trim() !== "";
+    }
+
+    validateCategory() {
+        return this.state.category.trim() !== "";
+    }
+
+    validateType() {
+        return this.state.type.trim() !== "";
+    }
+
+    validateColor() {
+        return this.state.color.trim() !== "";
+    }
+
+    validatePrice() {
+        const price = parseFloat(this.state.price);
+        return !isNaN(price) && price >= 0; 
+    }
+
+    validateCountInStock() {
+        const countInStock = parseInt(this.state.countInStock);
+        return countInStock >= 0 && Number.isInteger(countInStock);
+    }
+
+    validate() {
+        return {
+            brand: this.validateBrand(),
+            name: this.validateName(),
+            description: this.validateDescription(),
+            category: this.validateCategory(),
+            type: this.validateType(),
+            color: this.validateColor(),
+            price: this.validatePrice(),
+            countInStock: this.validateCountInStock()
+        };
+    }
+
     render() {
         let errorMessage = "";
-        if(this.state.wasSubmittedAtLeastOnce) {
-            errorMessage = <div className="error">T-shirt details are incorrect<br/></div>;
-        }  
+        if (this.state.wasSubmittedAtLeastOnce) {
+            errorMessage = <div className="error">T-shirt details are incorrect<br /></div>;
+        }
         return (
             <div className="form-container">
                 {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayTshirts"/> : null}  
@@ -152,6 +207,11 @@ export default class EditTshirt extends Component {
                         <Form.Label>Price</Form.Label>
                         <Form.Control type="text" name="price" value={this.state.price} onChange={this.handleChange} />
                     </Form.Group>
+                    <Form.Group controlId="countInStock">
+                        <Form.Label>Stock</Form.Label>
+                        <Form.Control type="text" name="countInStock" value={this.state.countInStock} onChange={this.handleChange} />
+                    </Form.Group>
+
                     <LinkInClass value="Update" className="green-button" onClick={this.handleSubmit}/>  
                     
                     <Link className="red-button" to={"/DisplayTshirts"}>Cancel</Link>
