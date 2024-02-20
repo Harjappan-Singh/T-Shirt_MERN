@@ -18,10 +18,11 @@ export default class TshirtTableRow extends Component {
                 <td>{this.props.tshirt.color}</td>
                 <td>{this.props.tshirt.sizes}</td>
                 <td>{this.props.tshirt.price}</td>
-                
+                <td>{this.props.tshirt.rating}</td>
                 <td>
                     
                     {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? <Link className="red-button" to={"/DeleteTshirt/" + this.props.tshirt._id}>Delete</Link> : null}
+                    </td> <td>
                     {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN  ? <Link className="green-button" to={"/EditTshirt/" + this.props.tshirt._id}>Edit</Link> : null}
                 </td>
             </tr>

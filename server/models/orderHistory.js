@@ -1,13 +1,3 @@
-//purchase_history 
-
-//cust_id 
-
-//item_id 
-
-//Date 
-
-//Cost  
-
 const mongoose = require('mongoose');
 
 let orderHistorySchema = new mongoose.Schema({
