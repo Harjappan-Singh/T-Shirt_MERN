@@ -9,10 +9,11 @@ import ResetDatabase from "./components/ResetDatabase"
 import Login from "./components/Login"
 import Logout from "./components/Logout"
 import AddCar from "./components/AddCar"
-import DeleteCar from "./components/DeleteCar"
 import LoggedInRoute from "./components/LoggedInRoute"
 import DisplayTshirts from "./components/DisplayTshirts"
 import EditTshirt from "./components/EditTshirt"
+import TshirtDetails from "./components/tshirtDetails"
+import DeleteTshirt from "./components/DeleteTshirt"
 
 import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
 
@@ -40,9 +41,9 @@ export default class App extends Component
                     <LoggedInRoute exact path="/Logout" component={Logout} />
                     <LoggedInRoute exact path="/AddCar" component={AddCar} />
                     <Route exact path="/EditTshirt/:id" component={EditTshirt} />
-                    <LoggedInRoute exact path="/DeleteCar/:id" component={DeleteCar} />
+                    <LoggedInRoute exact path="/DeleteTshirt/:id" component={DeleteTshirt} />
                     <Route exact path="/DisplayTshirts" component={DisplayTshirts}/> 
-                                     
+                    <Route exact path="/tshirt/:id" component={TshirtDetails} />                
                 </Switch>
             </BrowserRouter>
         )

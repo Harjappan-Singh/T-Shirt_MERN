@@ -15,7 +15,9 @@ export default class DisplayTshirts extends Component {
             genderFilter: "All",
             colorFilter: "All",
             brandFilter: "All", 
-            sizesFilter: "All"
+            sizesFilter: "All",
+
+            searchName: ""
         };
     }
 
@@ -80,17 +82,22 @@ export default class DisplayTshirts extends Component {
         this.setState({ brandFilter: event.target.value }); 
     };
 
+    handleSearchName = (event) => {
+        this.setState({ searchName: event.target.value });
+    };
+
     render() {
-        const { tshirts, genderFilter, colorFilter, sortByBrand, brandFilter, sizesFilter } = this.state;
+        const { tshirts, genderFilter, colorFilter, sortByBrand, brandFilter, sizesFilter, searchName } = this.state;
        
         let filteredTshirts = tshirts.filter(tshirt => {
             const matchesGender = genderFilter === "All" || tshirt.category === genderFilter;
             const matchesColor = colorFilter === "All" || tshirt.color === colorFilter;
             const matchesBrand = brandFilter === "All" || tshirt.brand === brandFilter;
             const matchesSizes = sizesFilter === "All" || tshirt.sizes.includes(sizesFilter);
+            const matchesSearchName = searchName === "" || tshirt.name.toLowerCase().includes(searchName.toLowerCase());
     
             // Return true if all filters match
-            return matchesGender && matchesColor && matchesBrand && matchesSizes;
+            return matchesGender && matchesColor && matchesBrand && matchesSizes && matchesSearchName;
         });
             
        
@@ -131,6 +138,7 @@ export default class DisplayTshirts extends Component {
                 )}
                 <div className="filter-container">
 
+                <input type="text" placeholder="Search by name" value={searchName} onChange={this.handleSearchName} />
                 <select value={sizesFilter} onChange={this.handleSizesFilter}>
                         <option value="All">Sizes</option>
                         <option value="XXS">XXS</option>
@@ -153,14 +161,23 @@ export default class DisplayTshirts extends Component {
                         <option value="All">All Colors</option>
                         <option value="Black">Black</option>
                         <option value="White">White</option>
+                        <option value="Brown">Brown</option>
                         <option value="Blue">Blue</option>
                         <option value="Red">Red</option>
+                        <option value="Green">Green</option>
+                        <option value="Gray">Gray</option>
                     </select>
+
                     <select value={brandFilter} onChange={this.handleBrandFilter}>
                         <option value="All">All Brands</option>
                         <option value="Nike">Nike</option>
                         <option value="Mango">Mango</option>
                         <option value="H&M">H&M</option>
+                        <option value="Adidas">Adidas</option>
+                        <option value="Zara">Zara</option>
+                        <option value="Puma">Puma</option>
+                        <option value="Under Armour">Under Armour</option>
+                        <option value="Fila">Fila</option>
                     </select>
                     </div>
                    
