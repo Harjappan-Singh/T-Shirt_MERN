@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Table from "./TshirtTable";
 import { ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN, SERVER_HOST } from "../config/global_constants";
-
+import Logout from "./Logout"
 export default class DisplayTshirts extends Component {
     constructor(props) {
         super(props);
@@ -11,10 +11,11 @@ export default class DisplayTshirts extends Component {
             tshirts: [],
             sortByRating: false,
             sortByPrice: false,
-            sortByBrand: "", 
+             
             genderFilter: "All",
             colorFilter: "All",
-            brandFilter: "All" 
+            brandFilter: "All", 
+            sizesFilter: "All"
         };
     }
 
@@ -62,9 +63,7 @@ export default class DisplayTshirts extends Component {
         });
     };
 
-    handleSortByBrand = (event) => {
-        this.setState({ sortByBrand: event.target.value });
-    };
+   
 
     handleGenderFilter = (event) => {
         this.setState({ genderFilter: event.target.value });
@@ -73,34 +72,28 @@ export default class DisplayTshirts extends Component {
     handleColorFilter = (event) => {
         this.setState({ colorFilter: event.target.value }); 
     };
+    handleSizesFilter = (event) => {
+        this.setState({ sizesFilter: event.target.value }); 
+    };
 
     handleBrandFilter = (event) => {
-        this.setState({ brandFilter: event.target.value }); // Add handleBrandFilter method
+        this.setState({ brandFilter: event.target.value }); 
     };
 
     render() {
-        const { tshirts, genderFilter, colorFilter, sortByBrand, brandFilter } = this.state;
+        const { tshirts, genderFilter, colorFilter, sortByBrand, brandFilter, sizesFilter } = this.state;
        
         let filteredTshirts = tshirts.filter(tshirt => {
-            if (genderFilter !== "All" && colorFilter !== "All" && brandFilter !== "All") {
-                return tshirt.category === genderFilter && tshirt.color === colorFilter && tshirt.brand === brandFilter;
-            } else if (genderFilter !== "All" && colorFilter !== "All") {
-                return tshirt.category === genderFilter && tshirt.color === colorFilter;
-            } else if (genderFilter !== "All" && brandFilter !== "All") {
-                return tshirt.category === genderFilter && tshirt.brand === brandFilter;
-            } else if (colorFilter !== "All" && brandFilter !== "All") {
-                return tshirt.color === colorFilter && tshirt.brand === brandFilter;
-            } else if (genderFilter !== "All") {
-                return tshirt.category === genderFilter;
-            } else if (colorFilter !== "All") {
-                return tshirt.color === colorFilter;
-            } else if (brandFilter !== "All") {
-                return tshirt.brand === brandFilter;
-            } else {
-                return true;
-            }
+            const matchesGender = genderFilter === "All" || tshirt.category === genderFilter;
+            const matchesColor = colorFilter === "All" || tshirt.color === colorFilter;
+            const matchesBrand = brandFilter === "All" || tshirt.brand === brandFilter;
+            const matchesSizes = sizesFilter === "All" || tshirt.sizes.includes(sizesFilter);
+    
+            // Return true if all filters match
+            return matchesGender && matchesColor && matchesBrand && matchesSizes;
         });
-
+            
+       
         if (sortByBrand) {
             filteredTshirts.sort((a, b) => {
                 const brandA = a.brand.toUpperCase();
@@ -111,17 +104,16 @@ export default class DisplayTshirts extends Component {
 
         return (
             <div className="form-container">
-                {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
-                    <div className="logout">
-                        {localStorage.profilePhoto !== "null" ? (
-                            <img
-                                id="profilePhoto"
-                                src={`data:;base64,${localStorage.profilePhoto}`}
-                                alt=""
-                            />
-                        ) : null}
-                    </div>
-                ) : (
+               {
+                    localStorage.accessLevel > ACCESS_LEVEL_GUEST 
+                    ? <div className="logout">
+                        {
+                            localStorage.profilePhoto !== "null" 
+                            ? <img id="profilePhoto" src={`data:;base64,${localStorage.profilePhoto}`} alt=""/>
+                            : null
+                        }                        
+                        <Logout/>
+                      </div> : (
                     <div>
                         <Link className="green-button" to={"/Login"}>
                             Login
@@ -138,6 +130,19 @@ export default class DisplayTshirts extends Component {
                     </div>
                 )}
                 <div className="filter-container">
+
+                <select value={sizesFilter} onChange={this.handleSizesFilter}>
+                        <option value="All">Sizes</option>
+                        <option value="XXS">XXS</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                        <option value="XXXL">XXXL</option>
+                    </select>
+                    
                     <select value={genderFilter} onChange={this.handleGenderFilter}>
                         <option value="All">All</option>
                         <option value="Men">Men</option>
@@ -158,24 +163,19 @@ export default class DisplayTshirts extends Component {
                         <option value="H&M">H&M</option>
                     </select>
                     </div>
-                    <div>
-                    <select value={sortByBrand} onChange={this.handleSortByBrand}>
-                        <option value="">Sort by Brand</option>
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
-                    </select>
-                </div>
+                   
                 <div className="table-container">
                     <div className="sort-by-rating">
                         <button onClick={this.handleSortByRating}>
-                            Sort by Rating {this.state.sortByRating ? "(Descending)" : "(Ascending)"}
+                            Sort by Rating {this.state.sortByRating ?  "(Low to High)" : "(High to Low)"}
                         </button>
                     </div>
                     <div className="sort-by-price">
                         <button onClick={this.handleSortByPrice}>
-                            Sort by Price {this.state.sortByPrice ? "(Descending)" : "(Ascending)"}
+                            Sort by Price {this.state.sortByPrice ? "(Low to High)" : "(High to Low)"}
                         </button>
                     </div>
+                    
 
                     <Table tshirts={filteredTshirts} />
 

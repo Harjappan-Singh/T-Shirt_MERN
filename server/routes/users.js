@@ -2,7 +2,7 @@ const router = require(`express`).Router()
 
 const usersModel = require(`../models/users`)
 
-const bcrypt = require('bcryptjs')  // needed for password encryption
+const bcrypt = require('bcryptjs')  //for password encryption
 
 const jwt = require('jsonwebtoken')
 const fs = require('fs')
