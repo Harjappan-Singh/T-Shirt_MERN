@@ -83,15 +83,15 @@ export default class DisplayTshirts extends Component {
        
         let filteredTshirts = tshirts.filter(tshirt => {
             if (genderFilter !== "All" && colorFilter !== "All" && brandFilter !== "All") {
-                return tshirt.gender === genderFilter && tshirt.color === colorFilter && tshirt.brand === brandFilter;
+                return tshirt.category === genderFilter && tshirt.color === colorFilter && tshirt.brand === brandFilter;
             } else if (genderFilter !== "All" && colorFilter !== "All") {
-                return tshirt.gender === genderFilter && tshirt.color === colorFilter;
+                return tshirt.category === genderFilter && tshirt.color === colorFilter;
             } else if (genderFilter !== "All" && brandFilter !== "All") {
-                return tshirt.gender === genderFilter && tshirt.brand === brandFilter;
+                return tshirt.category === genderFilter && tshirt.brand === brandFilter;
             } else if (colorFilter !== "All" && brandFilter !== "All") {
                 return tshirt.color === colorFilter && tshirt.brand === brandFilter;
             } else if (genderFilter !== "All") {
-                return tshirt.gender === genderFilter;
+                return tshirt.category === genderFilter;
             } else if (colorFilter !== "All") {
                 return tshirt.color === colorFilter;
             } else if (brandFilter !== "All") {
