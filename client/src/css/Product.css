@@ -1,0 +1,55 @@
+.product-card {
+  position: relative;
+  width: 320px;
+  height: 425px;
+  border-radius: 4%;
+  margin: 1rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.product-image {
+  position: relative;
+}
+
+.product-image img {
+  width: 100%;
+  border-radius: 4%;
+  max-width: 400px;
+}
+
+.product-info {
+  padding: 1rem;
+}
+
+.product-info a {
+  text-decoration: none;
+  color: black;
+}
+
+.heart-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.heart-icon::before {
+  position: absolute;
+  content: '';
+  left: 0;
+  top: 10px;
+  width: 16px;
+  height: 16px;
+  background-color: #ff385c;
+  border-radius: 50%;
+}
+
+.heart-icon::before {
+  left: -10px;
+}
+
+.heart-icon::after {
+  left: 10px;
+}
