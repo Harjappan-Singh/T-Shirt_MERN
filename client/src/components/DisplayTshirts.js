@@ -11,6 +11,7 @@ import {
   SERVER_HOST,
 } from '../config/global_constants';
 import Logout from './Logout';
+
 export default class DisplayTshirts extends Component {
   constructor(props) {
     super(props);
@@ -47,32 +48,33 @@ export default class DisplayTshirts extends Component {
   }
 
   handleSortByRating = () => {
-    const { tshirts, sortByRating } = this.state;
-    const sortedTshirts = [...tshirts];
-
-    sortedTshirts.sort((a, b) => {
+    const { products, sortByRating } = this.state;
+    const sortedProducts = [...products];
+  
+    sortedProducts.sort((a, b) => {
       return sortByRating ? b.rating - a.rating : a.rating - b.rating;
     });
-
+  
     this.setState({
-      tshirts: sortedTshirts,
+      products: sortedProducts,
       sortByRating: !sortByRating,
     });
   };
-
+  
   handleSortByPrice = () => {
-    const { tshirts, sortByPrice } = this.state;
-    const sortedTshirts = [...tshirts];
-
-    sortedTshirts.sort((a, b) => {
+    const { products, sortByPrice } = this.state;
+    const sortedProducts = [...products];
+  
+    sortedProducts.sort((a, b) => {
       return sortByPrice ? b.price - a.price : a.price - b.price;
     });
-
+  
     this.setState({
-      tshirts: sortedTshirts,
+      products: sortedProducts,
       sortByPrice: !sortByPrice,
     });
   };
+  
 
   handleGenderFilter = (event) => {
     this.setState({ genderFilter: event.target.value });
@@ -235,14 +237,22 @@ export default class DisplayTshirts extends Component {
           <div>
             {loading && <Loading />}
             {error && <Message variant="danger">{error}</Message>}
+
             <div className="products">
+  {filteredTshirts.map((product) => (
+    <div key={product.slug} className="product">
+      <ProductScreen product={product} />
+    </div>
+  ))}
+</div>
+          {/*  <div className="products">
               {products.map((product) => (
                 <div key={product.slug} className="product">
                   <ProductScreen product={product} />
                 </div>
               ))}
-            </div>
-          </div>
+              </div>*/}
+              </div>
 
           {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
             <div className="add-new-tshirt">
