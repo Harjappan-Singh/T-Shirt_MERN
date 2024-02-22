@@ -47,22 +47,22 @@ export default class DisplayTshirts extends Component {
   }
 
   handleSortByRating = () => {
-    const { tshirts, sortByRating } = this.state;
-    const sortedTshirts = [...tshirts];
+    const { products, sortByRating } = this.state;
+    const sortedTshirts = [...products];
 
     sortedTshirts.sort((a, b) => {
       return sortByRating ? b.rating - a.rating : a.rating - b.rating;
     });
 
     this.setState({
-      tshirts: sortedTshirts,
+      products: sortedTshirts,
       sortByRating: !sortByRating,
     });
   };
 
   handleSortByPrice = () => {
-    const { tshirts, sortByPrice } = this.state;
-    const sortedTshirts = [...tshirts];
+    const { products, sortByPrice } = this.state;
+    const sortedTshirts = [...products];
 
     sortedTshirts.sort((a, b) => {
       return sortByPrice ? b.price - a.price : a.price - b.price;
