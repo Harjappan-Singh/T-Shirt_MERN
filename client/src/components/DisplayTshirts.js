@@ -10,6 +10,7 @@ import {
   ACCESS_LEVEL_ADMIN,
   SERVER_HOST,
 } from '../config/global_constants';
+
 import Logout from './Logout';
 
 export default class DisplayTshirts extends Component {
@@ -242,6 +243,7 @@ export default class DisplayTshirts extends Component {
   {filteredTshirts.map((product) => (
     <div key={product.slug} className="product">
       <ProductScreen product={product} />
+      
     </div>
   ))}
 </div>
@@ -252,6 +254,7 @@ export default class DisplayTshirts extends Component {
                 </div>
               ))}
               </div>*/}
+             
               </div>
 
           {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
