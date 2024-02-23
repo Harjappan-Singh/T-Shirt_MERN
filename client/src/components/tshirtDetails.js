@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+
 import '../css/ProductDetail.css';
+
 export default class TshirtDetails extends Component {
     state = {
         quantity: 1,
@@ -48,12 +50,11 @@ export default class TshirtDetails extends Component {
     };
     
     render() {
-        const { product } = this.props.location.state; 
+        const { product } = this.props.location.state;
         const { quantity, selectedSize } = this.state;
 
         return (
-            <div>
-                <h2>{product.name}</h2>
+            <div className="product-details-container"> 
                 <p><strong>Brand:</strong> {product.brand}</p>
                 <p><strong>Description:</strong> {product.description}</p>
                 <p><strong>Category:</strong> {product.category}</p>
@@ -62,7 +63,7 @@ export default class TshirtDetails extends Component {
                 <p><strong>Cost:</strong> €{product.price}</p>
                 <p><strong>Rating:</strong> {product.rating}</p>
                 
-                <label >Quantity:</label>
+                <label>Quantity:</label>
                 <input
                     id="quantity"
                     type="number"
@@ -71,14 +72,14 @@ export default class TshirtDetails extends Component {
                     onChange={this.handleQuantityChange}
                 />
 
-                <label >Size:</label>
+                <label>Size:</label>
                 <select id="size" value={selectedSize} onChange={this.handleSizeChange}>
                     <option value="">Select Size</option>
                     {product.sizes.map((size, index) => (
                         <option key={index} value={size}>{size}</option>
                     ))}
                 </select>
-
+          
                 <button className="blue-button" onClick={this.addToCart}>Add to Cart</button>
                 <button onClick={this.removeFromCart}>Remove</button>
             </div>

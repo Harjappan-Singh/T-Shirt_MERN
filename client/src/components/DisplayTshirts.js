@@ -137,8 +137,11 @@ export default class DisplayTshirts extends Component {
     }
 
     return (
-      <div className="form-container">
       
+      <div className="form-container">
+         <Link to="/ShoppingCart" className="green-button">
+          Shopping Cart
+        </Link>
         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
           <div className="logout">
             {localStorage.profilePhoto !== 'null' ? (
@@ -241,14 +244,15 @@ export default class DisplayTshirts extends Component {
   {filteredTshirts.map((product) => (
     <div key={product.slug} className="product">
       <ProductScreen product={product} />
-       <Link
-              to={{
-                pathname: `/TshirtDetails/${product._id}`,
-                state: { product: product } // Pass product data as state
-              }}
-            >
-              View Details
-            </Link>
+      <Link
+  to={{
+    pathname: `/TshirtDetails/${product._id}`, // Assuming _id is the product ID
+    state: { product: product } // Pass product data as state
+  }}
+>
+  View Details
+</Link>
+      
     </div>
     
   ))}

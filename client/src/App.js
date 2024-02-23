@@ -14,6 +14,7 @@ import DisplayTshirts from "./components/DisplayTshirts"
 import EditTshirt from "./components/EditTshirt"
 import TshirtDetails from "./components/tshirtDetails"
 import DeleteTshirt from "./components/DeleteTshirt"
+import ShoppingCart from './components/ShoppingCart';
 
 
 import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
@@ -44,7 +45,8 @@ export default class App extends Component
                     <Route exact path="/EditTshirt/:id" component={EditTshirt} />
                     <LoggedInRoute exact path="/DeleteTshirt/:id" component={DeleteTshirt} />
                     <Route exact path="/DisplayTshirts" component={DisplayTshirts}/> 
-                    <Route exact path="/TshirtDetails/:id" component={TshirtDetails} />  
+                    <Route exact path="/TshirtDetails/:id" component={TshirtDetails} /> 
+                    <Route path="/ShoppingCart" component={ShoppingCart} /> 
                   
               
                 </Switch>
