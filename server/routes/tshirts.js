@@ -10,9 +10,20 @@ const JWT_PRIVATE_KEY = fs.readFileSync(
 
 // Middleware to verify user's JWT password and check if user is an administrator
 const verifyUsersJWTPassword = (req, res, next) => {
-  // Your JWT verification logic here
+  jwt.verify(
+       req.headers.authorization,
+        JWT_PRIVATE_KEY,
+       { algorithm: 'HS256' },
+        (err, decodedToken) => {
+          if (err) {
+            res.status(401).json({ errorMessage: 'User is not logged in' });
+           } else {
+             req.decodedToken = decodedToken;
+             next();
+           }
+     }
+ );
 };
-
 const deleteTshirtDocument = (req, res) => {
   tshirtsModel.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {

@@ -124,11 +124,7 @@ export default class DisplayTshirts extends Component {
 
       // Return true if all filters match
       return (
-        matchesGender &&
-        matchesColor &&
-        matchesBrand &&
-        matchesSizes &&
-        matchesSearchName
+        matchesGender && matchesColor && matchesBrand && matchesSizes && matchesSearchName
       );
     });
 
@@ -142,6 +138,7 @@ export default class DisplayTshirts extends Component {
 
     return (
       <div className="form-container">
+      
         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
           <div className="logout">
             {localStorage.profilePhoto !== 'null' ? (
@@ -155,6 +152,7 @@ export default class DisplayTshirts extends Component {
           </div>
         ) : (
           <div>
+            
             <Link className="green-button" to={'/Login'}>
               Login
             </Link>
@@ -238,15 +236,24 @@ export default class DisplayTshirts extends Component {
           <div>
             {loading && <Loading />}
             {error && <Message variant="danger">{error}</Message>}
-
+            
             <div className="products">
   {filteredTshirts.map((product) => (
     <div key={product.slug} className="product">
       <ProductScreen product={product} />
-      
+       <Link
+              to={{
+                pathname: `/TshirtDetails/${product._id}`,
+                state: { product: product } // Pass product data as state
+              }}
+            >
+              View Details
+            </Link>
     </div>
+    
   ))}
 </div>
+
           {/*  <div className="products">
               {products.map((product) => (
                 <div key={product.slug} className="product">

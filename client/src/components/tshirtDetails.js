@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import '../css/ProductDetail.css';
 export default class TshirtDetails extends Component {
     state = {
         quantity: 1,
@@ -7,7 +7,7 @@ export default class TshirtDetails extends Component {
     };
 
     addToCart = () => {
-        const { tshirt } = this.props.location.state;
+        const { product } = this.props.location.state;
         const { quantity, selectedSize } = this.state;
 
         if (!selectedSize) {
@@ -18,7 +18,7 @@ export default class TshirtDetails extends Component {
         const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
         for (let i = 0; i < quantity; i++) {
-            cartItems.push({ ...tshirt, size: selectedSize });
+            cartItems.push({ ...product, size: selectedSize });
         }
 
         localStorage.setItem("cart", JSON.stringify(cartItems));
@@ -35,12 +35,12 @@ export default class TshirtDetails extends Component {
     };
 
     removeFromCart = () => {
-        const { tshirt } = this.props.location.state;
+        const { product } = this.props.location.state;
         const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
     
         const updatedCartItems = cartItems.filter(item => {
            
-            return item.name !== tshirt.name || item.brand !== tshirt.brand || item.color !== tshirt.color || item.price !== tshirt.price || item.sizes.join(",") !== tshirt.sizes.join(",");
+            return item.name !== product.name || product.brand !== product.brand || product.color !== product.color || product.price !== product.price || item.sizes.join(",") !== product.sizes.join(",");
         });
     
         localStorage.setItem("cart", JSON.stringify(updatedCartItems)); 
@@ -48,19 +48,19 @@ export default class TshirtDetails extends Component {
     };
     
     render() {
-        const { tshirt } = this.props.location.state; 
+        const { product } = this.props.location.state; 
         const { quantity, selectedSize } = this.state;
 
         return (
             <div>
-                <h2>{tshirt.name}</h2>
-                <p><strong>Brand:</strong> {tshirt.brand}</p>
-                <p><strong>Description:</strong> {tshirt.description}</p>
-                <p><strong>Category:</strong> {tshirt.category}</p>
-                <p><strong>Color:</strong> {tshirt.color}</p>
-                <p><strong>Sizes:</strong> {tshirt.sizes.join(", ")}</p>
-                <p><strong>Cost:</strong> €{tshirt.price}</p>
-                <p><strong>Rating:</strong> {tshirt.rating}</p>
+                <h2>{product.name}</h2>
+                <p><strong>Brand:</strong> {product.brand}</p>
+                <p><strong>Description:</strong> {product.description}</p>
+                <p><strong>Category:</strong> {product.category}</p>
+                <p><strong>Color:</strong> {product.color}</p>
+                <p><strong>Sizes:</strong> {product.sizes.join(", ")}</p>
+                <p><strong>Cost:</strong> €{product.price}</p>
+                <p><strong>Rating:</strong> {product.rating}</p>
                 
                 <label >Quantity:</label>
                 <input
@@ -74,7 +74,7 @@ export default class TshirtDetails extends Component {
                 <label >Size:</label>
                 <select id="size" value={selectedSize} onChange={this.handleSizeChange}>
                     <option value="">Select Size</option>
-                    {tshirt.sizes.map((size, index) => (
+                    {product.sizes.map((size, index) => (
                         <option key={index} value={size}>{size}</option>
                     ))}
                 </select>
