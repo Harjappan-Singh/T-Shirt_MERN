@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import { Redirect, Link } from "react-router-dom";
-import Form from "react-bootstrap/Form";
-
 import axios from "axios";
-
 import LinkInClass from "../components/LinkInClass";
-
 import { ACCESS_LEVEL_ADMIN, SERVER_HOST } from "../config/global_constants";
 
 export default class AddTshirt extends Component {
@@ -19,7 +15,7 @@ export default class AddTshirt extends Component {
             category: "",
             type: "",
             color: "",
-            sizes: "",
+            sizes: [],
             price: "",
             selectedFiles: null,
             redirectToDisplayAllTshirts: localStorage.accessLevel < ACCESS_LEVEL_ADMIN
@@ -77,56 +73,63 @@ export default class AddTshirt extends Component {
             <div className="form-container">
                 {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayAllTshirts" /> : null}
 
-                <Form>
-                    <Form.Group controlId="brand">
-                        <Form.Label>Brand</Form.Label>
-                        <Form.Control ref={(input) => { this.inputToFocus = input; }} type="text" name="brand" value={this.state.brand} onChange={this.handleChange} />
-                    </Form.Group>
+                <form>
+                    <div>
+                        <label htmlFor="brand">Brand</label>
+                        <input ref={(input) => { this.inputToFocus = input; }} type="text" name="brand" value={this.state.brand} onChange={this.handleChange} />
+                    </div>
 
-                    <Form.Group controlId="name">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" name="name" value={this.state.name} onChange={this.handleChange} />
-                    </Form.Group>
+                    <div>
+                        <label htmlFor="name">Name</label>
+                        <input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
+                    </div>
 
-                    <Form.Group controlId="description">
-                        <Form.Label>Description</Form.Label>
-                        <Form.Control type="text" name="description" value={this.state.description} onChange={this.handleChange} />
-                    </Form.Group>
+                    <div>
+                        <label htmlFor="description">Description</label>
+                        <input type="text" name="description" value={this.state.description} onChange={this.handleChange} />
+                    </div>
 
-                    <Form.Group controlId="category">
-                        <Form.Label>Category</Form.Label>
-                        <Form.Control type="text" name="category" value={this.state.category} onChange={this.handleChange} />
-                    </Form.Group>
+                    <div>
+                        <label htmlFor="category">Category</label>
+                        <input type="text" name="category" value={this.state.category} onChange={this.handleChange} />
+                    </div>
 
-                    <Form.Group controlId="type">
-                        <Form.Label>Type</Form.Label>
-                        <Form.Control type="text" name="type" value={this.state.type} onChange={this.handleChange} />
-                    </Form.Group>
+                    <div>
+                        <label htmlFor="type">Type</label>
+                        <input type="text" name="type" value={this.state.type} onChange={this.handleChange} />
+                    </div>
 
-                    <Form.Group controlId="color">
-                        <Form.Label>Color</Form.Label>
-                        <Form.Control type="text" name="color" value={this.state.color} onChange={this.handleChange} />
-                    </Form.Group>
+                    <div>
+                        <label htmlFor="color">Color</label>
+                        <input type="text" name="color" value={this.state.color} onChange={this.handleChange} />
+                    </div>
 
-                    <Form.Group controlId="sizes">
-                        <Form.Label>Sizes</Form.Label>
-                        <Form.Control type="text" name="sizes" value={this.state.sizes} onChange={this.handleChange} />
-                    </Form.Group>
+                    <div>
+                        <label htmlFor="sizes">Sizes</label><br />
+                        <input type="checkbox" name="sizes" value="XXS" onChange={this.handleChange} /> XXS<br />
+                        <input type="checkbox" name="sizes" value="XS" onChange={this.handleChange} /> XS<br />
+                        <input type="checkbox" name="sizes" value="S" onChange={this.handleChange} /> S<br />
+                        <input type="checkbox" name="sizes" value="M" onChange={this.handleChange} /> M<br />
+                        <input type="checkbox" name="sizes" value="L" onChange={this.handleChange} /> L<br />
+                        <input type="checkbox" name="sizes" value="XL" onChange={this.handleChange} /> XL<br />
+                        <input type="checkbox" name="sizes" value="XXL" onChange={this.handleChange} /> XXL<br />
+                        <input type="checkbox" name="sizes" value="XXXL" onChange={this.handleChange} /> XXXL<br />
+                    </div>
 
-                    <Form.Group controlId="price">
-                        <Form.Label>Price</Form.Label>
-                        <Form.Control type="text" name="price" value={this.state.price} onChange={this.handleChange} />
-                    </Form.Group>
+                    <div>
+                        <label htmlFor="price">Price</label>
+                        <input type="text" name="price" value={this.state.price} onChange={this.handleChange} />
+                    </div>
 
-                    <Form.Group controlId="photos">
-                        <Form.Label>Photos</Form.Label>
-                        <Form.Control type="file" multiple onChange={this.handleFileChange} />
-                    </Form.Group> <br /><br />
+                    <div>
+                        <label htmlFor="photos">Photos</label>
+                        <input type="file" multiple onChange={this.handleFileChange} />
+                    </div> <br /><br />
 
                     <LinkInClass value="Add" className="green-button" onClick={this.handleSubmit} />
 
                     <Link className="red-button" to={"/DisplayTshirts"}>Cancel</Link>
-                </Form>
+                </form>
             </div>
         );
     }

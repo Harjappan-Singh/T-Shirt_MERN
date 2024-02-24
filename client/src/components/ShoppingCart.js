@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import {SANDBOX_CLIENT_ID, SERVER_HOST} from "../config/global_constants"
+import PayPalMessage from "./PayPalMessage"
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 export default class ShoppingCart extends Component {
     state = {
@@ -70,7 +73,14 @@ export default class ShoppingCart extends Component {
                     <p><strong>Total Cost (including shipping):</strong> €{totalCost.toFixed(2)}</p>
                 </div>
                 <button onClick={this.handleClearCart}>Clear Cart</button>
+
+                <div>
+                <PayPalScriptProvider options={{currency:"EUR", "client-id":SANDBOX_CLIENT_ID }}>
+                    <PayPalButtons style={{layout: "horizontal"}} createOrder={this.createOrder} onApprove={this.onApprove} onError={this.onError} onCancel={this.onCancel}/>
+                </PayPalScriptProvider>
             </div>
+            </div>
+            
         );
     }
 }
