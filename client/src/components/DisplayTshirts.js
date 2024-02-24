@@ -50,23 +50,30 @@ export default class DisplayTshirts extends Component {
 
   handleSortByRating = () => {
     const { products, sortByRating } = this.state;
+
     const sortedProducts = [...products];
   
     sortedProducts.sort((a, b) => {
+
       return sortByRating ? b.rating - a.rating : a.rating - b.rating;
     });
   
     this.setState({
+
       products: sortedProducts,
+
       sortByRating: !sortByRating,
     });
   };
   
   handleSortByPrice = () => {
     const { products, sortByPrice } = this.state;
+
     const sortedProducts = [...products];
   
     sortedProducts.sort((a, b) => {
+
+  
       return sortByPrice ? b.price - a.price : a.price - b.price;
     });
   
