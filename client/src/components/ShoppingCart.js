@@ -1,11 +1,16 @@
 import React, { Component } from "react";
-import {SANDBOX_CLIENT_ID, SERVER_HOST} from "../config/global_constants"
-import PayPalMessage from "./PayPalMessage"
+import axios from "axios";
+import { Redirect } from "react-router-dom";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { SANDBOX_CLIENT_ID, SERVER_HOST } from "../config/global_constants";
+import PayPalMessage from "./PayPalMessage";
 
-export default class ShoppingCart extends Component {
+class ShoppingCart extends Component {
     state = {
-        cartItems: []
+        cartItems: [],
+        redirectToPayPalMessage: false,
+        payPalMessageType: null,
+        payPalOrderID: null
     };
 
     componentDidMount() {
@@ -18,16 +23,14 @@ export default class ShoppingCart extends Component {
     }
 
     handleRemoveItem = (index) => {
-        const { cartItems } = this.state;
-        const updatedCartItems = [...cartItems];
+        const updatedCartItems = [...this.state.cartItems];
         updatedCartItems.splice(index, 1);
         this.setState({ cartItems: updatedCartItems });
         localStorage.setItem("cart", JSON.stringify(updatedCartItems));
     }
 
     handleSizeChange = (index, newSize) => {
-        const { cartItems } = this.state;
-        const updatedCartItems = [...cartItems];
+        const updatedCartItems = [...this.state.cartItems];
         updatedCartItems[index].size = newSize;
         this.setState({ cartItems: updatedCartItems });
         localStorage.setItem("cart", JSON.stringify(updatedCartItems));
@@ -38,14 +41,52 @@ export default class ShoppingCart extends Component {
         localStorage.removeItem("cart");
     }
 
+    createOrder = (data, actions) => {
+        return actions.order.create({
+            purchase_units: [{ amount: { value: this.calculateTotalCost() } }]
+        });
+    }
+
+    calculateTotalCost = () => {
+        const shippingCost = 4; // Flat rate shipping cost
+        const subtotal = this.state.cartItems.reduce((total, item) => total + item.price, 0);
+        return (subtotal + shippingCost).toFixed(2);
+    }
+
+    onApprove = (data, actions) => {
+        console.log("Payment approved:", data);
+        return actions.order.capture().then(details => {
+            console.log("Payment details:", details);
+            // Handle successful payment, e.g., make API request to update order status
+            // and navigate to a success page
+            this.setState({ 
+                payPalMessageType: PayPalMessage.messageType.SUCCESS, 
+                payPalOrderID: data.orderID, 
+                redirectToPayPalMessage: true 
+            });
+        });
+    }
+
+    onError = (err) => {
+        console.error("PayPal error:", err);
+        this.setState({ 
+            payPalMessageType: PayPalMessage.messageType.ERROR, 
+            redirectToPayPalMessage: true 
+        });
+    }
+
+    onCancel = (data) => {
+        console.log("Payment cancelled:", data);
+        this.setState({ 
+            payPalMessageType: PayPalMessage.messageType.CANCEL, 
+            redirectToPayPalMessage: true 
+        });
+    }
+
     render() {
         const { cartItems } = this.state;
         const shippingCost = 4; // Flat rate shipping cost
-
-        // Calculate subtotal
         const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
-
-        // Calculate total cost including shipping
         const totalCost = subtotal + shippingCost;
 
         return (
@@ -74,13 +115,22 @@ export default class ShoppingCart extends Component {
                 </div>
                 <button onClick={this.handleClearCart}>Clear Cart</button>
 
-                <div>
-                <PayPalScriptProvider options={{currency:"EUR", "client-id":SANDBOX_CLIENT_ID }}>
-                    <PayPalButtons style={{layout: "horizontal"}} createOrder={this.createOrder} onApprove={this.onApprove} onError={this.onError} onCancel={this.onCancel}/>
+                {this.state.redirectToPayPalMessage && 
+                    <Redirect to={`/PayPalMessage/${this.state.payPalMessageType}/${this.state.payPalOrderID}`} />
+                }
+
+                <PayPalScriptProvider options={{ currency: "EUR", "client-id": SANDBOX_CLIENT_ID }}>
+                    <PayPalButtons 
+                        style={{ layout: "horizontal" }} 
+                        createOrder={this.createOrder} 
+                        onApprove={this.onApprove} 
+                        onError={this.onError} 
+                        onCancel={this.onCancel} 
+                    />
                 </PayPalScriptProvider>
             </div>
-            </div>
-            
         );
     }
 }
+
+export default ShoppingCart;
