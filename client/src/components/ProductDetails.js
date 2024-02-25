@@ -4,7 +4,8 @@ import Rating from '../components/Rating';
 import '../css/ProductDetail.css';
 import Loading from './Loading';
 import Message from './Message';
-import DocumentTitle from 'react-document-title';
+import { SERVER_HOST } from '../config/global_constants';
+
 class ProductDetails extends Component {
   constructor(props) {
     super(props);
@@ -12,24 +13,68 @@ class ProductDetails extends Component {
       loading: true,
       error: '',
       product: {},
+      quantity: 1,
+      selectedSize: '',
     };
   }
 
   async componentDidMount() {
-    const { slug } = this.props.match.params; // Destructure slug from params
+    const { id } = this.props.match.params; // Destructure id from params
     try {
-      const result = await axios.get(
-        `http://localhost:4000/api/products/slug/${slug}`
-      );
+      const result = await axios.get(`${SERVER_HOST}/tshirts/${id}`);
       this.setState({ product: result.data, loading: false });
     } catch (err) {
       this.setState({ error: err.message, loading: false });
     }
   }
 
+  addToCart = () => {
+    const { product, quantity, selectedSize } = this.state;
+
+    if (!selectedSize) {
+      alert('Please select a size!');
+      return;
+    }
+
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+    for (let i = 0; i < quantity; i++) {
+      cartItems.push({ ...product, size: selectedSize });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+
+    alert(`${quantity} T-shirt(s) added to cart!`);
+  };
+
+  handleQuantityChange = (e) => {
+    this.setState({ quantity: parseInt(e.target.value) || 1 });
+  };
+
+  handleSizeChange = (e) => {
+    this.setState({ selectedSize: e.target.value });
+  };
+
+  removeFromCart = () => {
+    const { product } = this.state;
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+
+    const updatedCartItems = cartItems.filter((item) => {
+      return (
+        item.name !== product.name ||
+        product.brand !== product.brand ||
+        product.color !== product.color ||
+        product.price !== product.price ||
+        item.sizes.join(',') !== product.sizes.join(',')
+      );
+    });
+
+    localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+    alert('T-shirt removed from cart!');
+  };
+
   render() {
-    // console.log(product);
-    const { loading, error, product } = this.state;
+    const { loading, error, product, quantity, selectedSize } = this.state;
 
     if (loading) {
       return <Loading />;
@@ -42,49 +87,58 @@ class ProductDetails extends Component {
     } else {
       return (
         <div className="product-details-container">
-          {loading && <Loading />}
-          {error && <div>{error}</div>}
-          {!loading && !error && (
-            <>
-              <div className="product-details-header">
-                <DocumentTitle title={product.name}>
-                  <h1>{product.name}</h1>
-                </DocumentTitle>
-              </div>
-              <div className="product-details-content">
-                <div className="product-image-container">
-                  <img
-                    className="product-image"
-                    src={product.productImage}
-                    alt={product.name}
-                  />
-                </div>
-                <div className="product-info-container">
-                  <Rating
-                    rating={product.rating}
-                    numReviews={product.numReviews}
-                  />
-                  <p>Price: ${product.price}</p>
-                  <p>Description: {product.description}</p>
-                  <p>
-                    Status:{' '}
-                    <span
-                      style={{
-                        color: product.countInStock > 0 ? 'green' : 'red',
-                      }}
-                    >
-                      {product.countInStock > 0 ? 'In Stock' : 'Unavailable'}
-                    </span>
-                  </p>
-                  {product.countInStock > 0 && (
-                    <button onClick={() => alert('Added to cart')}>
-                      Add to Cart
-                    </button>
-                  )}
-                </div>
-              </div>
-            </>
-          )}
+          <div className="product-details-header">
+            <h1>{product.name}</h1>
+          </div>
+          <div className="product-details-content">
+            <div className="product-image-container">
+              <img
+                className="product-image"
+                src={product.productImage}
+                alt={product.name}
+              />
+            </div>
+            <div className="product-info-container">
+              <Rating rating={product.rating} numReviews={product.numReviews} />
+              <p>Price: ${product.price}</p>
+              <p>Description: {product.description}</p>
+              <p>
+                Status:{' '}
+                <span
+                  style={{
+                    color: product.countInStock > 0 ? 'green' : 'red',
+                  }}
+                >
+                  {product.countInStock > 0 ? 'In Stock' : 'Unavailable'}
+                </span>
+              </p>
+              <label>Quantity:</label>
+              <input
+                id="quantity"
+                type="number"
+                min="1"
+                value={quantity}
+                onChange={this.handleQuantityChange}
+              />
+              <label>Size:</label>
+              <select
+                id="size"
+                value={selectedSize}
+                onChange={this.handleSizeChange}
+              >
+                <option value="">Select Size</option>
+                {product.sizes.map((size, index) => (
+                  <option key={index} value={size}>
+                    {size}
+                  </option>
+                ))}
+              </select>
+              <button className="blue-button" onClick={this.addToCart}>
+                Add to Cart
+              </button>
+              <button onClick={this.removeFromCart}>Remove</button>
+            </div>
+          </div>
         </div>
       );
     }
