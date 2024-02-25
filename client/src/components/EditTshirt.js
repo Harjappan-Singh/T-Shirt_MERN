@@ -18,11 +18,20 @@ export default class EditTshirt extends Component {
             product_image: "",
             sizes: [],
             price: "",
-            countInStock:"", 
-            rating: "",
+            countInStock: "",
             redirectToDisplayAllTshirts: false,
             wasSubmittedAtLeastOnce: false,
-            errorMessage: ""
+            errorMessage: "",
+            errors: {
+                brand: "",
+                name: "",
+                description: "",
+                category: "",
+                type: "",
+                color: "",
+                price: "",
+                countInStock: ""
+            }
         };
     }
 
@@ -57,6 +66,7 @@ export default class EditTshirt extends Component {
     handleChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
+
     handleSizeChange = (e) => {
         const { value } = e.target;
         const { sizes } = this.state;
@@ -75,12 +85,12 @@ export default class EditTshirt extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-
+    
         this.setState({ wasSubmittedAtLeastOnce: true });
-
-        const formInputsState = this.validate();
-
-        if (Object.keys(formInputsState).every(index => formInputsState[index])) {
+    
+        const validationResult = this.validate();
+    
+        if (validationResult.isValid) {
             const tshirtObject = {
                 brand: this.state.brand,
                 name: this.state.name,
@@ -93,12 +103,12 @@ export default class EditTshirt extends Component {
                 price: this.state.price,
                 countInStock: this.state.countInStock
             };
-
+    
             axios.put(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, tshirtObject)
                 .then(res => {
                     if (res.data) {
                         if (res.data.errorMessage) {
-                            console.log(res.data.errorMessage);
+                            this.setState({ errorMessage: res.data.errorMessage });
                         } else {
                             console.log(`Record updated`);
                             this.setState({ redirectToDisplayAllTshirts: true });
@@ -107,8 +117,12 @@ export default class EditTshirt extends Component {
                         console.log(`Record not updated`);
                     }
                 });
+        } else {
+            
+            this.setState({ errors: validationResult.errors });
         }
     }
+    
 
     validateBrand() {
         return this.state.brand.trim() !== "";
@@ -136,7 +150,7 @@ export default class EditTshirt extends Component {
 
     validatePrice() {
         const price = parseFloat(this.state.price);
-        return !isNaN(price) && price >= 0; 
+        return !isNaN(price) && price >= 0;
     }
 
     validateCountInStock() {
@@ -145,51 +159,60 @@ export default class EditTshirt extends Component {
     }
 
     validate() {
+        const errors = {
+            brand: this.validateBrand() ? "" : "Brand is required",
+            name: this.validateName() ? "" : "Name is required",
+            description: this.validateDescription() ? "" : "Description is required",
+            category: this.validateCategory() ? "" : "Category is required",
+            type: this.validateType() ? "" : "Type is required",
+            color: this.validateColor() ? "" : "Color is required",
+            price: this.validatePrice() ? "" : "Price must be a positive number",
+            countInStock: this.validateCountInStock() ? "" : "Stock must be a non-negative integer"
+        };
+
         return {
-            brand: this.validateBrand(),
-            name: this.validateName(),
-            description: this.validateDescription(),
-            category: this.validateCategory(),
-            type: this.validateType(),
-            color: this.validateColor(),
-            price: this.validatePrice(),
-            countInStock: this.validateCountInStock()
+            isValid: Object.values(errors).every(error => error === ""),
+            errors
         };
     }
 
     render() {
-        let errorMessage = "";
-        if (this.state.wasSubmittedAtLeastOnce) {
-            errorMessage = <div className="error">T-shirt details are incorrect<br /></div>;
-        }
+        const { wasSubmittedAtLeastOnce, errorMessage, errors } = this.state;
+
         return (
             <div className="form-container">
-                {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayTshirts"/> : null}  
+                {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayTshirts" /> : null}
                 <form onSubmit={this.handleSubmit}>
-                    {errorMessage}
+                    {errorMessage && <div className="error">{errorMessage}</div>}
                     <div>
                         <label>Brand</label>
                         <input ref={(input) => { this.inputToFocus = input; }} type="text" name="brand" value={this.state.brand} onChange={this.handleChange} />
+                        {wasSubmittedAtLeastOnce && errors.brand && <span className="error-message">{errors.brand}</span>}
                     </div>
                     <div>
                         <label>Name</label>
                         <input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
+                        {wasSubmittedAtLeastOnce && errors.name && <span className="error-message">{errors.name}</span>}
                     </div>
                     <div>
                         <label>Description</label>
                         <input type="text" name="description" value={this.state.description} onChange={this.handleChange} />
+                        {wasSubmittedAtLeastOnce && errors.description && <span className="error-message">{errors.description}</span>}
                     </div>
                     <div>
                         <label>Category</label>
                         <input type="text" name="category" value={this.state.category} onChange={this.handleChange} />
+                        {wasSubmittedAtLeastOnce && errors.category && <span className="error-message">{errors.category}</span>}
                     </div>
                     <div>
                         <label>Type</label>
                         <input type="text" name="type" value={this.state.type} onChange={this.handleChange} />
+                        {wasSubmittedAtLeastOnce && errors.type && <span className="error-message">{errors.type}</span>}
                     </div>
                     <div>
                         <label>Color</label>
                         <input type="text" name="color" value={this.state.color} onChange={this.handleChange} />
+                        {wasSubmittedAtLeastOnce && errors.color && <span className="error-message">{errors.color}</span>}
                     </div>
                     <div>
     <label>Sizes</label>
@@ -202,17 +225,20 @@ export default class EditTshirt extends Component {
     <label><input type="checkbox" name="sizes" value="XXL" checked={this.state.sizes.includes("XXL")} onChange={this.handleSizeChange} /> XXL </label>
     <label><input type="checkbox" name="sizes" value="XXXL" checked={this.state.sizes.includes("XXXL")} onChange={this.handleSizeChange} /> XXXL </label>
 </div>
+       
                     <div>
                         <label>Price</label>
                         <input type="text" name="price" value={this.state.price} onChange={this.handleChange} />
+                        {wasSubmittedAtLeastOnce && errors.price && <span className="error-message">{errors.price}</span>}
                     </div>
                     <div>
                         <label>Stock</label>
                         <input type="text" name="countInStock" value={this.state.countInStock} onChange={this.handleChange} />
+                        {wasSubmittedAtLeastOnce && errors.countInStock && <span className="error-message">{errors.countInStock}</span>}
                     </div>
 
-                    <LinkInClass value="Update" className="green-button" onClick={this.handleSubmit}/>  
-                    
+                    <LinkInClass value="Update" className="green-button" onClick={this.handleSubmit} />
+
                     <Link className="red-button" to={"/DisplayTshirts"}>Cancel</Link>
                 </form>
             </div>
