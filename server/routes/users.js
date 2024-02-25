@@ -17,6 +17,7 @@ const emptyFolder = require('empty-folder')
 
 const checkThatUserExistsInUsersCollection = (req, res, next) =>
 {
+
     usersModel.findOne({email:req.params.email}, (error, data) => 
     {
         if(!data)

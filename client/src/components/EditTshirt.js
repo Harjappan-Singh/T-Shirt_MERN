@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Form from "react-bootstrap/Form";
 import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import LinkInClass from "../components/LinkInClass";
@@ -166,56 +165,56 @@ export default class EditTshirt extends Component {
         return (
             <div className="form-container">
                 {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayTshirts"/> : null}  
-                <Form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit}>
                     {errorMessage}
-                    <Form.Group controlId="brand">
-                        <Form.Label>Brand</Form.Label>
-                        <Form.Control ref={(input) => { this.inputToFocus = input; }} type="text" name="brand" value={this.state.brand} onChange={this.handleChange} />
-                    </Form.Group>
-                    <Form.Group controlId="name">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control type="text" name="name" value={this.state.name} onChange={this.handleChange} />
-                    </Form.Group>
-                    <Form.Group controlId="description">
-                        <Form.Label>Description</Form.Label>
-                        <Form.Control type="text" name="description" value={this.state.description} onChange={this.handleChange} />
-                    </Form.Group>
-                    <Form.Group controlId="category">
-                        <Form.Label>Category</Form.Label>
-                        <Form.Control type="text" name="category" value={this.state.category} onChange={this.handleChange} />
-                    </Form.Group>
-                    <Form.Group controlId="type">
-                        <Form.Label>Type</Form.Label>
-                        <Form.Control type="text" name="type" value={this.state.type} onChange={this.handleChange} />
-                    </Form.Group>
-                    <Form.Group controlId="color">
-                        <Form.Label>Color</Form.Label>
-                        <Form.Control type="text" name="color" value={this.state.color} onChange={this.handleChange} />
-                    </Form.Group>
-                    <Form.Group controlId="sizes">
-                    <Form.Label>Sizes</Form.Label>
-                        <Form.Check type="checkbox" label="XXS" name="sizes" value="XXS" checked={this.state.sizes.includes("XXS")} onChange={this.handleSizeChange} />
-                        <Form.Check type="checkbox" label="XS" name="sizes" value="XS" checked={this.state.sizes.includes("XS")} onChange={this.handleSizeChange} />
-                        <Form.Check type="checkbox" label="S" name="sizes" value="S" checked={this.state.sizes.includes("S")} onChange={this.handleSizeChange} />
-                        <Form.Check type="checkbox" label="M" name="sizes" value="M" checked={this.state.sizes.includes("M")} onChange={this.handleSizeChange} />
-                        <Form.Check type="checkbox" label="L" name="sizes" value="L" checked={this.state.sizes.includes("L")} onChange={this.handleSizeChange} />
-                        <Form.Check type="checkbox" label="XL" name="sizes" value="XL" checked={this.state.sizes.includes("XL")} onChange={this.handleSizeChange} />
-                        <Form.Check type="checkbox" label="XXL" name="sizes" value="XXL" checked={this.state.sizes.includes("XXL")} onChange={this.handleSizeChange} />
-                        <Form.Check type="checkbox" label="XXXL" name="sizes" value="XXXL" checked={this.state.sizes.includes("XXXL")} onChange={this.handleSizeChange} />
-                    </Form.Group>
-                    <Form.Group controlId="price">
-                        <Form.Label>Price</Form.Label>
-                        <Form.Control type="text" name="price" value={this.state.price} onChange={this.handleChange} />
-                    </Form.Group>
-                    <Form.Group controlId="countInStock">
-                        <Form.Label>Stock</Form.Label>
-                        <Form.Control type="text" name="countInStock" value={this.state.countInStock} onChange={this.handleChange} />
-                    </Form.Group>
+                    <div>
+                        <label>Brand</label>
+                        <input ref={(input) => { this.inputToFocus = input; }} type="text" name="brand" value={this.state.brand} onChange={this.handleChange} />
+                    </div>
+                    <div>
+                        <label>Name</label>
+                        <input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
+                    </div>
+                    <div>
+                        <label>Description</label>
+                        <input type="text" name="description" value={this.state.description} onChange={this.handleChange} />
+                    </div>
+                    <div>
+                        <label>Category</label>
+                        <input type="text" name="category" value={this.state.category} onChange={this.handleChange} />
+                    </div>
+                    <div>
+                        <label>Type</label>
+                        <input type="text" name="type" value={this.state.type} onChange={this.handleChange} />
+                    </div>
+                    <div>
+                        <label>Color</label>
+                        <input type="text" name="color" value={this.state.color} onChange={this.handleChange} />
+                    </div>
+                    <div>
+    <label>Sizes</label>
+    <label> <input type="checkbox" name="sizes" value="XXS" checked={this.state.sizes.includes("XXS")} onChange={this.handleSizeChange} />   XXS </label>
+    <label> <input type="checkbox" name="sizes" value="XS" checked={this.state.sizes.includes("XS")} onChange={this.handleSizeChange} /> XS </label>
+    <label> <input type="checkbox" name="sizes" value="S" checked={this.state.sizes.includes("S")} onChange={this.handleSizeChange} /> S </label>
+    <label> <input type="checkbox" name="sizes" value="M" checked={this.state.sizes.includes("M")} onChange={this.handleSizeChange} /> M </label>
+    <label> <input type="checkbox" name="sizes" value="L" checked={this.state.sizes.includes("L")} onChange={this.handleSizeChange} /> L </label>
+    <label><input type="checkbox" name="sizes" value="XL" checked={this.state.sizes.includes("XL")} onChange={this.handleSizeChange} /> XL </label>
+    <label><input type="checkbox" name="sizes" value="XXL" checked={this.state.sizes.includes("XXL")} onChange={this.handleSizeChange} /> XXL </label>
+    <label><input type="checkbox" name="sizes" value="XXXL" checked={this.state.sizes.includes("XXXL")} onChange={this.handleSizeChange} /> XXXL </label>
+</div>
+                    <div>
+                        <label>Price</label>
+                        <input type="text" name="price" value={this.state.price} onChange={this.handleChange} />
+                    </div>
+                    <div>
+                        <label>Stock</label>
+                        <input type="text" name="countInStock" value={this.state.countInStock} onChange={this.handleChange} />
+                    </div>
 
                     <LinkInClass value="Update" className="green-button" onClick={this.handleSubmit}/>  
                     
                     <Link className="red-button" to={"/DisplayTshirts"}>Cancel</Link>
-                </Form>
+                </form>
             </div>
         );
     }

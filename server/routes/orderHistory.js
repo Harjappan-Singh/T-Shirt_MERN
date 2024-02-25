@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const OrderHistory = require('../models/orderHistory');
 
-router.post('/orderHistory', (req, res) => {
+router.post('/orderHistory', async (req, res) => {
     try {
         const { cust_id, item_id, date, cost } = req.body;
 
@@ -14,18 +14,13 @@ router.post('/orderHistory', (req, res) => {
         });
 
         // Save the new order to the database
-        newOrder.save((error, data) => {
-            if (error) {
-                console.error("Error adding order to orderHistory:", error);
-                res.status(500).json({ errorMessage: "Internal server error" });
-            } else {
-                console.log("Order added to orderHistory:", data);
-                res.status(201).json(data);
-            }
-        });
+        await newOrder.save();
+        console.log("Order added to orderHistory:", newOrder);
+
+        res.status(201).json(newOrder);
     } catch (error) {
-        console.error("Error processing request:", error);
-        res.status(400).json({ errorMessage: "Bad request" });
+        console.error("Error adding order to orderHistory:", error);
+        res.status(500).json({ errorMessage: "Internal server error" });
     }
 });
 

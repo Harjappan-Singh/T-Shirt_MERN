@@ -10,7 +10,9 @@ import {
   ACCESS_LEVEL_ADMIN,
   SERVER_HOST,
 } from '../config/global_constants';
+
 import Logout from './Logout';
+
 export default class DisplayTshirts extends Component {
   constructor(props) {
     super(props);
@@ -48,31 +50,39 @@ export default class DisplayTshirts extends Component {
 
   handleSortByRating = () => {
     const { products, sortByRating } = this.state;
-    const sortedTshirts = [...products];
 
-    sortedTshirts.sort((a, b) => {
+    const sortedProducts = [...products];
+  
+    sortedProducts.sort((a, b) => {
+
       return sortByRating ? b.rating - a.rating : a.rating - b.rating;
     });
-
+  
     this.setState({
-      products: sortedTshirts,
+
+      products: sortedProducts,
+
       sortByRating: !sortByRating,
     });
   };
-
+  
   handleSortByPrice = () => {
     const { products, sortByPrice } = this.state;
-    const sortedTshirts = [...products];
 
-    sortedTshirts.sort((a, b) => {
+    const sortedProducts = [...products];
+  
+    sortedProducts.sort((a, b) => {
+
+  
       return sortByPrice ? b.price - a.price : a.price - b.price;
     });
-
+  
     this.setState({
-      tshirts: sortedTshirts,
+      products: sortedProducts,
       sortByPrice: !sortByPrice,
     });
   };
+  
 
   handleGenderFilter = (event) => {
     this.setState({ genderFilter: event.target.value });
@@ -121,11 +131,7 @@ export default class DisplayTshirts extends Component {
 
       // Return true if all filters match
       return (
-        matchesGender &&
-        matchesColor &&
-        matchesBrand &&
-        matchesSizes &&
-        matchesSearchName
+        matchesGender && matchesColor && matchesBrand && matchesSizes && matchesSearchName
       );
     });
 
@@ -138,7 +144,11 @@ export default class DisplayTshirts extends Component {
     }
 
     return (
+      
       <div className="form-container">
+         <Link to="/ShoppingCart" className="green-button">
+          Shopping Cart
+        </Link>
         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
           <div className="logout">
             {localStorage.profilePhoto !== 'null' ? (
@@ -152,6 +162,7 @@ export default class DisplayTshirts extends Component {
           </div>
         ) : (
           <div>
+            
             <Link className="green-button" to={'/Login'}>
               Login
             </Link>
@@ -235,14 +246,34 @@ export default class DisplayTshirts extends Component {
           <div>
             {loading && <Loading />}
             {error && <Message variant="danger">{error}</Message>}
+            
             <div className="products">
+  {filteredTshirts.map((product) => (
+    <div key={product.slug} className="product">
+      <ProductScreen product={product} />
+      <Link
+  to={{
+    pathname: `/TshirtDetails/${product._id}`, // Assuming _id is the product ID
+    state: { product: product } // Pass product data as state
+  }}
+>
+  View Details
+</Link>
+      
+    </div>
+    
+  ))}
+</div>
+
+          {/*  <div className="products">
               {products.map((product) => (
                 <div key={product.slug} className="product">
                   <ProductScreen product={product} />
                 </div>
               ))}
-            </div>
-          </div>
+              </div>*/}
+             
+              </div>
 
           {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
             <div className="add-new-tshirt">
