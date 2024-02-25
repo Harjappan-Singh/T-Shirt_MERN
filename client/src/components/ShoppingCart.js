@@ -57,8 +57,8 @@ class ShoppingCart extends Component {
         console.log("Payment approved:", data);
         return actions.order.capture().then(details => {
             console.log("Payment details:", details);
-            // Handle successful payment, e.g., make API request to update order status
-            // and navigate to a success page
+            // Handle successful payment,
+            localStorage.removeItem("cart"); // Remove items from local storage
             this.setState({ 
                 payPalMessageType: PayPalMessage.messageType.SUCCESS, 
                 payPalOrderID: data.orderID, 

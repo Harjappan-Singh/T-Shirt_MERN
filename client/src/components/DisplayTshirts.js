@@ -149,6 +149,13 @@ export default class DisplayTshirts extends Component {
          <Link to="/ShoppingCart" className="green-button">
           Shopping Cart
         </Link>
+
+        {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
+                    <Link to="/ViewCustomers" className="green-button">
+                        View customers
+                    </Link>
+                )}
+
         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
           <div className="logout">
             {localStorage.profilePhoto !== 'null' ? (
@@ -217,7 +224,6 @@ export default class DisplayTshirts extends Component {
             <option value="All">All Brands</option>
             <option value="Nike">Nike</option>
             <option value="Mango">Mango</option>
-            <option value="H&M">H&M</option>
             <option value="Adidas">Adidas</option>
             <option value="Zara">Zara</option>
             <option value="Puma">Puma</option>

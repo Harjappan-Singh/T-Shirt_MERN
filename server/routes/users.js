@@ -180,13 +180,49 @@ const returnUsersDetailsAsJSON = (req, res) =>
         }
     })  
 }
+router.delete('/users/:userId', (req, res) => {
+    const userId = req.params.userId;
+
+    // Check if the userId is provided
+    if (!userId) {
+        return res.status(400).json({ errorMessage: 'User ID is required' });
+    }
+
+    usersModel.findByIdAndDelete(userId, (error, deletedUser) => {
+        if (error) {
+            return res.status(500).json({ errorMessage: 'Internal Server Error' });
+        }
+
+        if (!deletedUser) {
+            return res.status(404).json({ errorMessage: 'User not found' });
+        }
+
+        res.json({ message: 'User deleted successfully' });
+    });
+});
 
 
 const logout = (req, res) => 
 {       
     res.json({})
 }
+router.get('/users', (req, res) => {
+    
+    usersModel.find({}, (error, users) => {
+        if (error) {
+            return res.status(500).json({ errorMessage: 'Internal Server Error' });
+        }
 
+        if (!users || users.length === 0) {
+            return res.status(404).json({ errorMessage: 'No users found' });
+        }
+
+        // Return user details
+        res.json(users);
+    });
+});
+
+  
 
 // IMPORTANT
 // Obviously, in a production release, you should never have the code below, as it allows a user to delete a database collection
