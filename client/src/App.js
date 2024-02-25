@@ -14,8 +14,9 @@ import EditTshirt from "./components/EditTshirt"
 import AddTshirt from "./components/AddTshirt"
 import TshirtDetails from "./components/tshirtDetails"
 import DeleteTshirt from "./components/DeleteTshirt"
-import ShoppingCart from './components/ShoppingCart';
+import ShoppingCart from './components/ShoppingCart'
 import PayPalMessage from "./components/PayPalMessage"
+import ViewCustomers from './components/ViewCustomers'
 
 
 import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
@@ -50,6 +51,7 @@ export default class App extends Component
                     <Route exact path="/TshirtDetails/:id" component={TshirtDetails} /> 
                     <Route path="/ShoppingCart" component={ShoppingCart} /> 
                     <Route exact path="/PayPalMessage/:messageType/:payPalPaymentID" component={PayPalMessage}/>  
+                    <Route exact path="/ViewCustomers" component={ViewCustomers} />
                   
               
                 </Switch>

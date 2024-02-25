@@ -15,5 +15,5 @@ export const PRODUCTION_CLIENT_ID = "TO_MAKE_A_LIVE_REAL_WORLD_APPLICATION_REPLA
 
 
 // details for paypal login
-//sb-gz5xe29189019@business.example.com
-//d,S93&?f
+//userName  sb-gz5xe29189019@business.example.com
+//Password  d,S93&?f
