@@ -31,6 +31,7 @@ export default class ViewOrderHistory extends Component {
     }
   }
 
+  
   render() {
     const { orderHistory, loading, error } = this.state; 
 

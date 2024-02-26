@@ -107,7 +107,7 @@ const addNewUserToUsersCollection = (req, res) =>
 {
     bcrypt.hash(req.params.password, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (err, hash) =>  
     {
-        usersModel.create({name:req.params.name, email:req.params.email, password:hash, profilePhotoFilename:req.file.filename}, (error, data) => 
+        usersModel.create({name:req.params.name, userId:req.params._id, email:req.params.email, password:hash, profilePhotoFilename:req.file.filename}, (error, data) => 
         {
             if(data)
             {
@@ -115,7 +115,7 @@ const addNewUserToUsersCollection = (req, res) =>
                            
                 fs.readFile(`${process.env.UPLOADED_FILES_FOLDER}/${req.file.filename}`, 'base64', (err, fileData) => 
                 {
-                    res.json({name: data.name, accessLevel:data.accessLevel, profilePhoto:fileData, token:token})
+                    res.json({name: data.name, accessLevel:data.accessLevel, email:req.params.email, profilePhoto:fileData, token:token})
                 })
             }
             else
@@ -172,11 +172,17 @@ const returnUsersDetailsAsJSON = (req, res) =>
     {        
         if(fileData)
         {  
-            res.json({name: req.data.name, accessLevel:req.data.accessLevel, profilePhoto:fileData, token:token})                           
+            res.json({
+                name: req.data.name, 
+                userId: req.data._id, 
+                accessLevel:req.data.accessLevel,
+                email:req.data.email, 
+                profilePhoto:fileData, 
+                token:token})                           
         }   
         else
         {
-            res.json({name: req.data.name, accessLevel:req.data.accessLevel, profilePhoto:null, token:token})  
+            res.json({name: req.data.name,  email: req.data.email,  accessLevel:req.data.accessLevel, profilePhoto:null, token:token})  
         }
     })  
 }

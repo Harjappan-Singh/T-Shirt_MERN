@@ -29,12 +29,26 @@ export default class DisplayTshirts extends Component {
       sizesFilter: 'All',
 
       searchName: '',
+      userId: null,
     };
   }
 
   componentDidMount() {
     this.fetchData();
+    this.fetchUserId();
   }
+
+  async fetchUserId() {
+    try {
+      const response = await axios.get(`${SERVER_HOST}/users`);
+      const userId = response.data._id; // Assuming the user ID is stored under _id in the response data
+      this.setState({ userId }); // Set the userId state here
+    } catch (error) {
+      console.error('Error fetching user ID:', error);
+      throw error;
+    }
+  }
+  
 
   async fetchData() {
     try {
@@ -104,6 +118,7 @@ export default class DisplayTshirts extends Component {
   };
 
   render() {
+    const { userId } = this.state;
     const {
       products,
       loading,
@@ -150,6 +165,14 @@ export default class DisplayTshirts extends Component {
           Shopping Cart
         </Link>
 
+        
+          
+          <Link to={`/ViewOrders/${this.state.userId}`} className="green-button">
+  View Orders
+</Link>
+
+
+       
         {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
                     <Link to="/ViewCustomers" className="green-button">
                         View customers
@@ -213,22 +236,31 @@ export default class DisplayTshirts extends Component {
             <option value="All">All Colors</option>
             <option value="Black">Black</option>
             <option value="White">White</option>
-            <option value="Brown">Brown</option>
             <option value="Blue">Blue</option>
             <option value="Red">Red</option>
             <option value="Green">Green</option>
             <option value="Gray">Gray</option>
+            <option value="Red">Red</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Pink">Pink</option>
           </select>
 
           <select value={brandFilter} onChange={this.handleBrandFilter}>
             <option value="All">All Brands</option>
             <option value="Nike">Nike</option>
-            <option value="Mango">Mango</option>
+            <option value="Hanes">Hanes</option>
             <option value="Adidas">Adidas</option>
             <option value="Zara">Zara</option>
             <option value="Puma">Puma</option>
             <option value="Under Armour">Under Armour</option>
-            <option value="Fila">Fila</option>
+            <option value="Gildan">Gildan</option>
+            <option value="American Apparel">American Apparel</option> 
+            <option value="Bella + Canvas">Bella + Canvas</option>
+            <option value="Fruit of the Loom">Fruit of the Loom</option>
+            <option value="Champion">Champion</option>
+            <option value="Next Level">Next Level</option>
+           
+
           </select>
         </div>
 

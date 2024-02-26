@@ -60,6 +60,8 @@ export default class App extends Component {
           />
           <Route exact path="/ViewCustomers" component={ViewCustomers} />
           <Route exact path="/ViewOrders" component={ViewOrders} />
+          <Route path="/ViewOrders/:_id" component={ViewOrders} />
+
         </Switch>
       </BrowserRouter>
     );
