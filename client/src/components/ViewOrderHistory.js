@@ -13,41 +13,61 @@ export default class ViewOrderHistory extends Component {
       orderHistory: [],
       loading: true,
       error: '',
+      sortByDateAsc: true, // Flag to track sorting order
+      customerEmail: props.customerEmail || localStorage.getItem('email'), // Initialize customerEmail state with prop or local storage
     };
   }
 
   componentDidMount() {
-    this.fetchOrderHistory();
+    const { customerEmail } = this.state;
+    if (customerEmail) {
+      this.fetchOrderHistory(customerEmail);
+    } else {
+      this.setState({ loading: false, error: 'Customer email not provided' });
+    }
   }
 
-  async fetchOrderHistory() {
+  async fetchOrderHistory(customerEmail) {
     try {
-      const { customerId } = this.props; 
-      const response = await axios.get(`${SERVER_HOST}/orderHistory/${customerId}`); 
-      this.setState({ orderHistory: response.data, loading: false }); 
+      const response = await axios.get(`${SERVER_HOST}/orderHistory/${customerEmail}`);
+      this.setState({ orderHistory: response.data, loading: false });
     } catch (error) {
       console.error('Error fetching order history', error);
       this.setState({ error: 'Internal Server Error', loading: false });
     }
   }
 
-  
+  handleSortByDate = () => {
+    const { orderHistory, sortByDateAsc } = this.state;
+    const sortedOrderHistory = orderHistory.slice().sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return sortByDateAsc ? dateA - dateB : dateB - dateA;
+    });
+    this.setState({
+      orderHistory: sortedOrderHistory,
+      sortByDateAsc: !sortByDateAsc, // Toggle sorting order
+    });
+  };
+
   render() {
-    const { orderHistory, loading, error } = this.state; 
+    const { orderHistory, loading, error } = this.state;
 
     return (
       <div>
         <h2>Order History</h2>
+        <button onClick={this.handleSortByDate}>Sort by Date</button>
         {loading && <p>Loading...</p>}
         {error && <p>Error: {error}</p>}
         {orderHistory.length === 0 && !loading && <p>No order history found.</p>}
         {orderHistory.length > 0 && (
           <ul>
-            {orderHistory.map((order) => ( 
-              <li key={order._id}> 
-                <strong>Name:</strong> {order.item_name}, 
-                <strong>Date:</strong> {order.date}, 
-                <strong>Cost:</strong> {order.cost} 
+            {orderHistory.map((order) => (
+              <li key={order._id}>
+                <strong>Name:</strong> {order.item_name},
+                <strong>Date:</strong> {new Date(order.date).toLocaleDateString()},
+                <strong>Time:</strong> {new Date(order.date).toLocaleTimeString()},
+                <strong>Cost:</strong> {order.cost}
               </li>
             ))}
           </ul>

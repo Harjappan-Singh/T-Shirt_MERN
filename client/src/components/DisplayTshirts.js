@@ -166,13 +166,10 @@ export default class DisplayTshirts extends Component {
         </Link>
 
         
-          
-          <Link to={`/ViewOrders/${this.state.userId}`} className="green-button">
+        <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
   View Orders
 </Link>
-
-
-       
+    
         {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
                     <Link to="/ViewCustomers" className="green-button">
                         View customers

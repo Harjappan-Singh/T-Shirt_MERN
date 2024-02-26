@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 let orderHistorySchema = new mongoose.Schema({
-    cust_id: { type: String },
+    email: { type: String },
     item_name: { type: String },
     date: { type: Date },
     cost: { type: Number }    
