@@ -18,6 +18,7 @@ import DeleteTshirt from './components/DeleteTshirt';
 import ShoppingCart from './components/ShoppingCart';
 import PayPalMessage from './components/PayPalMessage';
 import ViewCustomers from './components/ViewCustomers'
+import ViewOrders from './components/ViewOrderHistory';
 
 
 import { ACCESS_LEVEL_GUEST } from './config/global_constants';
@@ -58,6 +59,7 @@ export default class App extends Component {
             component={PayPalMessage}
           />
           <Route exact path="/ViewCustomers" component={ViewCustomers} />
+          <Route exact path="/ViewOrders" component={ViewOrders} />
         </Switch>
       </BrowserRouter>
     );
