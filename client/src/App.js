@@ -4,7 +4,6 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './css/App.css';
 
-
 import Register from './components/Register';
 import ResetDatabase from './components/ResetDatabase';
 import Login from './components/Login';
@@ -17,9 +16,8 @@ import TshirtDetails from './components/tshirtDetails';
 import DeleteTshirt from './components/DeleteTshirt';
 import ShoppingCart from './components/ShoppingCart';
 import PayPalMessage from './components/PayPalMessage';
-import ViewCustomers from './components/ViewCustomers'
+import ViewCustomers from './components/ViewCustomers';
 import ViewOrders from './components/ViewOrderHistory';
-
 
 import { ACCESS_LEVEL_GUEST } from './config/global_constants';
 import ProductDetails from './components/ProductDetails';
@@ -52,7 +50,12 @@ export default class App extends Component {
           <Route exact path="/DisplayTshirts" component={DisplayTshirts} />
           <Route exact path="/TshirtDetails/:id" component={TshirtDetails} />
           <Route path="/product/:id" component={ProductDetails} />
-          <Route path="/ShoppingCart" component={ShoppingCart} />
+          <Route
+            path="/ShoppingCart"
+            render={(props) => (
+              <ShoppingCart {...props} trackPurchase={this.trackPurchase} />
+            )}
+          />
           <Route
             exact
             path="/PayPalMessage/:messageType/:payPalPaymentID"
