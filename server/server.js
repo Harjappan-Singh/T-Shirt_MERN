@@ -16,7 +16,7 @@ app.use(require(`cors`)({ credentials: true, origin: process.env.LOCAL_HOST }));
 app.use(require(`./routes/cars`));
 app.use(require(`./routes/users`));
 app.use(require(`./routes/tshirts`));
-
+app.use(require(`./routes/orderHistory`));
 // Port
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Connected to port ` + process.env.SERVER_PORT);

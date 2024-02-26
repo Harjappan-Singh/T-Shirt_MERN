@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ViewOrderHistory from './ViewOrderHistory'; // Import the ViewOrderHistory component
 import {
   ACCESS_LEVEL_GUEST,
   ACCESS_LEVEL_ADMIN,
@@ -13,6 +14,8 @@ export default class ViewCustomers extends Component {
       customers: [],
       loading: true,
       error: '',
+      showOrderHistory: false, // State to manage whether to show order history
+      selectedCustomerId: null, // State to store the selected customer ID
     };
   }
 
@@ -41,8 +44,22 @@ export default class ViewCustomers extends Component {
     }
   };
 
+  handleShowOrderHistory = (customerId) => {
+    this.setState({
+      showOrderHistory: true,
+      selectedCustomerId: customerId,
+    });
+  };
+
+  handleCloseOrderHistory = () => {
+    this.setState({
+      showOrderHistory: false,
+      selectedCustomerId: null,
+    });
+  };
+
   render() {
-    const { customers, loading, error } = this.state;
+    const { customers, loading, error, showOrderHistory, selectedCustomerId } = this.state;
 
     return (
       <div>
@@ -52,9 +69,12 @@ export default class ViewCustomers extends Component {
         <ul>
           {customers.map((customer) => (
             <li key={customer._id}>
-              <strong>Name:</strong> {customer.name}, <strong>Email:</strong>{' '}
-              {customer.email}
+              <strong>Name:</strong> {customer.name}, <strong>Email:</strong> {customer.email}
               <button onClick={() => this.handleDeleteCustomer(customer._id)}>Delete</button>
+              <button onClick={() => this.handleShowOrderHistory(customer._id)}>Show Order History</button>
+              {showOrderHistory && selectedCustomerId === customer._id && (
+                <ViewOrderHistory customerId={customer._id} onClose={this.handleCloseOrderHistory} />
+              )}
             </li>
           ))}
         </ul>

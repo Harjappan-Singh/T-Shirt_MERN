@@ -257,14 +257,7 @@ export default class DisplayTshirts extends Component {
   {filteredTshirts.map((product) => (
     <div key={product.slug} className="product">
       <ProductScreen product={product} />
-      <Link
-  to={{
-    pathname: `/TshirtDetails/${product._id}`, // Assuming _id is the product ID
-    state: { product: product } // Pass product data as state
-  }}
->
-  View Details
-</Link>
+     
       
     </div>
     

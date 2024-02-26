@@ -1,27 +1,21 @@
-const router = require('express').Router();
-const OrderHistory = require('../models/orderHistory');
+const express = require('express');
+const router = express.Router();
+const Order = require('../models/orderHistory');
 
-router.post('/orderHistory', async (req, res) => {
-    try {
-        const { cust_id, item_id, date, cost } = req.body;
+router.get('/orderHistory/:customerId', (req, res) => {
+    const customerId = req.params.customerId; 
+    Order.find({ cust_id: customerId }, (error, orderHistory) => { 
+        if (error) {
+            return res.status(500).json({ errorMessage: 'Internal Server Error' });
+        }
 
-        // Create a new instance of OrderHistory model
-        const newOrder = new OrderHistory({
-            cust_id,
-            item_id,
-            date,
-            cost
-        });
+        if (!orderHistory || orderHistory.length === 0) {
+            return res.status(404).json({ errorMessage: 'No order history found for the customer' });
+        }
 
-        // Save the new order to the database
-        await newOrder.save();
-        console.log("Order added to orderHistory:", newOrder);
-
-        res.status(201).json(newOrder);
-    } catch (error) {
-        console.error("Error adding order to orderHistory:", error);
-        res.status(500).json({ errorMessage: "Internal server error" });
-    }
+        
+        res.json(orderHistory);
+    });
 });
 
 module.exports = router;
