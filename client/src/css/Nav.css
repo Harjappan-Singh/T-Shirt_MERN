@@ -84,48 +84,10 @@ h1 {
     color: #1e6091;
 }
 
-/* search css */
+/* end of nav css */
 
-/* .search-bar {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
 
-input {
-    margin-top: 10px;
-    padding: 8px;
-    border: 2px solid #1e6091;
-    border-radius: 10px;
-    outline: none;
-}
-
-input:focus {
-    outline: 0.5px solid #1e6091;
-    box-shadow: none;
-}
-
-.search-bar input {
-    border: 2px solid #1e6091;
-    border-radius: 10px;
-    padding: 8px;
-    width: 150px;
-    outline: none;
-    transition: width 0.3s;
-}
-
-.search-bar.active input {
-    width: 200px;
-}
-
-#search-icon {
-    margin-right: 5px;
-} */
+/*  search  */
 .search-bar {
     position: absolute;
     top: 100%;
@@ -152,7 +114,7 @@ input:focus {
     box-shadow: none;
 }
 
-/* Nav.css */
+/* button css */
 
 .admin-button {
     background-color: #ffffff; /* Blue background color */
@@ -219,3 +181,4 @@ input:focus {
 }
   
   
+/*  end of button css */

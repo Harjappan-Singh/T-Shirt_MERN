@@ -34,39 +34,63 @@ export default class AddTshirt extends Component {
         this.setState({ selectedFiles: e.target.files });
     };
 
+    validate() {
+        const errors = {
+            brand: this.state.brand.trim() !== "" ? "" : "Brand is required",
+            name: this.state.name.trim() !== "" ? "" : "Name is required",
+            description: this.state.description.trim() !== "" ? "" : "Description is required",
+            category: this.state.category.trim() !== "" ? "" : "Category is required",
+            type: this.state.type.trim() !== "" ? "" : "Type is required",
+            color: this.state.color.trim() !== "" ? "" : "Color is required",
+            price: this.state.price.trim() !== "" ? "" : "Price is required"
+        };
+
+        return {
+            isValid: Object.values(errors).every(error => error === ""),
+            errors
+        };
+    }
+
+
     handleSubmit = (e) => {
         e.preventDefault();
 
-        let formData = new FormData();
-        formData.append("brand", this.state.brand);
-        formData.append("name", this.state.name);
-        formData.append("description", this.state.description);
-        formData.append("category", this.state.category);
-        formData.append("type", this.state.type);
-        formData.append("color", this.state.color);
-        formData.append("sizes", this.state.sizes);
-        formData.append("price", this.state.price);
+        this.setState({ wasSubmittedAtLeastOnce: true });
 
-        if (this.state.selectedFiles) {
-            for (let i = 0; i < this.state.selectedFiles.length; i++) {
-                formData.append("tshirtPhotos", this.state.selectedFiles[i]);
-            }
-        }
+        const validationResult = this.validate();
 
-        axios.post(`${SERVER_HOST}/tshirts`, formData, { headers: { "authorization": localStorage.token, "Content-type": "multipart/form-data" } })
-            .then(res => {
-                if (res.data) {
-                    if (res.data.errorMessage) {
-                        console.log(res.data.errorMessage);
+        if (validationResult.isValid) {
+            const tshirtObject = {
+                brand: this.state.brand,
+                name: this.state.name,
+                description: this.state.description,
+                category: this.state.category,
+                type: this.state.type,
+                color: this.state.color,
+                product_image: this.state.product_image,
+                sizes: this.state.sizes,
+                price: this.state.price,
+                countInStock: this.state.countInStock
+            };
+
+            axios.post(`${SERVER_HOST}/tshirts`, tshirtObject)
+                .then(res => {
+                    if (res.data) {
+                        if (res.data.errorMessage) {
+                            this.setState({ errorMessage: res.data.errorMessage });
+                        } else {
+                            console.log(`Record added`);
+                            this.setState({ redirectToDisplayAllTshirts: true });
+                        }
                     } else {
-                        console.log("Record added");
-                        this.setState({ redirectToDisplayAllTshirts: true });
+                        console.log(`Record not added`);
                     }
-                } else {
-                    console.log("Record not added");
-                }
-            });
-    };
+                });
+        } else {
+            this.setState({ errors: validationResult.errors });
+        }
+    }
+
 
     render() {
         return (
@@ -106,20 +130,21 @@ export default class AddTshirt extends Component {
 
                     <div>
                         <label htmlFor="sizes">Sizes</label><br />
-                        <input type="checkbox" name="sizes" value="XXS" onChange={this.handleChange} /> XXS<br />
-                        <input type="checkbox" name="sizes" value="XS" onChange={this.handleChange} /> XS<br />
-                        <input type="checkbox" name="sizes" value="S" onChange={this.handleChange} /> S<br />
-                        <input type="checkbox" name="sizes" value="M" onChange={this.handleChange} /> M<br />
-                        <input type="checkbox" name="sizes" value="L" onChange={this.handleChange} /> L<br />
-                        <input type="checkbox" name="sizes" value="XL" onChange={this.handleChange} /> XL<br />
-                        <input type="checkbox" name="sizes" value="XXL" onChange={this.handleChange} /> XXL<br />
-                        <input type="checkbox" name="sizes" value="XXXL" onChange={this.handleChange} /> XXXL<br />
+                        <input type="checkbox" name="sizes" value="XXS" checked={this.state.sizes.includes("XXS")} onChange={this.handleCheckboxChange} /> XXS<br />
+                        <input type="checkbox" name="sizes" value="XS" checked={this.state.sizes.includes("XS")} onChange={this.handleCheckboxChange} /> XS<br />
+                        <input type="checkbox" name="sizes" value="S" checked={this.state.sizes.includes("S")} onChange={this.handleCheckboxChange} /> S<br />
+                        <input type="checkbox" name="sizes" value="M" checked={this.state.sizes.includes("M")} onChange={this.handleCheckboxChange} /> M<br />
+                        <input type="checkbox" name="sizes" value="L" checked={this.state.sizes.includes("L")} onChange={this.handleCheckboxChange} /> L<br />
+                        <input type="checkbox" name="sizes" value="XL" checked={this.state.sizes.includes("XL")} onChange={this.handleCheckboxChange} /> XL<br />
+                        <input type="checkbox" name="sizes" value="XXL" checked={this.state.sizes.includes("XXL")} onChange={this.handleCheckboxChange} /> XXL<br />
+                        <input type="checkbox" name="sizes" value="XXXL" checked={this.state.sizes.includes("XXXL")} onChange={this.handleCheckboxChange} /> XXXL<br />
                     </div>
 
                     <div>
                         <label htmlFor="price">Price</label>
                         <input type="text" name="price" value={this.state.price} onChange={this.handleChange} />
                     </div>
+
 
                     <div>
                         <label htmlFor="photos">Photos</label>

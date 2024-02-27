@@ -36,6 +36,8 @@ export default class DisplayTshirts extends Component {
       price: '',
       category: '',
       color: '',
+
+      isSearchVisible: false,
     };
   }
 
@@ -115,6 +117,12 @@ export default class DisplayTshirts extends Component {
     this.setState({ searchName: value, brand: value, sizes: value, description: value, price: value, color: value,category: value  });
   };
 
+  toggleSearchVisibility = () => {
+    this.setState((prevState) => ({
+      isSearchVisible: !prevState.isSearchVisible,
+    }));
+  };
+
   render() {
     const {
       products,
@@ -128,6 +136,9 @@ export default class DisplayTshirts extends Component {
       searchName,
     } = this.state;
 
+
+
+    
     let filteredTshirts = products.filter((tshirt) => {
       const matchesGender =
         genderFilter === 'All' || tshirt.category === genderFilter;
@@ -158,7 +169,7 @@ export default class DisplayTshirts extends Component {
     return (
 
     <>
-     
+       
 {/* 
         {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
           <Link to="/ViewCustomers" className="green-button">

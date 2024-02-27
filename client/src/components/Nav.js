@@ -21,6 +21,7 @@ class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchName: '',
       isSearchVisible: false,
     };
   }
@@ -80,6 +81,7 @@ class Nav extends Component {
   Reset Database
 </Link> */}
 </div>
+
   </div>
 
       <nav>
@@ -102,7 +104,7 @@ class Nav extends Component {
           <Link to="/ShoppingCart">
             <img src={bagImage} style={{ width: '20px', height: '20px' }} alt="Cart" />
           </Link>
-          <img id="profile-icon" src="profile-icon.png" alt="Profile" />
+          {/* <img id="profile-icon" src="profile-icon.png" alt="Profile" /> */}
 
 
 
@@ -111,6 +113,7 @@ class Nav extends Component {
 
 </div>
       </nav>
+      
 </>
     );
   }
