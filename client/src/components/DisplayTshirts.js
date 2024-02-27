@@ -10,6 +10,7 @@ import {
   ACCESS_LEVEL_ADMIN,
   SERVER_HOST,
 } from '../config/global_constants';
+import Banner from './Banner';
 
 import Logout from './Logout';
 
@@ -29,6 +30,12 @@ export default class DisplayTshirts extends Component {
       sizesFilter: 'All',
 
       searchName: '',
+      brand: '',
+      sizes: '',
+      description: '',
+      price: '',
+      category: '',
+      color: '',
     };
   }
 
@@ -52,12 +59,12 @@ export default class DisplayTshirts extends Component {
     const { products, sortByRating } = this.state;
 
     const sortedProducts = [...products];
-  
+
     sortedProducts.sort((a, b) => {
 
       return sortByRating ? b.rating - a.rating : a.rating - b.rating;
     });
-  
+
     this.setState({
 
       products: sortedProducts,
@@ -65,24 +72,24 @@ export default class DisplayTshirts extends Component {
       sortByRating: !sortByRating,
     });
   };
-  
+
   handleSortByPrice = () => {
     const { products, sortByPrice } = this.state;
 
     const sortedProducts = [...products];
-  
+
     sortedProducts.sort((a, b) => {
 
-  
+
       return sortByPrice ? b.price - a.price : a.price - b.price;
     });
-  
+
     this.setState({
       products: sortedProducts,
       sortByPrice: !sortByPrice,
     });
   };
-  
+
 
   handleGenderFilter = (event) => {
     this.setState({ genderFilter: event.target.value });
@@ -99,8 +106,13 @@ export default class DisplayTshirts extends Component {
     this.setState({ brandFilter: event.target.value });
   };
 
-  handleSearchName = (event) => {
-    this.setState({ searchName: event.target.value });
+  // handleSearchName = (event) => {
+  //   this.setState({ searchName: event.target.value });
+  // };
+
+  handleSearch = (event) => {
+    const value = event.target.value.toLowerCase();
+    this.setState({ searchName: value, brand: value, sizes: value, description: value, price: value, color: value,category: value  });
   };
 
   render() {
@@ -144,19 +156,17 @@ export default class DisplayTshirts extends Component {
     }
 
     return (
-      
-      <div className="form-container">
-         <Link to="/ShoppingCart" className="green-button">
-          Shopping Cart
-        </Link>
 
+    <>
+     
+{/* 
         {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
-                    <Link to="/ViewCustomers" className="green-button">
-                        View customers
-                    </Link>
-                )}
+          <Link to="/ViewCustomers" className="green-button">
+            View customers
+          </Link>
+        )} */}
 
-        {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
+        {/* {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
           <div className="logout">
             {localStorage.profilePhoto !== 'null' ? (
               <img
@@ -167,9 +177,11 @@ export default class DisplayTshirts extends Component {
             ) : null}
             <Logout />
           </div>
-        ) : (
-          <div>
-            
+        ) : ( */}
+
+
+          {/* <div>
+
             <Link className="green-button" to={'/Login'}>
               Login
             </Link>
@@ -182,15 +194,10 @@ export default class DisplayTshirts extends Component {
             <br />
             <br />
             <br />
-          </div>
-        )}
-        <div className="filter-container">
-          <input
-            type="text"
-            placeholder="Search by name"
-            value={searchName}
-            onChange={this.handleSearchName}
-          />
+          </div> */}
+        
+   
+
           <select value={sizesFilter} onChange={this.handleSizesFilter}>
             <option value="All">Sizes</option>
             <option value="XXS">XXS</option>
@@ -230,7 +237,7 @@ export default class DisplayTshirts extends Component {
             <option value="Under Armour">Under Armour</option>
             <option value="Fila">Fila</option>
           </select>
-        </div>
+        
 
         <div className="table-container">
           <div className="sort-by-rating">
@@ -252,27 +259,27 @@ export default class DisplayTshirts extends Component {
           <div>
             {loading && <Loading />}
             {error && <Message variant="danger">{error}</Message>}
-            
-            <div className="products">
-  {filteredTshirts.map((product) => (
-    <div key={product.slug} className="product">
-      <ProductScreen product={product} />
-     
-      
-    </div>
-    
-  ))}
-</div>
 
-          {/*  <div className="products">
+            <div className="products">
+              {filteredTshirts.map((product) => (
+                <div key={product.slug} className="product">
+                  <ProductScreen product={product} />
+
+
+                </div>
+
+              ))}
+            </div>
+
+            {/*  <div className="products">
               {products.map((product) => (
                 <div key={product.slug} className="product">
                   <ProductScreen product={product} />
                 </div>
               ))}
               </div>*/}
-             
-              </div>
+
+          </div>
 
           {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
             <div className="add-new-tshirt">
@@ -282,7 +289,7 @@ export default class DisplayTshirts extends Component {
             </div>
           ) : null}
         </div>
-      </div>
+      </>
     );
   }
 }

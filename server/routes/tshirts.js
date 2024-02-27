@@ -38,6 +38,10 @@ const deleteTshirtDocument = (req, res) => {
   });
 };
 
+
+
+
+
 // Delete one T-shirt record
 router.delete(
   '/tshirts/:id',
@@ -72,7 +76,7 @@ router.get('/tshirts/:id', (req, res) => {
   });
 });
 
-// Add a new T-shirt record
+// // Add a new T-shirt record
 // const createNewTshirtDocument = (req, res) => {
 //   try {
 //     // Use the new T-shirt details to create a new T-shirt document
@@ -108,35 +112,42 @@ router.get('/tshirts/:id', (req, res) => {
 //   }
 // };
 
- router.put(`/tshirts/:id`, (req, res) => {
-   const { brand, name, color, category, type, price, countInStock } = req.body;
+router.put('/tshirts/:id', (req, res) => {
+  const { brand, name, color, category, type, price, countInStock } = req.body;
 
-   if (!/^[\w\s'-]*$/.test(brand)) {
-     res.json({ errorMessage: `Brand must be a string` });
-   } else if (!/^[\w\s'-]*$/.test(name)) {
-     res.json({ errorMessage: `Name must be a string` });
-   } else if (!/^[\w\s'-]*$/.test(color)) {
-     res.json({ errorMessage: `Color must be a string` });
-   } else if (!/^[\w\s'-]*$/.test(category)) {
-     res.json({ errorMessage: `Category must be a string` });
-   } else if (!/^[\w\s'-]*$/.test(type)) {
-     res.json({ errorMessage: `Type must be a string` });
-   } else if (!/^\d+(\.\d{1,2})?$/.test(price)) {
-     res.json({
-       errorMessage: `Price must be a number greater than or equal to 1`,
-     });
-   } else if (parseInt(countInStock) < 0) {
-     res.json({ errorMessage: `CountInStock must be a non-negative integer` });
-   } else {
-     tshirtsModel.findByIdAndUpdate(
-       req.params.id,
-       { $set: req.body },
-       (error, data) => {
-         res.json(data);
-       }
-     );
-   }
- });
+  if (!/^[\w\s'-]*$/.test(brand)) {
+    res.json({ errorMessage: `Brand must be a string` });
+  } else if (!/^[\w\s'-]*$/.test(name)) {
+    res.json({ errorMessage: `Name must be a string` });
+  } else if (!/^[\w\s'-]*$/.test(color)) {
+    res.json({ errorMessage: `Color must be a string` });
+  } else if (!/^[\w\s'-]*$/.test(category)) {
+    res.json({ errorMessage: `Category must be a string` });
+  } else if (!/^[\w\s'-]*$/.test(type)) {
+    res.json({ errorMessage: `Type must be a string` });
+  } else if (!/^\d+(\.\d{1,2})?$/.test(price)) {
+    res.json({
+      errorMessage: `Price must be a number greater than or equal to 1`,
+    });
+  } else if (parseInt(countInStock) < 0) {
+    res.json({ errorMessage: `CountInStock must be a non-negative integer` });
+  } else {
+    tshirtsModel.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      (error, data) => {
+        if (error) {
+          console.error('Error updating T-shirt document:', error);
+          return res.status(500).json({ errorMessage: 'Internal server error' });
+        } else {
+          console.log('T-shirt document updated successfully');
+          return res.status(200).json(data);
+        }
+      }
+    );
+  }
+});
+
 
 // router.post('/tshirts', createNewTshirtDocument);
 
