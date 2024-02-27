@@ -34,6 +34,9 @@ if (typeof localStorage.accessLevel === 'undefined') {
   localStorage.profilePhoto = null;
 }
 
+
+
+
 export default class App extends Component {
   render() {
     
@@ -61,16 +64,19 @@ export default class App extends Component {
             path="/DeleteTshirt/:id"
             component={DeleteTshirt}
           />
-          <Route exact path="/DisplayTshirts" component={DisplayTshirts}></Route>
+          <Route exact path="/DisplayTshirts" component={DisplayTshirts} ></Route>
+
+         
+
           <Route exact path="/TshirtDetails/:id" component={TshirtDetails} />
           <Route path="/product/:id" component={ProductDetails} />
           {/* <Route path="/ShoppingCart" component={ShoppingCart} /> */}
-          
+{/*           
           <Route
             exact
             path="/PayPalMessage/:messageType/:payPalPaymentID"
             component={PayPalMessage}
-          />
+          /> */}
           <Route exact path="/ViewCustomers" component={ViewCustomers} />
           <Route exact path="/ViewOrders" component={ViewOrders} />
         </Switch>
