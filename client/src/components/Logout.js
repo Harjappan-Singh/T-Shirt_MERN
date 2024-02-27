@@ -1,7 +1,8 @@
 import React, {Component} from "react"
 import {Redirect} from "react-router-dom"
 import axios from "axios"
-
+import '../css/Nav.css';
+import exit from '../css/images/logout.png';
 import LinkInClass from "../components/LinkInClass"
 import {SERVER_HOST} from "../config/global_constants"
 
@@ -50,12 +51,22 @@ export default class Logout extends Component
     render()
     {
         return (
-            <div>   
-        
-                {!this.state.isLoggedIn ? <Redirect to="/DisplayTshirts"/> : null} 
-                  
-                <LinkInClass value="Log out" className="red-button" onClick={this.handleSubmit}/> 
-            </div>
+             <>         
+              {localStorage.profilePhoto !== 'null' ? (
+                <img
+                  id="profilePhoto"
+                  src={`data:;base64,${localStorage.profilePhoto}`}
+                  alt=""
+                />
+              ) : null}
+              <img
+                src={exit}
+                alt="Exit"
+                style={{ width: '20px', height: '20px' }}
+                onClick={this.handleSubmit}
+              />
+              {!this.state.isLoggedIn && <Redirect to="/DisplayTshirts" />}
+            </>
         )
     }
 }
