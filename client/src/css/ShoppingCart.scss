@@ -1,5 +1,13 @@
+$primary-font-family: 'Arial', sans-serif;
+$border-color: #ccc;
+$primary-color: #333;
+$accent-color: #ff4500;
+$button-bg-color: $accent-color;
+$button-text-color: white;
+$button-border-radius: 5px;
+
 .shopping-cart {
-  font-family: "Arial", sans-serif;
+  font-family: $primary-font-family;
 }
 
 .shopping-cart-title {
@@ -29,7 +37,7 @@
 .cart-item {
   display: flex;
   padding: 10px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid $border-color;
 }
 
 .item-details {
@@ -48,7 +56,7 @@
 
 .item-name {
   font-weight: bold;
-  color: #333;
+  color: $primary-color;
 }
 
 .item-size-selector {
@@ -89,7 +97,7 @@
 }
 
 .material-icons {
-  font-family: "Material Icons";
+  font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
   font-size: 24px;
@@ -112,11 +120,11 @@
 }
 
 .clear-cart-button {
-  background-color: #ff4500;
-  color: white;
+  background-color: $button-bg-color;
+  color: $button-text-color;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: $button-border-radius;
   cursor: pointer;
   font-weight: bold;
 }
@@ -136,4 +144,4 @@
 .total-text::before {
   content: attr(data-label);
   font-weight: bold;
-}/*# sourceMappingURL=ShoppingCart.css.map */
+}

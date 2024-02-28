@@ -1,0 +1,56 @@
+.green-button,
+.red-button,
+.blue-button {
+  padding: 7px 10px;
+  font-size: 0.875rem;
+  line-height: normal;
+  border-radius: 0.2rem;
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+  margin-right: 10px;
+  position: relative;
+  top: 1px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.green-button.green-button,
+.red-button.green-button,
+.blue-button.green-button {
+  background-color: #28a745;
+}
+.green-button.red-button,
+.red-button.red-button,
+.blue-button.red-button {
+  background-color: #dc3545;
+}
+.green-button.blue-button,
+.red-button.blue-button,
+.blue-button.blue-button {
+  background-color: #3545dc;
+}
+.green-button:hover,
+.red-button:hover,
+.blue-button:hover {
+  text-decoration: none;
+  color: #fff;
+}
+.green-button.green-button:hover,
+.red-button.green-button:hover,
+.blue-button.green-button:hover {
+  background-color: #107020;
+}
+.green-button.red-button:hover,
+.red-button.red-button:hover,
+.blue-button.red-button:hover {
+  background-color: #a01020;
+}
+.green-button.blue-button:hover,
+.red-button.blue-button:hover,
+.blue-button.blue-button:hover {
+  background-color: #1020a0;
+}
+
+input[type=button] {
+  color: pink;
+}/*# sourceMappingURL=App.css.map */

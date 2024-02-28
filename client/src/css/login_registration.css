@@ -1,102 +1,84 @@
-#loginOrRegistrationForm 
-{
-    width:100%;
+#loginOrRegistrationForm {
+  width: 100%;
 }
-
-#loginOrRegistrationForm input
-{
-    display: block;
-    width: 100%;
-    padding: 5px 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+#loginOrRegistrationForm input {
+  display: block;
+  width: 100%;
+  padding: 5px 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ddd;
 }
-
-
-#loginOrRegistrationForm input.error
-{
-    border-color: red;
+#loginOrRegistrationForm input.error {
+  border-color: red;
 }
-
-#loginOrRegistrationForm div.error
-{
-    margin:10px;
-    padding:5px;
-    margin-top:0px;
-    padding-top:0px;
-    color:red;
+#loginOrRegistrationForm input::-moz-placeholder {
+  color: #ddd;
 }
-
-#loginOrRegistrationForm div.error ul
-{
-    margin-left:0px;
-    padding-left:0px;
-    
+#loginOrRegistrationForm input::placeholder {
+  color: #ddd;
 }
-
-#loginOrRegistrationForm input 
-{
-    box-sizing: border-box;
+#loginOrRegistrationForm input:focus {
+  border-radius: 0px;
+  border-color: blue;
 }
-
-#loginOrRegistrationForm input:focus
-{
-    border-radius: 0px;
-    border-color:blue;
+#loginOrRegistrationForm input:focus::-moz-placeholder {
+  color: transparent;
 }
-
-#loginOrRegistrationForm input[type=submit] 
-{
-    padding: 7px 10px;
-    font-size: 0.875rem;
-    line-height: normal;
-    border-radius: 0.2rem;
-    color: #fff;
-    background-color: #28a745;
-    border-color: #28a745;
-    margin-right: 10px;
-    position: relative;
-    top: 1px;  
-    text-decoration: none;
-    cursor:pointer;
-    width:70px;
+#loginOrRegistrationForm input:focus::placeholder {
+  color: transparent;
 }
-
-#loginOrRegistrationForm input[type=submit]:hover 
-{
-    background-color: #669509;
+#loginOrRegistrationForm div.error {
+  margin: 10px;
+  padding: 5px;
+  margin-top: 0;
+  padding-top: 0;
+  color: red;
 }
-
-#loginOrRegistrationForm input[type=submit]:disabled 
-{
-    background-color: #dbf99f;
-    color: #999;
+#loginOrRegistrationForm div.error ul {
+  margin-left: 0;
+  padding-left: 0;
 }
-
-#nameContainer,
-#emailContainer,
-#passwordContainer,
-#confirmPasswordContainer
-{
-    position:relative;
+#loginOrRegistrationForm input[type=submit] {
+  padding: 7px 10px;
+  font-size: 0.875rem;
+  line-height: normal;
+  border-radius: 0.2rem;
+  color: #fff;
+  background-color: #28a745;
+  border-color: #28a745;
+  margin-right: 10px;
+  position: relative;
+  top: 1px;
+  text-decoration: none;
+  cursor: pointer;
+  width: 70px;
 }
-
-#nameContainer span,
-#emailContainer span,
-#passwordContainer span,
-#confirmPasswordContainer span
-{
-    position:absolute;
-    top:0px;
-    right:2px;
-    font-size: 20px;
-    color:green;
-    vertical-align: middle;  
-    display:none; 
+#loginOrRegistrationForm input[type=submit]:hover {
+  background-color: #669509;
 }
-
-.showCorrectTick
-{
-    display:block !important;
+#loginOrRegistrationForm input[type=submit]:disabled {
+  background-color: #dbf99f;
+  color: #999;
 }
+#loginOrRegistrationForm #nameContainer,
+#loginOrRegistrationForm #emailContainer,
+#loginOrRegistrationForm #passwordContainer,
+#loginOrRegistrationForm #confirmPasswordContainer {
+  position: relative;
+}
+#loginOrRegistrationForm #nameContainer span,
+#loginOrRegistrationForm #emailContainer span,
+#loginOrRegistrationForm #passwordContainer span,
+#loginOrRegistrationForm #confirmPasswordContainer span {
+  position: absolute;
+  top: 0;
+  right: 2px;
+  font-size: 20px;
+  color: green;
+  vertical-align: middle;
+  display: none;
+}
+#loginOrRegistrationForm .showCorrectTick {
+  display: block !important;
+}/*# sourceMappingURL=login_registration.css.map */

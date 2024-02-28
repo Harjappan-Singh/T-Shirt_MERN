@@ -1,221 +1,139 @@
- @font-face {
-    font-family: 'LovelyLove';
-    src: url('./images/lovelove.regular.ttf')_ format('truetype');
-    font-weight: normal;
-    font-style: italic;
+@font-face {
+  font-family: "LovelyLove";
+  src: url("./images/lovelove.regular.ttf") format("truetype");
+  font-weight: bold;
 }
-
-
-  /* Nav.css */
-
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
-
 
 .top-bar {
-    background-color: #1e6091;
-    color: white;
-    padding: 1px;
-    text-align: center;
-    display: flex;
-    align-items: center; 
-    justify-content: space-between;
- position: relative;
-  }
-  
-  .top-bar img {
-    margin-right: 10px; 
-    cursor: pointer;
-    width: 60px; /* Set the desired width */
-    height: 70px; /* Set the desired height */
-    object-fit: contain; /* Adjust object-fit as needed */
-    margin-left: 5px; /* Adjust margin */
+  background-color: #1e6091;
+  color: #fff;
+  padding: 1px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.top-bar img {
+  margin-right: 10px;
+  cursor: pointer;
+  width: 60px;
+  height: 70px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  margin-left: 5px;
 }
 
-
 nav {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 20px;
-    color: white;
-    border: 2px solid #1e6091;
-    border-color: #1e6091;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  color: #fff;
+  border: 2px solid #1e6091;
+  border-color: #1e6091;
 }
 
 .left-section,
 .right-section {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .center-section {
-    flex-grow: 1;
-    text-align: center;
+  flex-grow: 1;
+  text-align: center;
 }
 
 ul {
-    list-style-type: none;
-    display: flex;
+  list-style-type: none;
+  display: flex;
 }
 
 li {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 a {
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: #fff;
 }
 
 #search-icon,
 #profile-icon,
 #cart-icon {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
 
 h1 {
-    font-family: 'LovelyLove'; 
-    margin: 0;
-    color: #1e6091;
+  font-family: "LovelyLove";
+  margin: 0;
+  color: #1e6091;
+  font-weight: 400px;
+  font-size: 3em;
 }
 
-/* search css */
-
-/* .search-bar {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-input {
-    margin-top: 10px;
-    padding: 8px;
-    border: 2px solid #1e6091;
-    border-radius: 10px;
-    outline: none;
-}
-
-input:focus {
-    outline: 0.5px solid #1e6091;
-    box-shadow: none;
-}
-
-.search-bar input {
-    border: 2px solid #1e6091;
-    border-radius: 10px;
-    padding: 8px;
-    width: 150px;
-    outline: none;
-    transition: width 0.3s;
-}
-
-.search-bar.active input {
-    width: 200px;
-}
-
-#search-icon {
-    margin-right: 5px;
-} */
 .search-bar {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 input {
-    margin-top: 10px;
-    padding: 8px;
-    border: none; /* Remove the existing border */
-    border-bottom: 2px solid #1e6091; /* Add a bottom border */
-    outline: none;
-    width: calc(100% - 16px); /* Set width to 100% minus the total padding (8px on each side) */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  margin-top: 10px;
+  padding: 8px;
+  border: none;
+  border-bottom: 2px solid #1e6091;
+  outline: none;
+  width: calc(100% - 16px);
+  box-sizing: border-box;
 }
 
 input:focus {
-    border-bottom: 2px solid #1e6091;
-    box-shadow: none;
+  border-bottom: 2px solid #1e6091;
+  box-shadow: none;
 }
 
-/* Nav.css */
-
-.admin-button {
-    background-color: #ffffff; /* Blue background color */
-    border: none;
-    color: black; /* White text color */
-    padding: 8px 12px; /* Small padding */
-    border-radius: 40px; /* Rounded corners */
-    width: fit-content; /* Adjust width based on content */
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Add a smooth hover effect */
-    margin: auto;
-    padding: 8px 12px;
-
-
-    /* Hover effect */
-    &:hover {
-      background-color: #0056b3; /* Darker blue on hover */
-    }
+.admin-button,
+.admin-button1 {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 40px;
+  width: -moz-fit-content;
+  width: fit-content;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-  
-  .admin-button1 {
-    border: none;
-    color: white;
-    padding: 8px 12px; 
-    border-radius: 40px;
-    width: fit-content; 
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Add a smooth hover effect */
-  
-    &:hover {
-        color: black;
-        text-decoration: none;
-        background-color: #0056b3; /* Darker blue on hover */
-      }
-   
-  }
-   */
-
 
 .admin-button {
-    background-color: #ffffff;
-    border: none;
-    color: black;
-    padding: 8px 12px;
-    border-radius: 40px;
-    width: fit-content;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-left: auto; /* Move admin-button to the right */
+  background-color: #fff;
+  color: #000;
+  margin-left: auto;
+}
+.admin-button:hover {
+  background-color: #1e6091;
 }
 
 .admin-button1 {
-    border: none;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 40px;
-    width: fit-content;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  color: #fff;
+}
+.admin-button1:hover {
+  color: #000;
+  text-decoration: none;
+  background-color: #fff;
 }
 
 .AdminFunc a {
-    padding: 8px 12px;
-}
-  
-  
+  padding: 8px 12px;
+}/*# sourceMappingURL=Nav.css.map */

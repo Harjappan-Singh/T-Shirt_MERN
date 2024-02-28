@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import './css/app1.css';
+import './css/App.css';
 
 import Register from './components/Register';
 import ResetDatabase from './components/ResetDatabase';
@@ -55,9 +55,9 @@ export default class App extends Component {
             <Route path="/product/:id" component={ProductDetails} />
             <Route path="/ShoppingCart"  render={(props) => ( <ShoppingCart {...props} trackPurchase={this.trackPurchase} />)}/>
             <Route exact path="/PayPalMessage/:messageType/:payPalPaymentID" component={PayPalMessage}/>
-           <LoggedInRoute exact path="/ViewCustomers" component={ViewCustomers} />}
-            <LoggedInRoute exact path="/ViewOrders" component={ViewOrders} />}
-          <LoggedInRoute path="/ViewOrders/:_id" component={ViewOrders} />}
+           <LoggedInRoute exact path="/ViewCustomers" component={ViewCustomers} />
+            <LoggedInRoute exact path="/ViewOrders" component={ViewOrders} />
+          <LoggedInRoute path="/ViewOrders/:_id" component={ViewOrders} />
           </>
         </Switch>
         {/* <Footer /> */}
