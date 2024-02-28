@@ -10,6 +10,7 @@ import {
   ACCESS_LEVEL_ADMIN,
   SERVER_HOST,
 } from '../config/global_constants';
+import Banner from './Banner';
 
 import Logout from './Logout';
 
@@ -29,26 +30,18 @@ export default class DisplayTshirts extends Component {
       sizesFilter: 'All',
 
       searchName: '',
-      userId: null,
+      brand: '',
+      sizes: '',
+      description: '',
+      price: '',
+      category: '',
+      color: '',
     };
   }
 
   componentDidMount() {
     this.fetchData();
-    this.fetchUserId();
   }
-
-  async fetchUserId() {
-    try {
-      const response = await axios.get(`${SERVER_HOST}/users`);
-      const userId = response.data._id; // Assuming the user ID is stored under _id in the response data
-      this.setState({ userId }); // Set the userId state here
-    } catch (error) {
-      console.error('Error fetching user ID:', error);
-      throw error;
-    }
-  }
-  
 
   async fetchData() {
     try {
@@ -66,12 +59,12 @@ export default class DisplayTshirts extends Component {
     const { products, sortByRating } = this.state;
 
     const sortedProducts = [...products];
-  
+
     sortedProducts.sort((a, b) => {
 
       return sortByRating ? b.rating - a.rating : a.rating - b.rating;
     });
-  
+
     this.setState({
 
       products: sortedProducts,
@@ -79,24 +72,24 @@ export default class DisplayTshirts extends Component {
       sortByRating: !sortByRating,
     });
   };
-  
+
   handleSortByPrice = () => {
     const { products, sortByPrice } = this.state;
 
     const sortedProducts = [...products];
-  
+
     sortedProducts.sort((a, b) => {
 
-  
+
       return sortByPrice ? b.price - a.price : a.price - b.price;
     });
-  
+
     this.setState({
       products: sortedProducts,
       sortByPrice: !sortByPrice,
     });
   };
-  
+
 
   handleGenderFilter = (event) => {
     this.setState({ genderFilter: event.target.value });
@@ -113,12 +106,16 @@ export default class DisplayTshirts extends Component {
     this.setState({ brandFilter: event.target.value });
   };
 
-  handleSearchName = (event) => {
-    this.setState({ searchName: event.target.value });
+  // handleSearchName = (event) => {
+  //   this.setState({ searchName: event.target.value });
+  // };
+
+  handleSearch = (event) => {
+    const value = event.target.value.toLowerCase();
+    this.setState({ searchName: value, brand: value, sizes: value, description: value, price: value, color: value,category: value  });
   };
 
   render() {
-    const { userId } = this.state;
     const {
       products,
       loading,
@@ -159,24 +156,17 @@ export default class DisplayTshirts extends Component {
     }
 
     return (
-      
-      <div className="form-container">
-         <Link to="/ShoppingCart" className="green-button">
-          Shopping Cart
-        </Link>
 
-        
-        <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
-  View Orders
-</Link>
-    
+    <>
+     
+{/* 
         {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
-                    <Link to="/ViewCustomers" className="green-button">
-                        View customers
-                    </Link>
-                )}
+          <Link to="/ViewCustomers" className="green-button">
+            View customers
+          </Link>
+        )} 
 
-        {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
+         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
           <div className="logout">
             {localStorage.profilePhoto !== 'null' ? (
               <img
@@ -187,9 +177,11 @@ export default class DisplayTshirts extends Component {
             ) : null}
             <Logout />
           </div>
-        ) : (
-          <div>
-            
+        ) : ( */}
+
+
+          {/* <div>
+
             <Link className="green-button" to={'/Login'}>
               Login
             </Link>
@@ -202,15 +194,12 @@ export default class DisplayTshirts extends Component {
             <br />
             <br />
             <br />
-          </div>
-        )}
-        <div className="filter-container">
-          <input
-            type="text"
-            placeholder="Search by name"
-            value={searchName}
-            onChange={this.handleSearchName}
-          />
+          </div> */}
+        
+        <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
+  View Orders
+</Link>
+
           <select value={sizesFilter} onChange={this.handleSizesFilter}>
             <option value="All">Sizes</option>
             <option value="XXS">XXS</option>
@@ -233,13 +222,11 @@ export default class DisplayTshirts extends Component {
             <option value="All">All Colors</option>
             <option value="Black">Black</option>
             <option value="White">White</option>
+            <option value="Brown">Brown</option>
             <option value="Blue">Blue</option>
             <option value="Red">Red</option>
             <option value="Green">Green</option>
             <option value="Gray">Gray</option>
-            <option value="Red">Red</option>
-            <option value="Yellow">Yellow</option>
-            <option value="Pink">Pink</option>
           </select>
 
           <select value={brandFilter} onChange={this.handleBrandFilter}>
@@ -259,7 +246,6 @@ export default class DisplayTshirts extends Component {
            
 
           </select>
-        </div>
 
         <div className="table-container">
           <div className="sort-by-rating">
@@ -281,27 +267,27 @@ export default class DisplayTshirts extends Component {
           <div>
             {loading && <Loading />}
             {error && <Message variant="danger">{error}</Message>}
-            
-            <div className="products">
-  {filteredTshirts.map((product) => (
-    <div key={product.slug} className="product">
-      <ProductScreen product={product} />
-     
-      
-    </div>
-    
-  ))}
-</div>
 
-          {/*  <div className="products">
+            <div className="products">
+              {filteredTshirts.map((product) => (
+                <div key={product.slug} className="product">
+                  <ProductScreen product={product} />
+
+
+                </div>
+
+              ))}
+            </div>
+
+            {/*  <div className="products">
               {products.map((product) => (
                 <div key={product.slug} className="product">
                   <ProductScreen product={product} />
                 </div>
               ))}
               </div>*/}
-             
-              </div>
+
+          </div>
 
           {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
             <div className="add-new-tshirt">
@@ -311,7 +297,7 @@ export default class DisplayTshirts extends Component {
             </div>
           ) : null}
         </div>
-      </div>
+      </>
     );
   }
 }

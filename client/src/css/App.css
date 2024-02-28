@@ -45,7 +45,7 @@
 .blue-button:hover {
   background-color: #1020a0;
 }
-
-input [type='button'] {
+input[type='button'] {
   color: pink;
 }
+

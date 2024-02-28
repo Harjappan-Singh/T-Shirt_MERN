@@ -1,0 +1,71 @@
+/* footer.css */
+
+.footer {
+    background-color: white; /* Light Pink */
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #1e6091;
+    border-top: 2px solid #1e6091; /* Blue border with 2px width */
+    /* border-radius: 5px; Rounded corners */
+    overflow: hidden;
+}
+
+.footer img {
+    max-width: 80px; /* Adjust as needed */
+    margin-bottom: 1em;
+}
+
+.footer div {
+    margin-top: 0.7em;
+    display: flex;
+    color: #1e6091;
+}
+
+.footer div box-icon {
+    margin: 0 0.5em;
+    font-size: 2em; /* Adjust as needed */
+    color: #1e6091;
+}
+
+.footer-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
+    width: 100%;
+    margin-left: 50%;
+}
+
+.footer-pages {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 50%;
+}
+
+.footer-pages a {
+    color: #1e6091;
+    text-decoration: none;
+    margin: 0 1em;
+    transition: color 0.3s ease;
+}
+
+.footer-pages a:hover {
+    color: #007bff;
+}
+
+.footer-creators {
+    text-align: center;
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+
+.footer-creators h3 {
+    margin: 0.5em 0;
+    font-size: 1.2em;
+    color: #007bff;
+}

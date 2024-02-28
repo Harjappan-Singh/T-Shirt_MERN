@@ -1,0 +1,92 @@
+
+@font-face {
+    font-family: 'LovelyLove';
+    src: url('./images/lovelove.regular.ttf')_ format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+
+.form-container {
+    width: 350px;
+    height: 400px;
+    margin: auto;
+    margin-top: 5%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: black;
+    font-family: 'LovelyLove'; 
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.loginbutton {
+    background-color: #1e6091;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    height: 50px;
+    padding: 14px 30px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s, box-shadow 0.35s, transform 0.35s;
+}
+
+.loginbutton:hover {
+    background-color: #0a3a57;
+    box-shadow: rgba(29, 161, 242, 0.5) 0 0 10px;
+}
+
+.cancelbutton {
+    background-color: #e74c3c;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    height: 50px;
+    padding: 14px 30px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s, box-shadow 0.35s, color 0.3s; /* Separate transform transition */
+}
+
+.cancelbutton:hover {
+    background-color: #c0392b;
+    box-shadow: rgba(176, 61, 48, 0.5) 0 0 10px;
+    text-decoration: none;
+    list-style: none;
+    color: #fff; /* Setting text color to white on hover */
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.loginbutton,
+.cancelbutton {
+    flex-grow: 1;
+    margin: 0 5px; 
+}
+  
+ 
