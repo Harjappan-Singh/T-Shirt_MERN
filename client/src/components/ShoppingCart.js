@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { SANDBOX_CLIENT_ID, SERVER_HOST } from "../config/global_constants";
-import PayPalMessage from "./PayPalMessage";
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Redirect, Link } from 'react-router-dom';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { SANDBOX_CLIENT_ID, SERVER_HOST } from '../config/global_constants';
+import PayPalMessage from './PayPalMessage';
+import '../css/ShoppingCart.css';
 
 class ShoppingCart extends Component {
   state = {
@@ -19,7 +20,11 @@ class ShoppingCart extends Component {
 
   loadCartItems = () => {
     const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    this.setState({ cartItems });
+    const cartItemsWithIds = cartItems.map((item, index) => ({
+      ...item,
+      id: item._id + '_' + item.size, // Unique ID based on item ID and size
+    }));
+    this.setState({ cartItems: cartItemsWithIds });
   };
 
   handleRemoveItem = (index) => {
@@ -31,7 +36,18 @@ class ShoppingCart extends Component {
 
   handleSizeChange = (index, newSize) => {
     const updatedCartItems = [...this.state.cartItems];
-    updatedCartItems[index].size = newSize;
+    updatedCartItems[index] = { ...updatedCartItems[index], size: newSize };
+    this.setState({ cartItems: updatedCartItems });
+    localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+  };
+
+  updateCartHandler = (item, newQuantity) => {
+    const updatedCartItems = this.state.cartItems.map((cartItem) => {
+      if (cartItem.id === item.id) {
+        return { ...cartItem, quantity: newQuantity };
+      }
+      return cartItem;
+    });
     this.setState({ cartItems: updatedCartItems });
     localStorage.setItem('cart', JSON.stringify(updatedCartItems));
   };
@@ -49,25 +65,12 @@ class ShoppingCart extends Component {
 
   calculateTotalCost = () => {
     const shippingCost = 4; // Flat rate shipping cost
-    const subtotal = this.state.cartItems.reduce(
-      (total, item) => total + item.price,
+    const totalItemsCost = this.state.cartItems.reduce(
+      (total, item) => total + (item.price * item.quantity || 0),
       0
     );
-    return (subtotal + shippingCost).toFixed(2);
+    return (totalItemsCost + shippingCost).toFixed(2);
   };
-
-  // onApprove = (data, actions) => {
-  //     console.log("Payment approved:", data);
-  //     return actions.order.capture().then(details => {
-  //         console.log("Payment details:", details);
-  //         localStorage.removeItem("cart");
-  //         this.setState({
-  //             payPalMessageType: PayPalMessage.messageType.SUCCESS,
-  //             payPalOrderID: data.orderID,
-  //             redirectToPayPalMessage: true
-  //         });
-  //     });
-  // }
 
   onApprove = (data, actions) => {
     console.log('Payment approved:', data);
@@ -125,57 +128,118 @@ class ShoppingCart extends Component {
     const totalCost = subtotal + shippingCost;
 
     return (
-      <div>
-        <h2>Shopping Cart</h2>
-        <ul>
-          {cartItems.map((item, index) => (
-            <li key={index}>
-              <p>
-                <strong>Name:</strong> {item.name}
-              </p>
-              <p>
-                <strong>Brand:</strong> {item.brand}
-              </p>
-              <p>
-                <strong>Price:</strong> €{item.price}
-              </p>
-              <select
-                value={item.size}
-                onChange={(e) => this.handleSizeChange(index, e.target.value)}
-              >
-                <option value="">Select Size</option>
-                {item.sizes.map((size, sizeIndex) => (
-                  <option key={sizeIndex} value={size}>
-                    {size}
-                  </option>
-                ))}
-              </select>
-              <button onClick={() => this.handleRemoveItem(index)}>
-                Remove
-              </button>
-            </li>
-          ))}
-        </ul>
-        <div>
-          <p>
-            <strong>Subtotal:</strong> €{subtotal.toFixed(2)}
-          </p>
-          <p>
-            <strong>Shipping Cost:</strong> €{shippingCost.toFixed(2)}
-          </p>
-          <p>
-            <strong>Total Cost (including shipping):</strong> €
-            {totalCost.toFixed(2)}
-          </p>
-        </div>
-        <button onClick={this.handleClearCart}>Clear Cart</button>
+      <div className="shopping-cart">
+        <h1 className="shopping-cart-title">Shopping Cart</h1>
+        <div className="cart-container">
+          <div className="cart-items">
+            {cartItems.length === 0 ? (
+              <div className="empty-cart">
+                <p>
+                  Cart is empty. <Link to="/">Go Shopping</Link>
+                </p>
+              </div>
+            ) : (
+              <ul className="cart-items-list">
+                {cartItems.map((item, index) => (
+                  <li key={index} className="cart-item">
+                    <div className="item-details">
+                      <img
+                        src={item.productImage}
+                        alt={item.name}
+                        className="item-image"
+                      />
+                      <div className="item-info">
+                        <Link
+                          to={`/product/${item.slug}`}
+                          className="item-name"
+                        >
+                          {item.name}
+                        </Link>
+                        <select
+                          value={item.size}
+                          onChange={(e) =>
+                            this.handleSizeChange(index, e.target.value)
+                          }
+                          className="item-size-selector"
+                        >
+                          <option value="">Select Size</option>
+                          {item.sizes.map((size, sizeIndex) => (
+                            <option key={sizeIndex} value={size}>
+                              {size}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <div className="item-actions">
+                      <p className="item-price">${item.price}</p>
 
+                      <div className="quantity-controls">
+                        <button
+                          onClick={() => this.handleRemoveItem(index)}
+                          className="remove-button"
+                        >
+                          <span className="material-icons-outlined">
+                            delete
+                          </span>
+                        </button>
+                        <button
+                          className="action-button decrease-button"
+                          onClick={() =>
+                            this.updateCartHandler(item, item.quantity - 1)
+                          }
+                          disabled={item.quantity === 1}
+                        >
+                          <span className="material-icons-outlined">
+                            remove
+                          </span>
+                        </button>
+                        <span className="quantity">{item.quantity}</span>
+                        <button
+                          className="action-button increase-button"
+                          onClick={() =>
+                            this.updateCartHandler(item, item.quantity + 1)
+                          }
+                          disabled={item.quantity === item.countInStock}
+                        >
+                          <span className="material-icons-outlined">add</span>
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <div className="cart-summary">
+            <div className="subtotal">
+              <p className="subtotal-text">Subtotal: ${subtotal.toFixed(2)}</p>
+            </div>
+            <div className="shipping">
+              <p className="shipping-text">
+                Shipping Cost: ${shippingCost.toFixed(2)}
+              </p>
+            </div>
+            <div className="total">
+              <p className="total-text">
+                Total Cost (including shipping): ${this.calculateTotalCost()}
+              </p>
+            </div>
+            <div className="clear-cart">
+              <button
+                onClick={this.handleClearCart}
+                className="clear-cart-button"
+              >
+                Clear Cart
+              </button>
+            </div>
+          </div>
+        </div>
         {this.state.redirectToPayPalMessage && (
           <Redirect
             to={`/PayPalMessage/${this.state.payPalMessageType}/${this.state.payPalOrderID}`}
           />
         )}
-
         <PayPalScriptProvider
           options={{ currency: 'EUR', 'client-id': SANDBOX_CLIENT_ID }}
         >
