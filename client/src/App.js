@@ -55,9 +55,9 @@ export default class App extends Component {
             <Route path="/product/:id" component={ProductDetails} />
             <Route path="/ShoppingCart"  render={(props) => ( <ShoppingCart {...props} trackPurchase={this.trackPurchase} />)}/>
             <Route exact path="/PayPalMessage/:messageType/:payPalPaymentID" component={PayPalMessage}/>
-            {this.isAdminUser() && <LoggedInRoute exact path="/ViewCustomers" component={ViewCustomers} />}
-            {this.isAdminUser() && <LoggedInRoute exact path="/ViewOrders" component={ViewOrders} />}
-            {this.isAdminUser() && <LoggedInRoute path="/ViewOrders/:_id" component={ViewOrders} />}
+           <LoggedInRoute exact path="/ViewCustomers" component={ViewCustomers} />}
+            <LoggedInRoute exact path="/ViewOrders" component={ViewOrders} />}
+          <LoggedInRoute path="/ViewOrders/:_id" component={ViewOrders} />}
           </>
         </Switch>
         {/* <Footer /> */}
