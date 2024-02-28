@@ -22,9 +22,6 @@ import Nav from './components/Nav';
 import Banner from './components/Banner';
 import Footer from './components/Footer';
 
-
-
-
 import { ACCESS_LEVEL_GUEST } from './config/global_constants';
 import ProductDetails from './components/ProductDetails';
 
@@ -37,28 +34,17 @@ if (typeof localStorage.accessLevel === 'undefined') {
 
 export default class App extends Component {
   render() {
-    
     return (
-     
-     
       <BrowserRouter>
-       <div>
+      <div>
         <Nav /> 
-  
-        </div>
-      
+      </div>
         <Switch>
           <Route exact path="/Register" component={Register} />
           <Route exact path="/ResetDatabase" component={ResetDatabase} />
           <Route exact path="/" component={DisplayTshirts} />
           <Route exact path="/Login" component={Login} />
           <LoggedInRoute exact path="/Logout" component={Logout} />
-
-
-
-
-
-
 
           <Route exact path="/EditTshirt/:id" component={EditTshirt} />
           <Route exact path="/AddTshirt" component={AddTshirt} />
@@ -67,8 +53,16 @@ export default class App extends Component {
             path="/DeleteTshirt/:id"
             component={DeleteTshirt}
           />
-          <Route exact path="/DisplayTshirts" component={DisplayTshirts}></Route>
-          <Route exact path="/DisplayTshirts" component={DisplayTshirts}></Route>
+          <Route
+            exact
+            path="/DisplayTshirts"
+            component={DisplayTshirts}
+          ></Route>
+          <Route
+            exact
+            path="/DisplayTshirts"
+            component={DisplayTshirts}
+          ></Route>
           <Route exact path="/TshirtDetails/:id" component={TshirtDetails} />
           <Route path="/product/:id" component={ProductDetails} />
           <Route
@@ -93,5 +87,3 @@ export default class App extends Component {
     );
   }
 }
-
-
