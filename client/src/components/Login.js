@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import {Redirect, Link} from "react-router-dom"
-import axios from "axios"
+import axios from "axios";
+import '../css/Login.css';
 
 import LinkInClass from "../components/LinkInClass"
 import {SERVER_HOST} from "../config/global_constants"
@@ -60,6 +61,7 @@ export default class Login extends Component
     render()
     {            
         return (
+            <div className="bodylogin">
             <form className="form-container" noValidate = {true} id = "loginOrRegistrationForm">
                 <h2>Login</h2>
                 
@@ -83,9 +85,13 @@ export default class Login extends Component
                     onChange={this.handleChange}
                 /><br/><br/>
                 
-                <LinkInClass value="Login" className="green-button" onClick={this.handleSubmit}/> 
-                <Link className="red-button" to={"/DisplayTshirts"}>Cancel</Link>                                      
+                <div className="Buttons">
+                <LinkInClass value="Login" className="loginbutton" onClick={this.handleSubmit}/> 
+                <Link className="cancelbutton" to={"/DisplayTshirts"}>Cancel</Link>    
+                </div>                                  
             </form>
+            </div>
+
         )
     }
 }
