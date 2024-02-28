@@ -44,7 +44,7 @@ class ProductDetails extends Component {
 
     localStorage.setItem('cart', JSON.stringify(cartItems));
 
-    alert(`${quantity} T-shirt(s) added to cart!`);
+    this.props.history.push('/ShoppingCart');
   };
 
   handleQuantityChange = (e) => {
@@ -55,23 +55,7 @@ class ProductDetails extends Component {
     this.setState({ selectedSize: e.target.value });
   };
 
-  removeFromCart = () => {
-    const { product } = this.state;
-    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-
-    const updatedCartItems = cartItems.filter((item) => {
-      return (
-        item.name !== product.name ||
-        product.brand !== product.brand ||
-        product.color !== product.color ||
-        product.price !== product.price ||
-        item.sizes.join(',') !== product.sizes.join(',')
-      );
-    });
-
-    localStorage.setItem('cart', JSON.stringify(updatedCartItems));
-    alert('T-shirt removed from cart!');
-  };
+ 
 
   render() {
     const { loading, error, product, quantity, selectedSize } = this.state;
@@ -100,7 +84,7 @@ class ProductDetails extends Component {
             </div>
             <div className="product-info-container">
               <Rating rating={product.rating} numReviews={product.numReviews} />
-              <p>Price: ${product.price}</p>
+              <p>Price: €{product.price}</p>
               <p>Description: {product.description}</p>
               <p>
                 Status:{' '}
