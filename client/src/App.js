@@ -21,9 +21,8 @@ import ViewOrders from './components/ViewOrderHistory';
 import Nav from './components/Nav';
 import Banner from './components/Banner';
 import Footer from './components/Footer';
-import Nav from './components/Nav';
-import Banner from './components/Banner';
-import Footer from './components/Footer';
+
+
 
 
 import { ACCESS_LEVEL_GUEST } from './config/global_constants';
@@ -47,10 +46,7 @@ export default class App extends Component {
         <Nav /> 
   
         </div>
-       <div>
-        <Nav /> 
-  
-        </div>
+      
         <Switch>
           <Route exact path="/Register" component={Register} />
           <Route exact path="/ResetDatabase" component={ResetDatabase} />
@@ -88,6 +84,8 @@ export default class App extends Component {
           />
           <Route exact path="/ViewCustomers" component={ViewCustomers} />
           <Route exact path="/ViewOrders" component={ViewOrders} />
+          <Route path="/ViewOrders/:_id" component={ViewOrders} />
+
         </Switch>
         {/* <Footer /> */}
         {/* <Footer /> */}
