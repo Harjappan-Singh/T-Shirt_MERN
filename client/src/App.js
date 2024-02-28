@@ -21,7 +21,9 @@ import ViewOrders from './components/ViewOrderHistory';
 import Nav from './components/Nav';
 import Banner from './components/Banner';
 import Footer from './components/Footer';
-
+import Nav from './components/Nav';
+import Banner from './components/Banner';
+import Footer from './components/Footer';
 
 
 import { ACCESS_LEVEL_GUEST } from './config/global_constants';
@@ -36,14 +38,15 @@ if (typeof localStorage.accessLevel === 'undefined') {
 
 export default class App extends Component {
   render() {
-    
     return (
-     
-     
       <BrowserRouter>
+      <div>
+        <Nav /> 
+  
+        </div>
        <div>
         <Nav /> 
-  <Banner />
+  
         </div>
         <Switch>
           <Route exact path="/Register" component={Register} />
@@ -52,12 +55,6 @@ export default class App extends Component {
           <Route exact path="/Login" component={Login} />
           <LoggedInRoute exact path="/Logout" component={Logout} />
 
-
-
-
-
-
-
           <Route exact path="/EditTshirt/:id" component={EditTshirt} />
           <Route exact path="/AddTshirt" component={AddTshirt} />
           <LoggedInRoute
@@ -65,8 +62,16 @@ export default class App extends Component {
             path="/DeleteTshirt/:id"
             component={DeleteTshirt}
           />
-          <Route exact path="/DisplayTshirts" component={DisplayTshirts}></Route>
-          <Route exact path="/DisplayTshirts" component={DisplayTshirts}></Route>
+          <Route
+            exact
+            path="/DisplayTshirts"
+            component={DisplayTshirts}
+          ></Route>
+          <Route
+            exact
+            path="/DisplayTshirts"
+            component={DisplayTshirts}
+          ></Route>
           <Route exact path="/TshirtDetails/:id" component={TshirtDetails} />
           <Route path="/product/:id" component={ProductDetails} />
           <Route
@@ -82,11 +87,11 @@ export default class App extends Component {
           />
           <Route exact path="/ViewCustomers" component={ViewCustomers} />
           <Route exact path="/ViewOrders" component={ViewOrders} />
+          <Route path="/ViewOrders/:_id" component={ViewOrders} />
+
         </Switch>
         {/* <Footer /> */}
       </BrowserRouter>
     );
   }
 }
-
-
