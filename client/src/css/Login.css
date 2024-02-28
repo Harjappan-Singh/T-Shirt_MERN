@@ -6,6 +6,13 @@
     font-style: italic;
 }
 
+.login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
 
 .form-container {
     width: 350px;
@@ -13,10 +20,11 @@
     margin: auto;
     margin-top: 5%;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 3px solid #fff;
+    border-radius: 10px;
+    background-color: white;
+    border-color: #1e6091;
+
 }
 
 h2 {
