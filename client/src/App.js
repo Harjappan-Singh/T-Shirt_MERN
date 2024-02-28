@@ -38,15 +38,15 @@ if (typeof localStorage.accessLevel === 'undefined') {
 
 
 export default class App extends Component {
+  
   render() {
     
     return (
      
       <BrowserRouter>
-       <div>
+       <div className="main-content"> 
         <Nav /> 
-  
-        </div>
+<div className='page-content'>
         <Switch>
           <Route exact path="/Register" component={Register} />
           <Route exact path="/ResetDatabase" component={ResetDatabase} />
@@ -80,7 +80,10 @@ export default class App extends Component {
           <Route exact path="/ViewCustomers" component={ViewCustomers} />
           <Route exact path="/ViewOrders" component={ViewOrders} />
         </Switch>
+        
+        </div>
         {/* <Footer /> */}
+        </div>
       </BrowserRouter>
     );
   }

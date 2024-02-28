@@ -25,13 +25,10 @@ class ProductScreen extends Component {
           <div>
             {' '}
             {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
-              <Link
-                className="blue-button"
-                to={'/AddTshirt/' + this.props.product._id}
-              >
-                Add
+              <Link className="blue-button" to={'/AddTshirt'}>
+                Add T-Shirt
               </Link>
-            ) : null}
+          ) : null}
             {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
               <Link
                 className="red-button"

@@ -117,11 +117,11 @@ export default class DisplayTshirts extends Component {
     this.setState({ searchName: value, brand: value, sizes: value, description: value, price: value, color: value,category: value  });
   };
 
-  toggleSearchVisibility = () => {
-    this.setState((prevState) => ({
-      isSearchVisible: !prevState.isSearchVisible,
-    }));
-  };
+  // toggleSearchVisibility = () => {
+  //   this.setState((prevState) => ({
+  //     isSearchVisible: !prevState.isSearchVisible,
+  //   }));
+  // };
 
   render() {
     const {
@@ -292,13 +292,7 @@ export default class DisplayTshirts extends Component {
 
           </div>
 
-          {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
-            <div className="add-new-tshirt">
-              <Link className="blue-button" to={'/AddTshirt'}>
-                Add New T-shirt
-              </Link>
-            </div>
-          ) : null}
+         
         </div>
       </>
     );

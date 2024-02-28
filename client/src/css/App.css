@@ -49,3 +49,10 @@ input[type='button'] {
   color: pink;
 }
 
+.main-content {
+  z-index: 0;
+}
+
+.page-content {
+margin-top: 6%;
+}

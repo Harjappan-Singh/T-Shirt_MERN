@@ -8,7 +8,7 @@ import exit from '../css/images/logout.png';
 import Banner from "./Banner";
 import Logout from "./Logout";
 import wings from '../css/images/logobw.png';
-
+import DisplayTshirts from "./DisplayTshirts";
 
 
 import { ACCESS_LEVEL_ADMIN, ACCESS_LEVEL_GUEST} from '../config/global_constants';
@@ -22,9 +22,27 @@ class Nav extends Component {
     super(props);
     this.state = {
       searchName: '',
+      brand: '',
+      sizes: '',
+      description: '',
+      price: '',
+      category: '',
+      color: '',
       isSearchVisible: false,
     };
   }
+
+  handleSearch = (searchValue) => {
+    this.setState({
+      searchName: searchValue,
+      brand: searchValue,
+      sizes: searchValue,
+      description: searchValue,
+      price: searchValue,
+      color: searchValue,
+      category: searchValue,
+    });
+  };
 
   toggleSearchVisibility = () => {
     this.setState((prevState) => ({
@@ -64,10 +82,11 @@ class Nav extends Component {
             ) : null}
             <Logout />
           </div>
-        ) : ( */}
+ ) */}
 
 
 
+            
 
 
   <Link className="admin-button1" to={'/Login'}>
