@@ -17,7 +17,6 @@ app.use(require(`./routes/cars`));
 app.use(require(`./routes/users`));
 app.use(require(`./routes/tshirts`));
 app.use(require(`./routes/orderHistory`));
-app.use(require(`./routes/addresses`));
 // Port
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Connected to port ` + process.env.SERVER_PORT);

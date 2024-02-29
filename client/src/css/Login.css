@@ -9,25 +9,16 @@
   justify-content: center;
   align-items: center;
 }
-<<<<<<< HEAD
-
-body.bodylogin {
-    background-color: #1e6091; /* Set your desired blue background color */
-}
-
-=======
->>>>>>> main
 
 .form-container {
   width: 350px;
-  height: 400px;
   margin: auto;
   margin-top: 5%;
   padding: 20px;
-  border: 3px solid #fff;
+  border: 3px solid #1e6091; /* Border color */
   border-radius: 10px;
   background-color: white;
-  border-color: #1e6091;
+  text-align: center; /* Center text within the form container */
 }
 .form-container h2 {
   text-align: center;
@@ -35,12 +26,15 @@ body.bodylogin {
   font-family: sans-serif;
 }
 .form-container input {
-  width: 100%;
+  width: calc(100% - 20px); /* Adjust the width as needed */
+  max-width: 300px; /* Set a maximum width if necessary */
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
+  text-align: center; /* Center text within the input */
+  font-family: sans-serif; /* Apply the custom font */
 }
 .form-container .loginbutton,
 .form-container .cancelbutton {
@@ -64,34 +58,20 @@ body.bodylogin {
 .form-container .cancelbutton {
   background-color: #e74c3c;
   transition: background-color 0.3s, box-shadow 0.35s, color 0.3s;
-  /* Separate transform transition */
 }
 .form-container .cancelbutton:hover {
   background-color: #c0392b;
   box-shadow: rgba(176, 61, 48, 0.5) 0 0 10px;
   text-decoration: none;
   list-style: none;
-  color: #fff; /* Setting text color to white on hover */
+  color: #fff;
 }
-<<<<<<< HEAD
-
-.loginbutton,
-.cancelbutton {
-    flex-grow: 1;
-    margin-left: 25px;
-
-}
-  
- 
-=======
 .form-container .buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 40px;
 }
-.form-container .buttons .loginbutton,
-.form-container .buttons .cancelbutton {
+.form-container .buttons button {
   flex-grow: 1;
-  margin: 0 5px;
+  margin: 20%;
 }/*# sourceMappingURL=Login.css.map */
->>>>>>> main

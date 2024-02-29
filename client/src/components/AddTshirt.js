@@ -3,10 +3,12 @@ import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import LinkInClass from "../components/LinkInClass";
 import { ACCESS_LEVEL_ADMIN, SERVER_HOST } from "../config/global_constants";
+import '../css/DisplayTshirts.css';
+
 
 export default class AddTshirt extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state = {
             brand: "",
@@ -27,11 +29,11 @@ export default class AddTshirt extends Component {
     }
 
     handleChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({ [e.target.name]: e.target.value })
     };
 
     handleFileChange = (e) => {
-        this.setState({ selectedFiles: e.target.files });
+        this.setState({ selectedFiles: e.target.files })
     };
 
     validate() {
@@ -97,11 +99,11 @@ export default class AddTshirt extends Component {
             <div className="form-container">
                 {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayAllTshirts" /> : null}
 
-                <form>
-                    <div>
-                        <label htmlFor="brand">Brand</label>
+                <div>
+                <label htmlFor="brand">Brand</label>
                         <input ref={(input) => { this.inputToFocus = input; }} type="text" name="brand" value={this.state.brand} onChange={this.handleChange} />
-                    </div>
+                        </div>
+    
 
                     <div>
                         <label htmlFor="name">Name</label>
@@ -154,7 +156,6 @@ export default class AddTshirt extends Component {
                     <LinkInClass value="Add" className="green-button" onClick={this.handleSubmit} />
 
                     <Link className="red-button" to={"/DisplayTshirts"}>Cancel</Link>
-                </form>
             </div>
         );
     }
