@@ -79,28 +79,6 @@ h1 {
   font-size: 3em;
 }
 
-<<<<<<< HEAD
-/* end of nav css */
-
-
-/*  search  */
-.search-bar {
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    transition: height 0.3s ease-out;
-    overflow: hidden;
-    z-index: 1; 
-    background-color: white; 
-    padding: 10px; 
-
-
-=======
 .search-bar {
   position: absolute;
   top: 100%;
@@ -110,10 +88,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   width: 100%;
->>>>>>> main
 }
-
-
 
 input {
   margin-top: 10px;
@@ -130,27 +105,6 @@ input:focus {
   box-shadow: none;
 }
 
-<<<<<<< HEAD
-/* button css */
-
-.admin-button {
-    background-color: #ffffff; /* Blue background color */
-    border: none;
-    color: black; /* White text color */
-    padding: 8px 12px; /* Small padding */
-    border-radius: 40px; /* Rounded corners */
-    width: fit-content; /* Adjust width based on content */
-    cursor: pointer;
-    transition: background-color 0.3s ease; /* Add a smooth hover effect */
-    margin: auto;
-    padding: 8px 12px;
-
-
-    /* Hover effect */
-    &:hover {
-      background-color: #0056b3; /* Darker blue on hover */
-    }
-=======
 .admin-button,
 .admin-button1 {
   border: none;
@@ -160,7 +114,6 @@ input:focus {
   width: fit-content;
   cursor: pointer;
   transition: background-color 0.3s ease;
->>>>>>> main
 }
 
 .admin-button {
@@ -182,13 +135,5 @@ input:focus {
 }
 
 .AdminFunc a {
-<<<<<<< HEAD
-    padding: 8px 12px;
-}
-  
-  
-/*  end of button css */
-=======
   padding: 8px 12px;
 }/*# sourceMappingURL=Nav.css.map */
->>>>>>> main

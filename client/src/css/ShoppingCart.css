@@ -4,6 +4,11 @@
 
 .shopping-cart-title {
   text-align: center;
+  font-family: "Courier New", Courier, monospace;
+}
+
+body {
+  font-family: "Arial", sans-serif;
 }
 
 .cart-container {

@@ -12,7 +12,15 @@ $button-border-radius: 5px;
 
 .shopping-cart-title {
   text-align: center;
+  font-family: 'Courier New', Courier, monospace;
 }
+
+body {
+  font-family: $primary-font-family;
+}
+
+
+
 
 .cart-container {
   display: flex;

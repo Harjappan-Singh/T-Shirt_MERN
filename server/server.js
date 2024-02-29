@@ -6,7 +6,7 @@ require(`./config/db`);
 const createError = require('http-errors');
 
 // Express
-const express = require(`express`);
+const express = require('express');
 const app = express();
 
 app.use(require(`body-parser`).json());

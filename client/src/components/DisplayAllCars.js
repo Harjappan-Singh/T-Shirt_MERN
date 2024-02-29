@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import {Link} from "react-router-dom"
-
+import Banner from "./Banner";
 import axios from "axios"
 
 import CarTable from "./CarTable"
@@ -76,6 +76,7 @@ export default class DisplayAllCars extends Component
                           </div>
                         : null
                     }
+                  
                 </div>
             </div> 
         )

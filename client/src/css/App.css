@@ -49,12 +49,4 @@
 .red-button.blue-button:hover,
 .blue-button.blue-button:hover {
   background-color: #1020a0;
-}
-
-.main-content {
-  z-index: 0;
-}
-
-.page-content {
-margin-top: 6%;
-}
+}/*# sourceMappingURL=App.css.map */
