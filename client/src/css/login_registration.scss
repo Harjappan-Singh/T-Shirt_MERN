@@ -1,89 +1,112 @@
+
+
+
 #loginOrRegistrationForm {
+  width: 100%;
+  border: none;
+  align-items: center;
+  h2 {
     width: 100%;
-  
-    input {
-      display: block;
-      width: 100%;
-      padding: 5px 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-  
-      &.error {
-        border-color: red;
-      }
-  
+    margin-top: 20px;
+  }
+
+  input,
+  select {
+
+    width: calc(50% - 20px); /* Adjust the width as needed */
+    padding: 5px 10px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+
+    &.error {
+      border-color: red;
+    }
+
+    &::placeholder {
+      color: #ddd;
+    }
+
+    &:focus {
+      border-radius: 0px;
+      border-color: blue;
+
       &::placeholder {
-        color: #ddd;
-      }
-  
-      &:focus {
-        border-radius: 0px;
-        border-color: blue;
-  
-        &::placeholder {
-          color: transparent;
-        }
+        color: transparent;
       }
     }
-  
-    div.error {
-      margin: 10px;
-      padding: 5px;
-      margin-top: 0;
-      padding-top: 0;
-      color: red;
-  
-      ul {
-        margin-left: 0;
-        padding-left: 0;
-      }
+  }
+
+  div.error {
+    width: 100%;
+    margin: 10px;
+    padding: 5px;
+    margin-top: 0;
+    padding-top: 0;
+    color: red;
+
+    ul {
+      margin-left: 0;
+      padding-left: 0;
     }
-  
-    input[type=submit] {
-      padding: 7px 10px;
-      font-size: 0.875rem;
-      line-height: normal;
-      border-radius: 0.2rem;
-      color: #fff;
-      background-color: #28a745;
-      border-color: #28a745;
-      margin-right: 10px;
-      position: relative;
-      top: 1px;
-      text-decoration: none;
-      cursor: pointer;
-      width: 70px;
-  
-      &:hover {
-        background-color: #669509;
-      }
-  
-      &:disabled {
-        background-color: #dbf99f;
-        color: #999;
-      }
+  }
+
+  .green-button,
+  .red-button {
+    width: 100%;
+    margin: 10px;
+  }
+
+  input[type=submit] {
+    width: calc(50% - 20px); /* Adjust the width as needed */
+    padding: 7px 10px;
+    font-size: 0.875rem;
+    line-height: normal;
+    border-radius: 0.2rem;
+    color: #fff;
+    margin-right: 10px;
+    position: relative;
+    top: 1px;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #669509;
     }
-  
-    #nameContainer,
-    #emailContainer,
-    #passwordContainer,
-    #confirmPasswordContainer {
-      position: relative;
-  
-      span {
-        position: absolute;
-        top: 0;
-        right: 2px;
-        font-size: 20px;
-        color: green;
-        vertical-align: middle;
-        display: none;
-      }
+
+    &:disabled {
+      background-color: #dbf99f;
+      color: #999;
     }
-  
+  }
+
+  #nameContainer,
+  #emailContainer,
+  #passwordContainer,
+  #confirmPasswordContainer {
+    width: calc(50% - 20px); /* Adjust the width as needed */
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    position: relative;
+
+    input,
+    select {
+      margin-top: 5px;
+    }
+
+    span {
+      position: absolute;
+      top: 0;
+      right: 2px;
+      font-size: 20px;
+      color: green;
+      vertical-align: middle;
+      display: none;
+    }
+
     .showCorrectTick {
       display: block !important;
     }
   }
-  
+}

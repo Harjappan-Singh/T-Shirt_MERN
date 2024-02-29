@@ -76,7 +76,7 @@ router.get('/tshirts/:id', (req, res) => {
   });
 });
 
-// // Add a new T-shirt record
+// Add a new T-shirt record
 const createNewTshirtDocument = (req, res) => {
   try {
     // Use the new T-shirt details to create a new T-shirt document
@@ -87,16 +87,19 @@ const createNewTshirtDocument = (req, res) => {
       category: req.body.category,
       type: req.body.type,
       color: req.body.color,
-      sizes: Array.isArray(req.body.sizes) ? req.body.sizes : [], // Ensure sizes is an array
+      sizes: Array.isArray(req.body.sizes) ? req.body.sizes : [],
       price: req.body.price,
       countInStock: req.body.countInStock,
-      photos: [], // add the T-shirt's photos to the tshirtDetails object
+      rating: req.body.rating,
+      numReviews: req.body.numReviews,
+      photos: [],
     };
 
     req.files.forEach((file, index) => {
       tshirtDetails.photos[index] = { filename: file.filename };
     });
 
+    // Uncomment the next line to add the T-shirt document to the database
     tshirtsModel.create(tshirtDetails, (error, data) => {
       if (error) {
         console.error('Error creating new T-shirt document:', error);
@@ -112,9 +115,9 @@ const createNewTshirtDocument = (req, res) => {
   }
 };
 
+router.post('/tshirts', createNewTshirtDocument);
 
 
 
-// router.post('/tshirts', createNewTshirtDocument);
 
 module.exports = router;

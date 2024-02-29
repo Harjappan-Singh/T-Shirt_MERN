@@ -1,34 +1,45 @@
 #loginOrRegistrationForm {
   width: 100%;
+  border: none;
+  align-items: center;
 }
-#loginOrRegistrationForm input {
-  display: block;
+#loginOrRegistrationForm h2 {
   width: 100%;
+  margin-top: 20px;
+}
+#loginOrRegistrationForm input,
+#loginOrRegistrationForm select {
+  width: calc(50% - 20px); /* Adjust the width as needed */
   padding: 5px 10px;
-  margin: 10px 0;
+  margin: 10px;
   border-radius: 5px;
   border: 1px solid #ddd;
 }
-#loginOrRegistrationForm input.error {
+#loginOrRegistrationForm input.error,
+#loginOrRegistrationForm select.error {
   border-color: red;
 }
-#loginOrRegistrationForm input::-moz-placeholder {
+#loginOrRegistrationForm input::-moz-placeholder, #loginOrRegistrationForm select::-moz-placeholder {
   color: #ddd;
 }
-#loginOrRegistrationForm input::placeholder {
+#loginOrRegistrationForm input::placeholder,
+#loginOrRegistrationForm select::placeholder {
   color: #ddd;
 }
-#loginOrRegistrationForm input:focus {
+#loginOrRegistrationForm input:focus,
+#loginOrRegistrationForm select:focus {
   border-radius: 0px;
   border-color: blue;
 }
-#loginOrRegistrationForm input:focus::-moz-placeholder {
+#loginOrRegistrationForm input:focus::-moz-placeholder, #loginOrRegistrationForm select:focus::-moz-placeholder {
   color: transparent;
 }
-#loginOrRegistrationForm input:focus::placeholder {
+#loginOrRegistrationForm input:focus::placeholder,
+#loginOrRegistrationForm select:focus::placeholder {
   color: transparent;
 }
 #loginOrRegistrationForm div.error {
+  width: 100%;
   margin: 10px;
   padding: 5px;
   margin-top: 0;
@@ -39,20 +50,23 @@
   margin-left: 0;
   padding-left: 0;
 }
+#loginOrRegistrationForm .green-button,
+#loginOrRegistrationForm .red-button {
+  width: 100%;
+  margin: 10px;
+}
 #loginOrRegistrationForm input[type=submit] {
+  width: calc(50% - 20px); /* Adjust the width as needed */
   padding: 7px 10px;
   font-size: 0.875rem;
   line-height: normal;
   border-radius: 0.2rem;
   color: #fff;
-  background-color: #28a745;
-  border-color: #28a745;
   margin-right: 10px;
   position: relative;
   top: 1px;
   text-decoration: none;
   cursor: pointer;
-  width: 70px;
 }
 #loginOrRegistrationForm input[type=submit]:hover {
   background-color: #669509;
@@ -65,7 +79,21 @@
 #loginOrRegistrationForm #emailContainer,
 #loginOrRegistrationForm #passwordContainer,
 #loginOrRegistrationForm #confirmPasswordContainer {
+  width: calc(50% - 20px); /* Adjust the width as needed */
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
   position: relative;
+}
+#loginOrRegistrationForm #nameContainer input,
+#loginOrRegistrationForm #nameContainer select,
+#loginOrRegistrationForm #emailContainer input,
+#loginOrRegistrationForm #emailContainer select,
+#loginOrRegistrationForm #passwordContainer input,
+#loginOrRegistrationForm #passwordContainer select,
+#loginOrRegistrationForm #confirmPasswordContainer input,
+#loginOrRegistrationForm #confirmPasswordContainer select {
+  margin-top: 5px;
 }
 #loginOrRegistrationForm #nameContainer span,
 #loginOrRegistrationForm #emailContainer span,
@@ -79,6 +107,9 @@
   vertical-align: middle;
   display: none;
 }
-#loginOrRegistrationForm .showCorrectTick {
+#loginOrRegistrationForm #nameContainer .showCorrectTick,
+#loginOrRegistrationForm #emailContainer .showCorrectTick,
+#loginOrRegistrationForm #passwordContainer .showCorrectTick,
+#loginOrRegistrationForm #confirmPasswordContainer .showCorrectTick {
   display: block !important;
 }/*# sourceMappingURL=login_registration.css.map */
