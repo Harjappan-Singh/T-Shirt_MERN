@@ -1,102 +1,115 @@
-#loginOrRegistrationForm 
-{
-    width:100%;
+#loginOrRegistrationForm {
+  width: 100%;
+  border: none;
+  align-items: center;
 }
-
-#loginOrRegistrationForm input
-{
-    display: block;
-    width: 100%;
-    padding: 5px 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+#loginOrRegistrationForm h2 {
+  width: 100%;
+  margin-top: 20px;
 }
-
-
-#loginOrRegistrationForm input.error
-{
-    border-color: red;
+#loginOrRegistrationForm input,
+#loginOrRegistrationForm select {
+  width: calc(50% - 20px); /* Adjust the width as needed */
+  padding: 5px 10px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
 }
-
-#loginOrRegistrationForm div.error
-{
-    margin:10px;
-    padding:5px;
-    margin-top:0px;
-    padding-top:0px;
-    color:red;
+#loginOrRegistrationForm input.error,
+#loginOrRegistrationForm select.error {
+  border-color: red;
 }
-
-#loginOrRegistrationForm div.error ul
-{
-    margin-left:0px;
-    padding-left:0px;
-    
+#loginOrRegistrationForm input::-moz-placeholder, #loginOrRegistrationForm select::-moz-placeholder {
+  color: #ddd;
 }
-
-#loginOrRegistrationForm input 
-{
-    box-sizing: border-box;
+#loginOrRegistrationForm input::placeholder,
+#loginOrRegistrationForm select::placeholder {
+  color: #ddd;
 }
-
-#loginOrRegistrationForm input:focus
-{
-    border-radius: 0px;
-    border-color:blue;
+#loginOrRegistrationForm input:focus,
+#loginOrRegistrationForm select:focus {
+  border-radius: 0px;
+  border-color: blue;
 }
-
-#loginOrRegistrationForm input[type=submit] 
-{
-    padding: 7px 10px;
-    font-size: 0.875rem;
-    line-height: normal;
-    border-radius: 0.2rem;
-    color: #fff;
-    background-color: #28a745;
-    border-color: #28a745;
-    margin-right: 10px;
-    position: relative;
-    top: 1px;  
-    text-decoration: none;
-    cursor:pointer;
-    width:70px;
+#loginOrRegistrationForm input:focus::-moz-placeholder, #loginOrRegistrationForm select:focus::-moz-placeholder {
+  color: transparent;
 }
-
-#loginOrRegistrationForm input[type=submit]:hover 
-{
-    background-color: #669509;
+#loginOrRegistrationForm input:focus::placeholder,
+#loginOrRegistrationForm select:focus::placeholder {
+  color: transparent;
 }
-
-#loginOrRegistrationForm input[type=submit]:disabled 
-{
-    background-color: #dbf99f;
-    color: #999;
+#loginOrRegistrationForm div.error {
+  width: 100%;
+  margin: 10px;
+  padding: 5px;
+  margin-top: 0;
+  padding-top: 0;
+  color: red;
 }
-
-#nameContainer,
-#emailContainer,
-#passwordContainer,
-#confirmPasswordContainer
-{
-    position:relative;
+#loginOrRegistrationForm div.error ul {
+  margin-left: 0;
+  padding-left: 0;
 }
-
-#nameContainer span,
-#emailContainer span,
-#passwordContainer span,
-#confirmPasswordContainer span
-{
-    position:absolute;
-    top:0px;
-    right:2px;
-    font-size: 20px;
-    color:green;
-    vertical-align: middle;  
-    display:none; 
+#loginOrRegistrationForm .green-button,
+#loginOrRegistrationForm .red-button {
+  width: 100%;
+  margin: 10px;
 }
-
-.showCorrectTick
-{
-    display:block !important;
+#loginOrRegistrationForm input[type=submit] {
+  width: calc(50% - 20px); /* Adjust the width as needed */
+  padding: 7px 10px;
+  font-size: 0.875rem;
+  line-height: normal;
+  border-radius: 0.2rem;
+  color: #fff;
+  margin-right: 10px;
+  position: relative;
+  top: 1px;
+  text-decoration: none;
+  cursor: pointer;
 }
+#loginOrRegistrationForm input[type=submit]:hover {
+  background-color: #669509;
+}
+#loginOrRegistrationForm input[type=submit]:disabled {
+  background-color: #dbf99f;
+  color: #999;
+}
+#loginOrRegistrationForm #nameContainer,
+#loginOrRegistrationForm #emailContainer,
+#loginOrRegistrationForm #passwordContainer,
+#loginOrRegistrationForm #confirmPasswordContainer {
+  width: calc(50% - 20px); /* Adjust the width as needed */
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  position: relative;
+}
+#loginOrRegistrationForm #nameContainer input,
+#loginOrRegistrationForm #nameContainer select,
+#loginOrRegistrationForm #emailContainer input,
+#loginOrRegistrationForm #emailContainer select,
+#loginOrRegistrationForm #passwordContainer input,
+#loginOrRegistrationForm #passwordContainer select,
+#loginOrRegistrationForm #confirmPasswordContainer input,
+#loginOrRegistrationForm #confirmPasswordContainer select {
+  margin-top: 5px;
+}
+#loginOrRegistrationForm #nameContainer span,
+#loginOrRegistrationForm #emailContainer span,
+#loginOrRegistrationForm #passwordContainer span,
+#loginOrRegistrationForm #confirmPasswordContainer span {
+  position: absolute;
+  top: 0;
+  right: 2px;
+  font-size: 20px;
+  color: green;
+  vertical-align: middle;
+  display: none;
+}
+#loginOrRegistrationForm #nameContainer .showCorrectTick,
+#loginOrRegistrationForm #emailContainer .showCorrectTick,
+#loginOrRegistrationForm #passwordContainer .showCorrectTick,
+#loginOrRegistrationForm #confirmPasswordContainer .showCorrectTick {
+  display: block !important;
+}/*# sourceMappingURL=login_registration.css.map */

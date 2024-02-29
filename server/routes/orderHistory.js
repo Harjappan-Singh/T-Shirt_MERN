@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/orderHistory');
 
-router.get('/orderHistory/:customerId', (req, res) => {
-    const customerId = req.params.customerId; 
-    Order.find({ cust_id: customerId }, (error, orderHistory) => { 
+router.get('/orderHistory/:email', (req, res) => {
+    const email = req.params.email;
+    
+    Order.find({ email: email }, (error, orderHistory) => { 
         if (error) {
             return res.status(500).json({ errorMessage: 'Internal Server Error' });
         }

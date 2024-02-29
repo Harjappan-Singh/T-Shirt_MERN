@@ -175,9 +175,9 @@ export default class DisplayTshirts extends Component {
           <Link to="/ViewCustomers" className="green-button">
             View customers
           </Link>
-        )} */}
+        )} 
 
-        {/* {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
+         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
           <div className="logout">
             {localStorage.profilePhoto !== 'null' ? (
               <img
@@ -207,7 +207,9 @@ export default class DisplayTshirts extends Component {
             <br />
           </div> */}
         
-   
+        <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
+  View Orders
+</Link>
 
           <select value={sizesFilter} onChange={this.handleSizesFilter}>
             <option value="All">Sizes</option>
@@ -241,14 +243,20 @@ export default class DisplayTshirts extends Component {
           <select value={brandFilter} onChange={this.handleBrandFilter}>
             <option value="All">All Brands</option>
             <option value="Nike">Nike</option>
-            <option value="Mango">Mango</option>
+            <option value="Hanes">Hanes</option>
             <option value="Adidas">Adidas</option>
             <option value="Zara">Zara</option>
             <option value="Puma">Puma</option>
             <option value="Under Armour">Under Armour</option>
-            <option value="Fila">Fila</option>
+            <option value="Gildan">Gildan</option>
+            <option value="American Apparel">American Apparel</option> 
+            <option value="Bella + Canvas">Bella + Canvas</option>
+            <option value="Fruit of the Loom">Fruit of the Loom</option>
+            <option value="Champion">Champion</option>
+            <option value="Next Level">Next Level</option>
+           
+
           </select>
-        
 
         <div className="table-container">
           <div className="sort-by-rating">
