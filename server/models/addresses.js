@@ -6,8 +6,7 @@ let addressesSchema = new mongoose.Schema({
     addressLine1:{ type: String },
     addressLine2:{ type: String },
     city:{type: String},
-    county:{type: String},
-    
+    county:{type: String}, 
     eircode:{type: String}
 }, {
     collection: 'addresses'
