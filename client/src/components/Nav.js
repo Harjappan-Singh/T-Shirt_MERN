@@ -11,6 +11,7 @@ import {
   ACCESS_LEVEL_NORMAL_USER,
 } from '../config/global_constants';
 import Login from './Login';
+import ViewCustomers from './ViewCustomers';
 
 class Nav extends Component {
   constructor(props) {
@@ -90,6 +91,9 @@ class Nav extends Component {
                 Admin
               </button>
               <div className="dropdown-menu" aria-labelledby="adminDropdown">
+                <Link className=" dropdown-item blue-button" to={'/AddTshirt'}>
+                  Add New T-shirt
+                </Link>
                 <Link className="dropdown-item" to="/admin/dashboard">
                   Dashboard
                 </Link>
@@ -99,9 +103,10 @@ class Nav extends Component {
                 <Link className="dropdown-item" to="/admin/orders">
                   Orders
                 </Link>
-                <Link className="dropdown-item" to="/admin/users">
+                <Link className="dropdown-item" to={ViewCustomers}>
                   Users
                 </Link>
+
                 <Link
                   className="dropdown-item"
                   to="/"

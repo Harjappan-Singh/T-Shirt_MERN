@@ -9,15 +9,26 @@ const JWT_PRIVATE_KEY = fs.readFileSync(
 );
 const { isAuth, isAdmin } = require('../utils.js');
 
-// Middleware to verify user's JWT password and check if user is an administrator
 const verifyUsersJWTPassword = (req, res, next) => {
+  const token = req.headers.authorization;
+
+  if (!token || !token.startsWith('Bearer ')) {
+    return res
+      .status(401)
+      .json({ errorMessage: 'Unauthorized: Missing or invalid token' });
+  }
+
+  const tokenWithoutBearer = token.split(' ')[1];
+
   jwt.verify(
-    req.headers.authorization,
+    tokenWithoutBearer,
     JWT_PRIVATE_KEY,
     { algorithm: 'HS256' },
     (err, decodedToken) => {
       if (err) {
-        res.status(401).json({ errorMessage: 'User is not logged in' });
+        return res
+          .status(401)
+          .json({ errorMessage: 'Unauthorized: Invalid token' });
       } else {
         req.decodedToken = decodedToken;
         next();
@@ -25,6 +36,7 @@ const verifyUsersJWTPassword = (req, res, next) => {
     }
   );
 };
+
 const deleteTshirtDocument = (req, res) => {
   tshirtsModel.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {
@@ -46,20 +58,6 @@ router.delete(
   deleteTshirtDocument,
   isAdmin
 );
-
-// router.delete('/tshirts/:id', isAuth, isAdmin, async (req, res) => {
-//   try {
-//     const tshirt = await tshirtsModel.findById(req.params.id);
-//     if (!tshirt) {
-//       return res.status(404).json({ message: 'T-shirt Not Found' });
-//     }
-//     await tshirt.remove();
-//     res.json({ message: 'T-shirt Deleted' });
-//   } catch (error) {
-//     console.error('Error deleting T-shirt document:', error);
-//     res.status(500).json({ errorMessage: 'Internal Server Error' });
-//   }
-// });
 
 // Read all records
 router.get('/tshirts', (req, res) => {
@@ -86,42 +84,6 @@ router.get('/tshirts/:id', (req, res) => {
     }
   });
 });
-
-// // Add a new T-shirt record
-// const createNewTshirtDocument = (req, res) => {
-//   try {
-//     // Use the new T-shirt details to create a new T-shirt document
-//     let tshirtDetails = {
-//       brand: req.body.brand,
-//       name: req.body.name,
-//       description: req.body.description,
-//       category: req.body.category,
-//       type: req.body.type,
-//       color: req.body.color,
-//       sizes: Array.isArray(req.body.sizes) ? req.body.sizes : [], // Ensure sizes is an array
-//       price: req.body.price,
-//       countInStock: req.body.countInStock,
-//       photos: [], // add the T-shirt's photos to the tshirtDetails object
-//     };
-
-//     req.files.forEach((file, index) => {
-//       tshirtDetails.photos[index] = { filename: file.filename };
-//     });
-
-//     tshirtsModel.create(tshirtDetails, (error, data) => {
-//       if (error) {
-//         console.error('Error creating new T-shirt document:', error);
-//         return res.status(500).json({ errorMessage: 'Internal server error' });
-//       } else {
-//         console.log('New T-shirt document created successfully');
-//         return res.status(201).json(data);
-//       }
-//     });
-//   } catch (error) {
-//     console.error('Error processing request:', error);
-//     return res.status(400).json({ errorMessage: 'Bad request' });
-//   }
-// };
 
 router.put('/tshirts/:id', (req, res) => {
   const { brand, name, color, category, type, price, countInStock } = req.body;
@@ -161,6 +123,51 @@ router.put('/tshirts/:id', (req, res) => {
   }
 });
 
-// router.post('/tshirts', createNewTshirtDocument);
+// Add a new T-shirt record
+const createNewTshirtDocument = (req, res) => {
+  try {
+    // Use the new T-shirt details to create a new T-shirt document
+    console.log(req.body.brand);
+    let tshirtDetails = {
+      brand: req.body.brand,
+      name: req.body.name,
+      description: req.body.description,
+      category: req.body.category,
+      type: req.body.type,
+      color: req.body.color,
+      sizes: Array.isArray(req.body.sizes) ? req.body.sizes : [], // Ensure sizes is an array
+      price: req.body.price,
+      countInStock: req.body.countInStock,
+      photos: [
+        // add the static URL for the T-shirt's photo
+        {
+          filename: 'mens-t-shirt-front.jpg',
+          url: 'https://image.spreadshirtmedia.net/image-server/v1/mp/productTypes/6/views/1/appearances/2,width=550,height=550,backgroundColor=e5e5e5/mens-t-shirt-front.jpg',
+        },
+      ],
+    };
+
+    tshirtsModel.create(tshirtDetails, (error, data) => {
+      if (error) {
+        console.error('Error creating new T-shirt document:', error);
+        return res.status(500).json({ errorMessage: 'Internal server error' });
+      } else {
+        console.log('New T-shirt document created successfully');
+        return res.status(201).json(data);
+      }
+    });
+  } catch (error) {
+    console.error('Error processing request:', error);
+    return res.status(400).json({ errorMessage: 'Bad request' });
+  }
+};
+
+// Add route for creating a new T-shirt record
+router.post(
+  '/tshirts',
+  verifyUsersJWTPassword,
+  isAdmin,
+  createNewTshirtDocument
+);
 
 module.exports = router;

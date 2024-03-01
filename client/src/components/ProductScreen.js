@@ -27,14 +27,6 @@ class ProductScreen extends Component {
           <div>
             {userInfo && userInfo.accessLevel === ACCESS_LEVEL_ADMIN ? ( // Check if userInfo exists and user is admin
               <Link
-                className="blue-button"
-                to={'/AddTshirt/' + this.props.product._id}
-              >
-                Add
-              </Link>
-            ) : null}
-            {userInfo && userInfo.accessLevel === ACCESS_LEVEL_ADMIN ? ( // Check if userInfo exists and user is admin
-              <Link
                 className="red-button"
                 to={'/DeleteTshirt/' + this.props.product._id}
               >

@@ -61,12 +61,10 @@ export default class DisplayTshirts extends Component {
     const sortedProducts = [...products];
 
     sortedProducts.sort((a, b) => {
-
       return sortByRating ? b.rating - a.rating : a.rating - b.rating;
     });
 
     this.setState({
-
       products: sortedProducts,
 
       sortByRating: !sortByRating,
@@ -79,8 +77,6 @@ export default class DisplayTshirts extends Component {
     const sortedProducts = [...products];
 
     sortedProducts.sort((a, b) => {
-
-
       return sortByPrice ? b.price - a.price : a.price - b.price;
     });
 
@@ -89,7 +85,6 @@ export default class DisplayTshirts extends Component {
       sortByPrice: !sortByPrice,
     });
   };
-
 
   handleGenderFilter = (event) => {
     this.setState({ genderFilter: event.target.value });
@@ -112,7 +107,15 @@ export default class DisplayTshirts extends Component {
 
   handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
-    this.setState({ searchName: value, brand: value, sizes: value, description: value, price: value, color: value,category: value  });
+    this.setState({
+      searchName: value,
+      brand: value,
+      sizes: value,
+      description: value,
+      price: value,
+      color: value,
+      category: value,
+    });
   };
 
   render() {
@@ -143,7 +146,11 @@ export default class DisplayTshirts extends Component {
 
       // Return true if all filters match
       return (
-        matchesGender && matchesColor && matchesBrand && matchesSizes && matchesSearchName
+        matchesGender &&
+        matchesColor &&
+        matchesBrand &&
+        matchesSizes &&
+        matchesSearchName
       );
     });
 
@@ -156,10 +163,8 @@ export default class DisplayTshirts extends Component {
     }
 
     return (
-
-    <>
-     
-{/* 
+      <>
+        {/* 
         {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
           <Link to="/ViewCustomers" className="green-button">
             View customers
@@ -179,8 +184,7 @@ export default class DisplayTshirts extends Component {
           </div>
         ) : ( */}
 
-
-          {/* <div>
+        {/* <div>
 
             <Link className="green-button" to={'/Login'}>
               Login
@@ -195,57 +199,58 @@ export default class DisplayTshirts extends Component {
             <br />
             <br />
           </div> */}
-        
-        <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
-  View Orders
-</Link>
 
-          <select value={sizesFilter} onChange={this.handleSizesFilter}>
-            <option value="All">Sizes</option>
-            <option value="XXS">XXS</option>
-            <option value="XS">XS</option>
-            <option value="S">S</option>
-            <option value="M">M</option>
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-            <option value="XXL">XXL</option>
-            <option value="XXXL">XXXL</option>
-          </select>
+        <Link
+          to={`/ViewOrders/${localStorage.getItem('email')}`}
+          className="green-button"
+        >
+          View Orders
+        </Link>
 
-          <select value={genderFilter} onChange={this.handleGenderFilter}>
-            <option value="All">All</option>
-            <option value="Men">Men</option>
-            <option value="Women">Women</option>
-            <option value="Unisex">Unisex</option>
-          </select>
-          <select value={colorFilter} onChange={this.handleColorFilter}>
-            <option value="All">All Colors</option>
-            <option value="Black">Black</option>
-            <option value="White">White</option>
-            <option value="Brown">Brown</option>
-            <option value="Blue">Blue</option>
-            <option value="Red">Red</option>
-            <option value="Green">Green</option>
-            <option value="Gray">Gray</option>
-          </select>
+        <select value={sizesFilter} onChange={this.handleSizesFilter}>
+          <option value="All">Sizes</option>
+          <option value="XXS">XXS</option>
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+          <option value="XXXL">XXXL</option>
+        </select>
 
-          <select value={brandFilter} onChange={this.handleBrandFilter}>
-            <option value="All">All Brands</option>
-            <option value="Nike">Nike</option>
-            <option value="Hanes">Hanes</option>
-            <option value="Adidas">Adidas</option>
-            <option value="Zara">Zara</option>
-            <option value="Puma">Puma</option>
-            <option value="Under Armour">Under Armour</option>
-            <option value="Gildan">Gildan</option>
-            <option value="American Apparel">American Apparel</option> 
-            <option value="Bella + Canvas">Bella + Canvas</option>
-            <option value="Fruit of the Loom">Fruit of the Loom</option>
-            <option value="Champion">Champion</option>
-            <option value="Next Level">Next Level</option>
-           
+        <select value={genderFilter} onChange={this.handleGenderFilter}>
+          <option value="All">All</option>
+          <option value="Men">Men</option>
+          <option value="Women">Women</option>
+          <option value="Unisex">Unisex</option>
+        </select>
+        <select value={colorFilter} onChange={this.handleColorFilter}>
+          <option value="All">All Colors</option>
+          <option value="Black">Black</option>
+          <option value="White">White</option>
+          <option value="Brown">Brown</option>
+          <option value="Blue">Blue</option>
+          <option value="Red">Red</option>
+          <option value="Green">Green</option>
+          <option value="Gray">Gray</option>
+        </select>
 
-          </select>
+        <select value={brandFilter} onChange={this.handleBrandFilter}>
+          <option value="All">All Brands</option>
+          <option value="Nike">Nike</option>
+          <option value="Hanes">Hanes</option>
+          <option value="Adidas">Adidas</option>
+          <option value="Zara">Zara</option>
+          <option value="Puma">Puma</option>
+          <option value="Under Armour">Under Armour</option>
+          <option value="Gildan">Gildan</option>
+          <option value="American Apparel">American Apparel</option>
+          <option value="Bella + Canvas">Bella + Canvas</option>
+          <option value="Fruit of the Loom">Fruit of the Loom</option>
+          <option value="Champion">Champion</option>
+          <option value="Next Level">Next Level</option>
+        </select>
 
         <div className="table-container">
           <div className="sort-by-rating">
@@ -272,30 +277,10 @@ export default class DisplayTshirts extends Component {
               {filteredTshirts.map((product) => (
                 <div key={product.slug} className="product">
                   <ProductScreen product={product} />
-
-
                 </div>
-
               ))}
             </div>
-
-            {/*  <div className="products">
-              {products.map((product) => (
-                <div key={product.slug} className="product">
-                  <ProductScreen product={product} />
-                </div>
-              ))}
-              </div>*/}
-
           </div>
-
-          {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
-            <div className="add-new-tshirt">
-              <Link className="blue-button" to={'/AddTshirt'}>
-                Add New T-shirt
-              </Link>
-            </div>
-          ) : null}
         </div>
       </>
     );
