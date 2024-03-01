@@ -85,85 +85,45 @@ router.get('/tshirts/:id', (req, res) => {
   });
 });
 
-// // Add a new T-shirt record
-// const createNewTshirtDocument = (req, res) => {
-//   try {
-//     // Use the new T-shirt details to create a new T-shirt document
-//     let tshirtDetails = {
-//       brand: req.body.brand,
-//       name: req.body.name,
-//       description: req.body.description,
-//       category: req.body.category,
-//       type: req.body.type,
-//       color: req.body.color,
-//       sizes: Array.isArray(req.body.sizes) ? req.body.sizes : [], // Ensure sizes is an array
-//       price: req.body.price,
-//       countInStock: req.body.countInStock,
-//       photos: [], // add the T-shirt's photos to the tshirtDetails object
-//     };
-
-//     req.files.forEach((file, index) => {
-//       tshirtDetails.photos[index] = { filename: file.filename };
-//     });
-
-//     tshirtsModel.create(tshirtDetails, (error, data) => {
-//       if (error) {
-//         console.error('Error creating new T-shirt document:', error);
-//         return res.status(500).json({ errorMessage: 'Internal server error' });
-//       } else {
-//         console.log('New T-shirt document created successfully');
-//         return res.status(201).json(data);
-//       }
-//     });
-//   } catch (error) {
-//     console.error('Error processing request:', error);
-//     return res.status(400).json({ errorMessage: 'Bad request' });
-//   }
-// };
-
 router.put('/tshirts/:id', (req, res) => {
   const { brand, name, color, category, type, price, countInStock } = req.body;
 
-  if (!/^[\w\s'-]*$/.test(brand)) {
-    res.json({ errorMessage: `Brand must be a string` });
-  } else if (!/^[\w\s'-]*$/.test(name)) {
-    res.json({ errorMessage: `Name must be a string` });
-  } else if (!/^[\w\s'-]*$/.test(color)) {
-    res.json({ errorMessage: `Color must be a string` });
-  } else if (!/^[\w\s'-]*$/.test(category)) {
-    res.json({ errorMessage: `Category must be a string` });
-  } else if (!/^[\w\s'-]*$/.test(type)) {
-    res.json({ errorMessage: `Type must be a string` });
-  } else if (!/^\d+(\.\d{1,2})?$/.test(price)) {
-    res.json({
-      errorMessage: `Price must be a number greater than or equal to 1`,
-    });
-  } else if (parseInt(countInStock) < 0) {
-    res.json({ errorMessage: `CountInStock must be a non-negative integer` });
-  } else {
-    tshirtsModel.findByIdAndUpdate(
-      req.params.id,
-      { $set: req.body },
-      (error, data) => {
-        if (error) {
-          console.error('Error updating T-shirt document:', error);
-          return res.status(500).json({ errorMessage: 'Internal server error' });
-        } else {
-          console.log('T-shirt document updated successfully');
-          return res.status(200).json(data);
+  try {
+    if (!/^[\w\s'-]*$/.test(brand)) {
+      throw new Error('Brand must be a string');
+    } else if (!/^[\w\s'-]*$/.test(name)) {
+      throw new Error('Name must be a string');
+    } else if (!/^[\w\s'-]*$/.test(color)) {
+      throw new Error('Color must be a string');
+    } else if (!/^[\w\s'-]*$/.test(category)) {
+      throw new Error('Category must be a string');
+    } else if (!/^[\w\s'-]*$/.test(type)) {
+      throw new Error('Type must be a string');
+    } else if (!/^\d+(\.\d{1,2})?$/.test(price)) {
+      throw new Error('Price must be a number greater than or equal to 1');
+    } else if (parseInt(countInStock) < 0) {
+      throw new Error('CountInStock must be a non-negative integer');
+    } else {
+      tshirtsModel.findByIdAndUpdate(
+        req.params.id,
+        { $set: req.body },
+        (error, data) => {
+          if (error) {
+            console.error('Error updating T-shirt document:', error);
+            return res
+              .status(500)
+              .json({ errorMessage: 'Internal server error' });
+          } else {
+            console.log('T-shirt document updated successfully');
+            return res.status(200).json(data);
+          }
         }
-      }
-    });
+      );
+    }
   } catch (error) {
     console.error('Error processing request:', error);
     return res.status(400).json({ errorMessage: 'Bad request' });
   }
-};
-
-router.post('/tshirts', createNewTshirtDocument);
-
-
-
-// router.post('/tshirts', createNewTshirtDocument);
+});
 
 module.exports = router;
