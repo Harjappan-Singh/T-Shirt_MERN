@@ -29,6 +29,8 @@ export default class Login extends Component
     
     handleSubmit = (e) => 
     {
+        e.preventDefault();
+
         axios.post(`${SERVER_HOST}/users/login/${this.state.email}/${this.state.password}`)
         .then(res => 
         {     
@@ -62,8 +64,9 @@ export default class Login extends Component
     render()
     {            
         return (
+            <div className="page-content">
             <div className="bodylogin">
-            <form className="form-container" noValidate = {true} id = "loginOrRegistrationForm">
+       <form className="form-container" onSubmit={this.handleSubmit}>
                 <h2>Login</h2>
                 
                 {this.state.isLoggedIn ? <Redirect to="/DisplayTshirts"/> : null} 
@@ -86,11 +89,16 @@ export default class Login extends Component
                     onChange={this.handleChange}
                 /><br/><br/>
                 
-                <div className="Buttons">
+                {/* <div className="Buttons">
                 <LinkInClass value="Login" className="loginbutton" onClick={this.handleSubmit}/> 
                 <Link className="cancelbutton" to={"/DisplayTshirts"}>Cancel</Link>    
-                </div>                                  
+                </div>                                   */}
+                 <div className="Buttons">
+            <button type="submit" className="loginbutton">Login</button>
+            <Link to="/DisplayTshirts" className="cancelbutton">Cancel</Link>
+          </div>
             </form>
+            </div>
             </div>
 
         )

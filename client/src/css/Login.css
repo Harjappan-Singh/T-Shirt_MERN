@@ -3,6 +3,12 @@
   src: url("./images/lovelove.regular.ttf") format("truetype");
   font-weight: normal;
 }
+.page-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 70vh; /* 100% of the viewport height */
+}
+
 .login-container {
   height: 100vh;
   display: flex;

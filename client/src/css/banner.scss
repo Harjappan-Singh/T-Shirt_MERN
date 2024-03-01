@@ -1,42 +1,149 @@
-.banner {
-    width: 100%;
-    height: 400px;
-    background-size: cover;
-    position: relative;
+$bluecolor: #1e6091;
+$blackcolor: #000000;
+$whitecolor: #ffffff;
+
+@font-face {
+  font-family: 'Nexa';
+  src: url('../css/fonts/Nexa-Heavy.ttf') format('woff2'), /* Replace with the actual path to your font files */
+       url('../css/fonts/Nexa-Heavy.ttf') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+.banner-container {
+  position: relative;
+  overflow: hidden;
+  
+
+
+  .thin-banner-text {
+    display: flex;
+    justify-content: space-between;
+    color: $blackcolor ;
+    text-align: center;
+    padding: 5px 0;
+    font-size: 16px;
+    white-space: nowrap;
     overflow: hidden;
-    animation: slideBanner 5s infinite; /* Adjust the duration to match the interval in milliseconds */
-  
-    @keyframes slideBanner {
-      0% {
-        transform: translateX(0%);
-      }
-      100% {
-        transform: translateX(-200%); /* Adjust the percentage based on the number of images */
-      }
+    animation: slideText 10s infinite linear; 
+    height: 40px;
+  }
+
+  p {
+    margin: 0;
+    flex: 1;
+  }
+
+  @keyframes slideText {
+    0% {
+      transform: translateX(-100vw); /* Start from the middle of the viewport */
+    }
+    10% {
+      transform: translateX(-70vw);
+    }
+    40% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(10vw); /* Slow down in the middle */
+    }
+    70% {
+      transform: translateX(25vw);
+    }
+    90% {
+      transform: translateX(50vw);
+    }
+    100% {
+      transform: translateX(100vw); /* Disappear on the left side */
+    }
+    
+
     }
   
-    .dots {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
+
+
+.banner {
+  width: 100%;
+  height: 700px;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+
+  .images {
+    display: flex; // Ensure images are displayed in a row
+    animation: slideBanner 5s infinite; // Adjust the duration to match the interval in milliseconds
+  }
+
+  @keyframes slideBanner {
+    0% {
+      transform: translateX(0%);
     }
-  
+    100% {
+      transform: translateX(-200%); 
+    }
+  }
+
+  .dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     .dot {
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background-color: #ccc; /* Inactive dot color */
+      background-color: #ccc; 
       margin: 0 5px;
       cursor: pointer;
       transition: background-color 0.3s ease-in-out;
-    }
-  
-    .dot.active {
-      background-color: #333; /* Active dot color */
+
+      &.active {
+        background-color: #333; // Active dot color
+      }
     }
   }
-  
+
+
+.text-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+
+  h1 {
+    // font-family: 'Nexa', sans-serif;
+    font-size: 6em;
+    color: $bluecolor; 
+
+    &.angel-blue {
+      // Styles for the "angel blue" variation
+      font-weight: 700;
+      font-size: 5em; // Adjust the font size as needed
+      color: $whitecolor; // Example color, replace with your desired color
+      -webkit-text-stroke: 0.5px $whitecolor; // WebKit (Safari, Chrome) syntax
+        text-stroke: 6px $whitecolor; // Standard syntax
+        // text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); // Add a drop shadow
+    }
+  }
+
+  .angel-blue-image {
+    // Styles for the "angel blue" image
+    max-width: 100%;
+    height: auto;
+    height: 40px;
+    width: 40px;
+  }
+}
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+}

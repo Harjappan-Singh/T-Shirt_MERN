@@ -117,6 +117,11 @@ export default class DisplayTshirts extends Component {
     this.setState({ searchName: value, brand: value, sizes: value, description: value, price: value, color: value,category: value  });
   };
 
+  handleSearchClick = () => {
+    // Call the prop method to move the banner down
+    this.props.moveBannerDown();
+  };
+
   // toggleSearchVisibility = () => {
   //   this.setState((prevState) => ({
   //     isSearchVisible: !prevState.isSearchVisible,
@@ -169,7 +174,9 @@ export default class DisplayTshirts extends Component {
     return (
 
     <>
-       
+  <div className='bannerimg'>
+    <Banner />
+       <div className='page-setting'>
 {/* 
         {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
           <Link to="/ViewCustomers" className="green-button">
@@ -300,7 +307,8 @@ export default class DisplayTshirts extends Component {
 
           </div>
 
-         
+          </div>
+        </div>
         </div>
       </>
     );

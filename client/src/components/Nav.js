@@ -18,6 +18,8 @@ import { ACCESS_LEVEL_ADMIN, ACCESS_LEVEL_GUEST} from '../config/global_constant
 
 
 class Nav extends Component {
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -53,6 +55,7 @@ class Nav extends Component {
   render() {
     const { handleSearch } = this.props;
     const { isSearchVisible } = this.state;
+    const accessLevel = localStorage.accessLevel;
 
     return (
       <>
@@ -64,11 +67,14 @@ class Nav extends Component {
 
 <div className="AdminFunc">
   {/* for admin use */}
-  {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
-              <Link to="/ViewCustomers">
-                <button className="admin-button">Customers</button>
-              </Link>
-            )}
+  {localStorage.accessLevel === ACCESS_LEVEL_ADMIN && (
+  <Link to="/ViewCustomers">
+    <button className="admin-button">Customers</button>
+  </Link>
+)}
+
+
+
 
 
  {/* {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
@@ -105,13 +111,21 @@ class Nav extends Component {
 
       <nav>
         <div className="left-section">
-          <SearchBar handleSearch={handleSearch} isVisible={isSearchVisible} />
+          {/* <SearchBar handleSearch={handleSearch} isVisible={isSearchVisible} />
           <img
             id="search-icon"
             src={searchicon}
             alt="Search"
-            onClick={this.toggleSearchVisibility}
-          />
+            onClick={this.toggleSearchVisibility, }
+          /> */}
+              <SearchBar handleSearch={handleSearch} isVisible={isSearchVisible} />
+        {/* Search icon */}
+        <img
+          id="search-icon"
+          src={searchicon}
+          alt="Search"
+          onClick={this.props.moveBannerDown}
+        />
         </div>
 
         <div className="center-section">

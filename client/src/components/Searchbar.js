@@ -47,18 +47,25 @@ class SearchBar extends Component {
       this.setState({ searchName: e.target.value });
     };
 
+    
     render() {
         const { isVisible, searchName } = this.props;
   
        return (
         <div className={`search-bar ${isVisible ? 'active' : ''}`}>
         {isVisible && (
+          // <input
+          //   type="text"
+          //   placeholder="Search"
+          //   value={this.state.searchName}
+          //   onChange={(e) => this.setState({ searchName: e.target.value })}
+          //   autoFocus
           <input
-            type="text"
-            placeholder="Search"
-            value={this.state.searchName}
-            onChange={(e) => this.setState({ searchName: e.target.value })}
-            autoFocus
+          type="text"
+          placeholder="Search"
+          value={this.state.searchName}
+          onChange={this.handleChange}
+          autoFocus
           />
         )}
       </div>
