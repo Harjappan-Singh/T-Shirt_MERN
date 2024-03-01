@@ -19,8 +19,19 @@ export default class Register extends Component {
             city: "",
             county: "",
             eircode: "",
-            country: "",
-            isRegistered: false
+            isRegistered: false,
+            errors: {
+                name: "",
+                email: "",
+                password: "",
+                confirmPassword: "",
+                selectedFile: "",
+                addressLine1: "",
+                addressLine2: "",
+                city: "",
+                county: "",
+                eircode: ""
+            }
         };
     }
 
@@ -29,61 +40,67 @@ export default class Register extends Component {
     };
 
     handleFileChange = (e) => {
+        console.log("File selected:", e.target.files[0]);
         this.setState({ selectedFile: e.target.files[0] });
     };
+    validateName() {
+        return this.state.name.trim() !== "";
+    }
 
+    
     handleSubmit = (e) => {
         e.preventDefault();
     
-        let formData = new FormData();
-        if (this.state.selectedFile) {
-            formData.append(
-                "profilePhoto",
-                this.state.selectedFile,
-                this.state.selectedFile.name
-            );
+        if (!this.state.selectedFile) {
+            console.error("No file was selected to be uploaded");
+            return; // Abort the registration process
         }
     
-        // Prepare data to send to the server
-        const userData = {
-            name: this.state.name,
-            email: this.state.email,
-            password: this.state.password,
-            addressLine1: this.state.addressLine1,
-            addressLine2: this.state.addressLine2,
-            city: this.state.city,
-            county: this.state.county,
-            eircode: this.state.eircode,
-            country: this.state.country
-        };
+        // Create FormData object to send file data
+        const formData = new FormData();
+        formData.append('profilePhoto', this.state.selectedFile);
     
-        axios.post(
-            `${SERVER_HOST}/users/register`,
-            userData,
-            { headers: { "Content-type": "application/json" } } // Set headers to specify JSON content type
-        ).then((res) => {
-            if (res.data) {
-                if (res.data.errorMessage) {
-                    console.log(res.data.errorMessage);
-                } else {
-                    console.log("User registered and logged in");
-    
-                    localStorage.name = res.data.name;
-                    localStorage.accessLevel = res.data.accessLevel; // You may need to adjust this based on your server response
-                    localStorage.profilePhoto = res.data.profilePhoto; // You may need to adjust this based on your server response
-                    localStorage.token = res.data.token;
-                    localStorage.email = res.data.email;
-    
-                    this.setState({ isRegistered: true });
-                }
+        // First, register the user
+        axios.post(`${SERVER_HOST}/users/register/${this.state.name}/${this.state.email}/${this.state.password}`, formData)
+            .then((userRes) => {
+                if (userRes.data && !userRes.data.errorMessage) {
+                    // If user registration is successful, add address
+                    const userData = userRes.data;
+                    const addressData = {
+                        name: this.state.name,
+                        email: this.state.email,
+                        addressLine1: this.state.addressLine1,
+                        addressLine2: this.state.addressLine2,
+                        city: this.state.city,
+                        county: this.state.county,
+                        eircode: this.state.eircode,
+                        
+                    };
+                    axios.post('http://localhost:4000/addresses/add', addressData)
+                    .then((addressRes) => {
+                        if (addressRes.data && !addressRes.data.errorMessage) {
+                            console.log("Address added successfully");
+                            this.setState({ isRegistered: true });
+                            localStorage.name = userData.name;
+                            localStorage.accessLevel = userData.accessLevel;
+                            localStorage.profilePhoto = userData.profilePhoto;
+                            localStorage.token = userData.token;
+                            localStorage.email = userData.email;
+                        } else {
+                            console.log("Address addition failed:", addressRes.data.errorMessage);
+                        }
+                    })
+                    .catch((addressError) => {
+                        console.error("Error adding address:", addressError);
+                    });
             } else {
-                console.log("Registration failed");
+                console.log("User registration failed:", userRes.data.errorMessage);
             }
-        }).catch((error) => {
-            console.error("Error registering user:", error);
+        })
+        .catch((userError) => {
+            console.error("Error registering user:", userError);
         });
-    };
-    
+};
 
     render() {
         return (
@@ -183,16 +200,45 @@ export default class Register extends Component {
                 <br />
 
                 <select
-                    id="county-dropdown"
-                    name="county"
-                    value={this.state.county}
-                    onChange={this.handleChange}
-                >
-                    <option value="">Select County</option>
-                    <option value="Antrim">Antrim</option>
-                    <option value="Armagh">Armagh</option>
-                    {/* Add other county options here */}
-                </select>
+    id="county-dropdown"
+    name="county"
+    value={this.state.county}
+    onChange={this.handleChange}
+>
+    <option value="">Select County</option>
+    <option value="Antrim">Antrim</option>
+    <option value="Armagh">Armagh</option>
+    <option value="Carlow">Carlow</option>
+    <option value="Cavan">Cavan</option>
+    <option value="Clare">Clare</option>
+    <option value="Cork">Cork</option>
+    <option value="Derry">Derry</option>
+    <option value="Donegal">Donegal</option>
+    <option value="Down">Down</option>
+    <option value="Dublin">Dublin</option>
+    <option value="Fermanagh">Fermanagh</option>
+    <option value="Galway">Galway</option>
+    <option value="Kerry">Kerry</option>
+    <option value="Kildare">Kildare</option>
+    <option value="Kilkenny">Kilkenny</option>
+    <option value="Laois">Laois</option>
+    <option value="Leitrim">Leitrim</option>
+    <option value="Limerick">Limerick</option>
+    <option value="Longford">Longford</option>
+    <option value="Louth">Louth</option>
+    <option value="Mayo">Mayo</option>
+    <option value="Meath">Meath</option>
+    <option value="Monaghan">Monaghan</option>
+    <option value="Offaly">Offaly</option>
+    <option value="Roscommon">Roscommon</option>
+    <option value="Sligo">Sligo</option>
+    <option value="Tipperary">Tipperary</option>
+    <option value="Tyrone">Tyrone</option>
+    <option value="Waterford">Waterford</option>
+    <option value="Westmeath">Westmeath</option>
+    <option value="Wexford">Wexford</option>
+    <option value="Wicklow">Wicklow</option>
+</select>
                 <br />
 
                 <input
@@ -204,15 +250,6 @@ export default class Register extends Component {
                     onChange={this.handleChange}
                 />
                 <br />
-
-                <input
-                    name="country"
-                    type="text"
-                    placeholder="Country"
-                    autoComplete="country"
-                    value={this.state.country}
-                    onChange={this.handleChange}
-                />
                 <br />
 
                 <LinkInClass

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { SANDBOX_CLIENT_ID, SERVER_HOST } from "../config/global_constants";
+import { SANDBOX_CLIENT_ID, SERVER_HOST, ACCESS_LEVEL_GUEST } from "../config/global_constants";
 import PayPalMessage from "./PayPalMessage";
 
 class ShoppingCart extends Component {
@@ -10,7 +10,14 @@ class ShoppingCart extends Component {
         cartItems: [],
         redirectToPayPalMessage: false,
         payPalMessageType: null,
-        payPalOrderID: null
+        payPalOrderID: null,
+        name:"",
+        email:"",
+        addressLine1: "",
+        addressLine2: "",
+        city: "",
+        county: "",
+        eircode: ""
     };
 
     componentDidMount() {
@@ -41,6 +48,32 @@ class ShoppingCart extends Component {
         localStorage.removeItem("cart");
     }
 
+    handleChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    handleSubmit = () => {
+        const addressData = {
+            name: this.state.name,
+            email: this.state.email,
+            addressLine1: this.state.addressLine1,
+            addressLine2: this.state.addressLine2,
+            city: this.state.city,
+            county: this.state.county,
+            eircode: this.state.eircode
+        };
+    
+        axios.post('http://localhost:4000/addresses/add', addressData)
+        .then(response => {
+                console.log("Address added:", response.data);
+               
+                this.setState({ addressSubmitted: true });
+            })
+            .catch(error => {
+                console.error("Error adding address:", error);
+            });
+    }
+    
     createOrder = (data, actions) => {
         return actions.order.create({
             purchase_units: [{ amount: { value: this.calculateTotalCost() } }]
@@ -57,7 +90,7 @@ class ShoppingCart extends Component {
         console.log("Payment approved:", data);
         return actions.order.capture().then(details => {
             console.log("Payment details:", details);
-            localStorage.removeItem("cart"); 
+            localStorage.removeItem("cart");
             this.setState({ 
                 payPalMessageType: PayPalMessage.messageType.SUCCESS, 
                 payPalOrderID: data.orderID, 
@@ -114,19 +147,132 @@ class ShoppingCart extends Component {
                 </div>
                 <button onClick={this.handleClearCart}>Clear Cart</button>
 
-                {this.state.redirectToPayPalMessage && 
-                    <Redirect to={`/PayPalMessage/${this.state.payPalMessageType}/${this.state.payPalOrderID}`} />
-                }
+                {localStorage.accessLevel > ACCESS_LEVEL_GUEST || this.state.addressSubmitted ? (
+    <div>
+        {this.state.redirectToPayPalMessage && 
+            <Redirect to={`/PayPalMessage/${this.state.payPalMessageType}/${this.state.payPalOrderID}`} />
+        }
+        <PayPalScriptProvider options={{ currency: "EUR", "client-id": SANDBOX_CLIENT_ID }}>
+            <PayPalButtons 
+                style={{ layout: "horizontal" }} 
+                createOrder={this.createOrder} 
+                onApprove={this.onApprove} 
+                onError={this.onError} 
+                onCancel={this.onCancel} 
+            />
+        </PayPalScriptProvider>
+    </div>
+) : (
+                    <div>
+                        <h2>Enter Address Details</h2>
+                        <input
+                    name="name"
+                    type="text"
+                    placeholder="Name"
+                    autoComplete="name"
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                    ref={(input) => {
+                        this.inputToFocus = input;
+                    }}
+                />
+                <br />
+                <input
+                    name="email"
+                    type="text"
+                    placeholder="Email"
+                    autoComplete="email"
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                    ref={(input) => {
+                        this.inputToFocus = input;
+                    }}
+                />
+                <br />
+                        <input
+                            name="addressLine1"
+                            type="text"
+                            placeholder="Address Line 1"
+                            autoComplete="addressLine1"
+                            value={this.state.addressLine1}
+                            onChange={this.handleChange}
+                        />
+                        <br />
+                        <input
+                            name="addressLine2"
+                            type="text"
+                            placeholder="Address Line 2"
+                            autoComplete="addressLine2"
+                            value={this.state.addressLine2}
+                            onChange={this.handleChange}
+                        />
+                        <br />
+                        <input
+                            name="city"
+                            type="text"
+                            placeholder="City"
+                            autoComplete="city"
+                            value={this.state.city}
+                            onChange={this.handleChange}
+                        />
+                        <br />
+                       
+                          
+                            <select
+                            id="county-dropdown"
+                            name="county"
+                            value={this.state.county}
+                            onChange={this.handleChange}
+                                >
+<option value="">Select County</option>
+<option value="Antrim">Antrim</option>
+<option value="Armagh">Armagh</option>
+<option value="Carlow">Carlow</option>
+<option value="Cavan">Cavan</option>
+<option value="Clare">Clare</option>
+<option value="Cork">Cork</option>
+<option value="Derry">Derry</option>
+<option value="Donegal">Donegal</option>
+<option value="Down">Down</option>
+<option value="Dublin">Dublin</option>
+<option value="Fermanagh">Fermanagh</option>
+<option value="Galway">Galway</option>
+<option value="Kerry">Kerry</option>
+<option value="Kildare">Kildare</option>
+<option value="Kilkenny">Kilkenny</option>
+<option value="Laois">Laois</option>
+<option value="Leitrim">Leitrim</option>
+<option value="Limerick">Limerick</option>
+<option value="Longford">Longford</option>
+<option value="Louth">Louth</option>
+<option value="Mayo">Mayo</option>
+<option value="Meath">Meath</option>
+<option value="Monaghan">Monaghan</option>
+<option value="Offaly">Offaly</option>
+<option value="Roscommon">Roscommon</option>
+<option value="Sligo">Sligo</option>
+<option value="Tipperary">Tipperary</option>
+<option value="Tyrone">Tyrone</option>
+<option value="Waterford">Waterford</option>
+<option value="Westmeath">Westmeath</option>
+<option value="Wexford">Wexford</option>
+<option value="Wicklow">Wicklow</option>
 
-                <PayPalScriptProvider options={{ currency: "EUR", "client-id": SANDBOX_CLIENT_ID }}>
-                    <PayPalButtons 
-                        style={{ layout: "horizontal" }} 
-                        createOrder={this.createOrder} 
-                        onApprove={this.onApprove} 
-                        onError={this.onError} 
-                        onCancel={this.onCancel} 
-                    />
-                </PayPalScriptProvider>
+                        </select>
+                        <br />
+                        <input
+                            name="eircode"
+                            type="text"
+                            placeholder="Eircode"
+                            autoComplete="eircode"
+                            value={this.state.eircode}
+                            onChange={this.handleChange}
+                        />
+                         <button onClick={this.handleSubmit}>Submit</button>
+                    </div>
+                )}
+                
+               
             </div>
         );
     }

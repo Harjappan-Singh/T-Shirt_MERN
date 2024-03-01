@@ -125,8 +125,8 @@ export default class EditTshirt extends Component {
     
 
     validateBrand() {
-        const regex = /^[A-Za-z0-9\-&]+$/;
-        return regex.test(this.state.brand.trim());
+       
+        return this.state.name.trim() !== "";
     }
 
     validateName() {
