@@ -3,11 +3,13 @@ import Rating from './Rating';
 import '../css/Product.css';
 import HeartIcon from './HeartIcon';
 import { Link } from 'react-router-dom';
-import { ACCESS_LEVEL_ADMIN, SERVER_HOST } from '../config/global_constants';
+import { ACCESS_LEVEL_ADMIN } from '../config/global_constants';
 
 class ProductScreen extends Component {
   render() {
     const { product } = this.props;
+    const userInfo = JSON.parse(localStorage.getItem('userInfo')); // Retrieve user info from localStorage
+
     return (
       <div className="product-card">
         <div className="product-image">
@@ -23,8 +25,7 @@ class ProductScreen extends Component {
           <Rating rating={product.rating} numReviews={product.numReviews} />
           <div className="product-price">€{product.price}</div>
           <div>
-            {' '}
-            {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
+            {userInfo && userInfo.accessLevel === ACCESS_LEVEL_ADMIN ? ( // Check if userInfo exists and user is admin
               <Link
                 className="blue-button"
                 to={'/AddTshirt/' + this.props.product._id}
@@ -32,7 +33,7 @@ class ProductScreen extends Component {
                 Add
               </Link>
             ) : null}
-            {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
+            {userInfo && userInfo.accessLevel === ACCESS_LEVEL_ADMIN ? ( // Check if userInfo exists and user is admin
               <Link
                 className="red-button"
                 to={'/DeleteTshirt/' + this.props.product._id}
@@ -40,7 +41,7 @@ class ProductScreen extends Component {
                 Delete
               </Link>
             ) : null}
-            {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
+            {userInfo && userInfo.accessLevel === ACCESS_LEVEL_ADMIN ? ( // Check if userInfo exists and user is admin
               <Link
                 className="green-button"
                 to={'/EditTshirt/' + this.props.product._id}

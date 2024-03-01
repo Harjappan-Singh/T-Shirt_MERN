@@ -7,22 +7,23 @@ const JWT_PRIVATE_KEY = fs.readFileSync(
   process.env.JWT_PRIVATE_KEY_FILENAME,
   'utf8'
 );
+const { isAuth, isAdmin } = require('../utils.js');
 
 // Middleware to verify user's JWT password and check if user is an administrator
 const verifyUsersJWTPassword = (req, res, next) => {
   jwt.verify(
-       req.headers.authorization,
-        JWT_PRIVATE_KEY,
-       { algorithm: 'HS256' },
-        (err, decodedToken) => {
-          if (err) {
-            res.status(401).json({ errorMessage: 'User is not logged in' });
-           } else {
-             req.decodedToken = decodedToken;
-             next();
-           }
-     }
- );
+    req.headers.authorization,
+    JWT_PRIVATE_KEY,
+    { algorithm: 'HS256' },
+    (err, decodedToken) => {
+      if (err) {
+        res.status(401).json({ errorMessage: 'User is not logged in' });
+      } else {
+        req.decodedToken = decodedToken;
+        next();
+      }
+    }
+  );
 };
 const deleteTshirtDocument = (req, res) => {
   tshirtsModel.findByIdAndRemove(req.params.id, (error, data) => {
@@ -38,17 +39,27 @@ const deleteTshirtDocument = (req, res) => {
   });
 };
 
-
-
-
-
 // Delete one T-shirt record
 router.delete(
   '/tshirts/:id',
   verifyUsersJWTPassword,
-  deleteTshirtDocument
+  deleteTshirtDocument,
+  isAdmin
 );
 
+// router.delete('/tshirts/:id', isAuth, isAdmin, async (req, res) => {
+//   try {
+//     const tshirt = await tshirtsModel.findById(req.params.id);
+//     if (!tshirt) {
+//       return res.status(404).json({ message: 'T-shirt Not Found' });
+//     }
+//     await tshirt.remove();
+//     res.json({ message: 'T-shirt Deleted' });
+//   } catch (error) {
+//     console.error('Error deleting T-shirt document:', error);
+//     res.status(500).json({ errorMessage: 'Internal Server Error' });
+//   }
+// });
 
 // Read all records
 router.get('/tshirts', (req, res) => {
@@ -138,7 +149,9 @@ router.put('/tshirts/:id', (req, res) => {
       (error, data) => {
         if (error) {
           console.error('Error updating T-shirt document:', error);
-          return res.status(500).json({ errorMessage: 'Internal server error' });
+          return res
+            .status(500)
+            .json({ errorMessage: 'Internal server error' });
         } else {
           console.log('T-shirt document updated successfully');
           return res.status(200).json(data);
@@ -147,7 +160,6 @@ router.put('/tshirts/:id', (req, res) => {
     );
   }
 });
-
 
 // router.post('/tshirts', createNewTshirtDocument);
 

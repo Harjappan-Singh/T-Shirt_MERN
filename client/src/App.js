@@ -1,3 +1,4 @@
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
@@ -34,11 +35,13 @@ if (typeof localStorage.accessLevel === 'undefined') {
 
 export default class App extends Component {
   render() {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+
     return (
       <BrowserRouter>
-      <div>
-        <Nav /> 
-      </div>
+        <div>
+          <Nav userInfo={userInfo} />
+        </div>
         <Switch>
           <Route exact path="/Register" component={Register} />
           <Route exact path="/ResetDatabase" component={ResetDatabase} />
@@ -79,7 +82,6 @@ export default class App extends Component {
           <Route exact path="/ViewCustomers" component={ViewCustomers} />
           <Route exact path="/ViewOrders" component={ViewOrders} />
           <Route path="/ViewOrders/:_id" component={ViewOrders} />
-
         </Switch>
         {/* <Footer /> */}
         {/* <Footer /> */}
