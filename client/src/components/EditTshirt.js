@@ -68,6 +68,7 @@ export default class EditTshirt extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+
   handleSizeChange = (e) => {
     const { value } = e.target;
     const { sizes } = this.state;
