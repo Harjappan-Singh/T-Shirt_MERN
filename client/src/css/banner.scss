@@ -1,0 +1,42 @@
+.banner {
+    width: 100%;
+    height: 400px;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    animation: slideBanner 5s infinite; /* Adjust the duration to match the interval in milliseconds */
+  
+    @keyframes slideBanner {
+      0% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(-200%); /* Adjust the percentage based on the number of images */
+      }
+    }
+  
+    .dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #ccc; /* Inactive dot color */
+      margin: 0 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+  
+    .dot.active {
+      background-color: #333; /* Active dot color */
+    }
+  }
+  

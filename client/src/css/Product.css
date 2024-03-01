@@ -4,13 +4,12 @@
   height: 425px;
   border-radius: 4%;
   margin: 1rem;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .product-image {
   position: relative;
 }
-
 .product-image img {
   width: 100%;
   border-radius: 4%;
@@ -20,7 +19,6 @@
 .product-info {
   padding: 1rem;
 }
-
 .product-info a {
   text-decoration: none;
   color: black;
@@ -34,22 +32,18 @@
   height: 20px;
   cursor: pointer;
 }
-
-.heart-icon::before {
+.heart-icon::before, .heart-icon::after {
   position: absolute;
-  content: '';
-  left: 0;
-  top: 10px;
+  content: "";
   width: 16px;
   height: 16px;
   background-color: #ff385c;
   border-radius: 50%;
+  top: 10px;
 }
-
 .heart-icon::before {
   left: -10px;
 }
-
 .heart-icon::after {
   left: 10px;
-}
+}/*# sourceMappingURL=Product.css.map */
