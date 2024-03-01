@@ -1,0 +1,64 @@
+.table-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.table-container select {
+  margin-bottom: 10px;
+  width: 100%;
+}
+.table-container .sort-by-rating button,
+.table-container .sort-by-price button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.select-options {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.green-button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.products .product {
+  margin-bottom: 20px;
+  width: calc(30% - 10px);
+}
+
+@media (max-width: 768px) {
+  .products .product {
+    width: calc(50% - 10px);
+  }
+}
+@media (max-width: 480px) {
+  .products .product {
+    width: 100%;
+  }
+}
+.page-setting {
+  margin-top: 5%;
+}
+
+@media (max-width: 480px) {
+  .bannerimg {
+    width: 100%;
+    height: auto;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}/*# sourceMappingURL=DisplayTshirts.css.map */
