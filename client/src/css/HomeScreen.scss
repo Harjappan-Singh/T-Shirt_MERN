@@ -1,3 +1,6 @@
+$border-color: #404040;
+$margin-size: 1rem;
+
 .products {
   display: flex;
   flex-direction: row;
@@ -6,10 +9,10 @@
 }
 
 .product {
-  border: 1px solid #404040;
-  margin: 1rem;
+  border: 1px solid $border-color;
+  margin: $margin-size;
 }
 
 body {
   background-color: white;
-}/*# sourceMappingURL=HomeScreen.css.map */
+}

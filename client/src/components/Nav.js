@@ -143,18 +143,20 @@ class Nav extends Component {
             <h1>Closet</h1>
           </div>
 
-          <div className="right-section">
-            <Link to="/ShoppingCart">
-              <img
-                src={bagImage}
-                style={{ width: '20px', height: '20px' }}
-                alt="Cart"
-              />
-            </Link>
-            <img id="profile-icon" src="profile-icon.png" alt="Profile" />
-          </div>
-        </nav>
-      </>
+        <div className="right-section">
+          <Link to="/ShoppingCart">
+            <img src={bagImage} style={{ width: '20px', height: '20px' }} alt="Cart" />
+          </Link>
+          <img id="profile-icon" src="profile-icon.png" alt="Profile" />
+
+
+
+        
+
+
+</div>
+      </nav>
+</>
     );
   }
 }

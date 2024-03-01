@@ -20,8 +20,6 @@ import PayPalMessage from './components/PayPalMessage';
 import ViewCustomers from './components/ViewCustomers';
 import ViewOrders from './components/ViewOrderHistory';
 import Nav from './components/Nav';
-import Banner from './components/Banner';
-import Footer from './components/Footer';
 
 import { ACCESS_LEVEL_GUEST } from './config/global_constants';
 import ProductDetails from './components/ProductDetails';
@@ -34,14 +32,13 @@ if (typeof localStorage.accessLevel === 'undefined') {
 }
 
 export default class App extends Component {
-  render() {
-    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
+  render() {
     return (
       <BrowserRouter>
-        <div>
-          <Nav userInfo={userInfo} />
-        </div>
+      <div>
+        <Nav /> 
+      </div>
         <Switch>
           <Route exact path="/Register" component={Register} />
           <Route exact path="/ResetDatabase" component={ResetDatabase} />
@@ -82,8 +79,8 @@ export default class App extends Component {
           <Route exact path="/ViewCustomers" component={ViewCustomers} />
           <Route exact path="/ViewOrders" component={ViewOrders} />
           <Route path="/ViewOrders/:_id" component={ViewOrders} />
+
         </Switch>
-        {/* <Footer /> */}
         {/* <Footer /> */}
       </BrowserRouter>
     );
