@@ -206,24 +206,33 @@ const returnUsersDetailsAsJSON = (req, res) => {
     { algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRY }
   );
 
-  try {
-    const fileData = fs.readFileSync(
-      `${process.env.UPLOADED_FILES_FOLDER}/${req.data.profilePhotoFilename}`,
-      'base64'
-    );
+  console.log(req.data);
 
-    res.json({
-      fullName: req.data.fullName,
-      userId: req.data._id,
-      accessLevel: req.data.accessLevel,
-      email: req.data.email,
-      profilePhoto: fileData,
-      token: token,
-    });
-  } catch (err) {
-    console.error('Error reading profile photo:', err);
-    res.status(500).json({ errorMessage: 'Error reading profile photo' });
-  }
+  fs.readFile(
+    `${process.env.UPLOADED_FILES_FOLDER}/${req.data.profilePhotoFilename}`,
+    'base64',
+    (err, fileData) => {
+      if (fileData) {
+        res.json({
+          name: req.data.name,
+          email: req.data.email, // Include email in the response
+          userId: req.data._id,
+          accessLevel: req.data.accessLevel,
+          profilePhoto: fileData,
+          token: token,
+        });
+      } else {
+        res.json({
+        name: req.data.name,
+          email: req.data.email, // Include email in the response
+          accessLevel: req.data.accessLevel,
+          profilePhoto: null,
+          token: token,
+        });
+      }
+    }
+  );
+
 };
 
 router.delete('/users/:userId', (req, res) => {
