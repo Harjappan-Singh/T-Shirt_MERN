@@ -205,33 +205,27 @@ const returnUsersDetailsAsJSON = (req, res) => {
     JWT_PRIVATE_KEY,
     { algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRY }
   );
-  console.log(req.data);
 
-  fs.readFile(
-    `${process.env.UPLOADED_FILES_FOLDER}/${req.data.profilePhotoFilename}`,
-    'base64',
-    (err, fileData) => {
-      if (fileData) {
-        res.json({
-          fullName: req.data.fullName,
-          userId: req.data._id,
-          accessLevel: req.data.accessLevel,
-          email: req.data.email,
-          profilePhoto: fileData,
-          token: token,
-        });
-      } else {
-        res.json({
-          fullName: req.data.fullName,
-          //   email: req.data.email,s
-          accessLevel: req.data.accessLevel,
-          profilePhoto: null,
-          token: token,
-        });
-      }
-    }
-  );
+  try {
+    const fileData = fs.readFileSync(
+      `${process.env.UPLOADED_FILES_FOLDER}/${req.data.profilePhotoFilename}`,
+      'base64'
+    );
+
+    res.json({
+      fullName: req.data.fullName,
+      userId: req.data._id,
+      accessLevel: req.data.accessLevel,
+      email: req.data.email,
+      profilePhoto: fileData,
+      token: token,
+    });
+  } catch (err) {
+    console.error('Error reading profile photo:', err);
+    res.status(500).json({ errorMessage: 'Error reading profile photo' });
+  }
 };
+
 router.delete('/users/:userId', (req, res) => {
   const userId = req.params.userId;
 

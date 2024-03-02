@@ -22,6 +22,13 @@ class Nav extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log(
+      'localStorage.profilePhoto:',
+      JSON.parse(localStorage.getItem('userInfo'))
+    );
+  }
+
   updateUserInfo = (userInfo) => {
     this.setState({ userInfo: userInfo });
   };
@@ -60,7 +67,13 @@ class Nav extends Component {
               >
                 {/* {userInfo.name}
                 {console.log(userInfo)} */}
-                User
+                {userInfo.profilePhoto && (
+                  <img
+                    id="profilePhoto"
+                    src={`data:image/jpeg;base64,${userInfo.profilePhoto}`}
+                    alt="Profile"
+                  />
+                )}
               </button>
               <div className="dropdown-menu" aria-labelledby="userDropdown">
                 <Link className="dropdown-item" to="/profile">
@@ -152,7 +165,6 @@ class Nav extends Component {
                 alt="Cart"
               />
             </Link>
-            <img id="profile-icon" src="profile-icon.png" alt="Profile" />
           </div>
         </nav>
       </>
