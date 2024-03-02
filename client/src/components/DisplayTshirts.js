@@ -41,7 +41,7 @@ export default class DisplayTshirts extends Component {
   componentDidMount() {
     this.fetchData();
   }
-  
+
   async fetchData() {
     try {
       const result = await axios.get(`${SERVER_HOST}/tshirts`);
@@ -54,10 +54,10 @@ export default class DisplayTshirts extends Component {
 
   updateProduct = (updatedProduct) => {
     // Update the product in the state
-    this.setState(prevState => ({
-      products: prevState.products.map(product =>
+    this.setState((prevState) => ({
+      products: prevState.products.map((product) =>
         product._id === updatedProduct._id ? updatedProduct : product
-      )
+      ),
     }));
   };
 
@@ -101,8 +101,6 @@ export default class DisplayTshirts extends Component {
     this.setState({ brandFilter: event.target.value });
   };
 
-
-
   render() {
     const {
       products,
@@ -116,9 +114,6 @@ export default class DisplayTshirts extends Component {
       searchName,
     } = this.state;
 
-
-
-    
     let filteredTshirts = products.filter((tshirt) => {
       const matchesGender =
         genderFilter === 'All' || tshirt.category === genderFilter;
@@ -150,12 +145,11 @@ export default class DisplayTshirts extends Component {
     }
 
     return (
-
-    <>
-  <div className='bannerimg'>
-    <Banner />
-       <div className='page-setting'>
-{/* 
+      <>
+        <div className="bannerimg">
+          <Banner />
+          <div className="page-setting">
+            {/* 
         {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
           <Link to="/ViewCustomers" className="green-button">
             View customers
@@ -175,8 +169,7 @@ export default class DisplayTshirts extends Component {
           </div>
         ) : ( */}
 
-
-          {/* <div>
+            {/* <div>
 
             <Link className="green-button" to={'/Login'}>
               Login
@@ -191,84 +184,80 @@ export default class DisplayTshirts extends Component {
             <br />
             <br />
           </div> */}
-        
-        <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
-          View Orders
-        </Link>
-        <select value={sizesFilter} onChange={this.handleSizesFilter}>
-          <option value="All">Sizes</option>
-          <option value="XXS">XXS</option>
-          <option value="XS">XS</option>
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L</option>
-          <option value="XL">XL</option>
-          <option value="XXL">XXL</option>
-          <option value="XXXL">XXXL</option>
-        </select>
-        <select value={genderFilter} onChange={this.handleGenderFilter}>
-          <option value="All">All</option>
-          <option value="Men">Men</option>
-          <option value="Women">Women</option>
-          <option value="Unisex">Unisex</option>
-        </select>
-        <select value={colorFilter} onChange={this.handleColorFilter}>
-          <option value="All">All Colors</option>
-          <option value="Black">Black</option>
-          <option value="White">White</option>
-          <option value="Brown">Brown</option>
-          <option value="Blue">Blue</option>
-          <option value="Red">Red</option>
-          <option value="Green">Green</option>
-          <option value="Gray">Gray</option>
-        </select>
-        <select value={brandFilter} onChange={this.handleBrandFilter}>
-          <option value="All">All Brands</option>
-          <option value="Nike">Nike</option>
-          <option value="Hanes">Hanes</option>
-          <option value="Adidas">Adidas</option>
-          <option value="Zara">Zara</option>
-          <option value="Puma">Puma</option>
-          <option value="Under Armour">Under Armour</option>
-          <option value="Gildan">Gildan</option>
-          <option value="American Apparel">American Apparel</option> 
-          <option value="Bella + Canvas">Bella + Canvas</option>
-          <option value="Fruit of the Loom">Fruit of the Loom</option>
-          <option value="Champion">Champion</option>
-          <option value="Next Level">Next Level</option>
-        </select>
-        <div className="table-container">
-          <div className="sort-by-rating">
-            <button onClick={this.handleSortByRating}>
-              Sort by Rating{' '}
-              {this.state.sortByRating ? '(Low to High)' : '(High to Low)'}
-            </button>
-          </div>
-          <div className="sort-by-price">
-            <button onClick={this.handleSortByPrice}>
-              Sort by Price{' '}
-              {this.state.sortByPrice ? '(Low to High)' : '(High to Low)'}
-            </button>
-          </div>
-          <div>
-            {loading && <Loading />}
-            {error && <Message variant="danger">{error}</Message>}
-            <div className="products">
-              {filteredTshirts.map((product) => (
-                <div key={product.slug} className="product">
-                 
-                  <ProductScreen product={product} updateProduct={this.updateProduct} />
-                </div>
-              ))}
-            </div>
-         
-          </div>
 
+            <select value={sizesFilter} onChange={this.handleSizesFilter}>
+              <option value="All">Sizes</option>
+              <option value="XXS">XXS</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+              <option value="XXXL">XXXL</option>
+            </select>
+            <select value={genderFilter} onChange={this.handleGenderFilter}>
+              <option value="All">All</option>
+              <option value="Men">Men</option>
+              <option value="Women">Women</option>
+              <option value="Unisex">Unisex</option>
+            </select>
+            <select value={colorFilter} onChange={this.handleColorFilter}>
+              <option value="All">All Colors</option>
+              <option value="Black">Black</option>
+              <option value="White">White</option>
+              <option value="Brown">Brown</option>
+              <option value="Blue">Blue</option>
+              <option value="Red">Red</option>
+              <option value="Green">Green</option>
+              <option value="Gray">Gray</option>
+            </select>
+            <select value={brandFilter} onChange={this.handleBrandFilter}>
+              <option value="All">All Brands</option>
+              <option value="Nike">Nike</option>
+              <option value="Hanes">Hanes</option>
+              <option value="Adidas">Adidas</option>
+              <option value="Zara">Zara</option>
+              <option value="Puma">Puma</option>
+              <option value="Under Armour">Under Armour</option>
+              <option value="Gildan">Gildan</option>
+              <option value="American Apparel">American Apparel</option>
+              <option value="Bella + Canvas">Bella + Canvas</option>
+              <option value="Fruit of the Loom">Fruit of the Loom</option>
+              <option value="Champion">Champion</option>
+              <option value="Next Level">Next Level</option>
+            </select>
+            <div className="table-container">
+              <div className="sort-by-rating">
+                <button onClick={this.handleSortByRating}>
+                  Sort by Rating{' '}
+                  {this.state.sortByRating ? '(Low to High)' : '(High to Low)'}
+                </button>
+              </div>
+              <div className="sort-by-price">
+                <button onClick={this.handleSortByPrice}>
+                  Sort by Price{' '}
+                  {this.state.sortByPrice ? '(Low to High)' : '(High to Low)'}
+                </button>
+              </div>
+              <div>
+                {loading && <Loading />}
+                {error && <Message variant="danger">{error}</Message>}
+                <div className="products">
+                  {filteredTshirts.map((product) => (
+                    <div key={product.slug} className="product">
+                      <ProductScreen
+                        product={product}
+                        updateProduct={this.updateProduct}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
         </div>
       </>
     );
   }
 }
-
