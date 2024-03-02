@@ -4,6 +4,7 @@ import '../css/Product.css';
 import HeartIcon from './HeartIcon';
 import { Link } from 'react-router-dom';
 import { ACCESS_LEVEL_ADMIN } from '../config/global_constants';
+import { ACCESS_LEVEL_ADMIN } from '../config/global_constants';
 
 class ProductScreen extends Component {
   componentDidUpdate(prevProps) {

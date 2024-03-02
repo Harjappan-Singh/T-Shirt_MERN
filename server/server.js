@@ -8,7 +8,7 @@ const createError = require('http-errors');
 // Express
 const express = require(`express`);
 const app = express();
-
+app.use(express.urlencoded({ extended: true }));
 app.use(require(`body-parser`).json());
 app.use(require(`cors`)({ credentials: true, origin: process.env.LOCAL_HOST }));
 

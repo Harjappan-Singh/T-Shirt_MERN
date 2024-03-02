@@ -70,25 +70,26 @@ export default class EditTshirt extends Component {
         });
     }
 
-    handleChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
-    }
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-    handleSizeChange = (e) => {
-        const { value } = e.target;
-        const { sizes } = this.state;
 
-        // Toggle the selected size
-        if (sizes.includes(value)) {
-            this.setState(prevState => ({
-                sizes: prevState.sizes.filter(size => size !== value)
-            }));
-        } else {
-            this.setState(prevState => ({
-                sizes: [...prevState.sizes, value]
-            }));
-        }
+  handleSizeChange = (e) => {
+    const { value } = e.target;
+    const { sizes } = this.state;
+
+    // Toggle the selected size
+    if (sizes.includes(value)) {
+      this.setState((prevState) => ({
+        sizes: prevState.sizes.filter((size) => size !== value),
+      }));
+    } else {
+      this.setState((prevState) => ({
+        sizes: [...prevState.sizes, value],
+      }));
     }
+  };
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -146,56 +147,58 @@ export default class EditTshirt extends Component {
     }
 
 
-    validateName() {
-        return this.state.name.trim() !== "";
-    }
+  validateName() {
+    return this.state.name.trim() !== '';
+  }
 
-    validateDescription() {
-        return this.state.description.trim() !== "";
-    }
+  validateDescription() {
+    return this.state.description.trim() !== '';
+  }
 
-    validateCategory() {
-        return this.state.category.trim() !== "";
-    }
+  validateCategory() {
+    return this.state.category.trim() !== '';
+  }
 
-    validateType() {
-        return this.state.type.trim() !== "";
-    }
+  validateType() {
+    return this.state.type.trim() !== '';
+  }
 
-    validateColor() {
-        return this.state.color.trim() !== "";
-    }
+  validateColor() {
+    return this.state.color.trim() !== '';
+  }
 
-    validatePrice() {
-        const price = parseFloat(this.state.price);
-        return !isNaN(price) && price >= 0;
-    }
+  validatePrice() {
+    const price = parseFloat(this.state.price);
+    return !isNaN(price) && price >= 0;
+  }
 
-    validateCountInStock() {
-        const countInStock = parseInt(this.state.countInStock);
-        return countInStock >= 0 && Number.isInteger(countInStock);
-    }
+  validateCountInStock() {
+    const countInStock = parseInt(this.state.countInStock);
+    return countInStock >= 0 && Number.isInteger(countInStock);
+  }
 
-    validate() {
-        const errors = {
-            brand: this.validateBrand() ? "" : "Brand is required",
-            name: this.validateName() ? "" : "Name is required",
-            description: this.validateDescription() ? "" : "Description is required",
-            category: this.validateCategory() ? "" : "Category is required",
-            type: this.validateType() ? "" : "Type is required",
-            color: this.validateColor() ? "" : "Color is required",
-            price: this.validatePrice() ? "" : "Price must be a positive number",
-            countInStock: this.validateCountInStock() ? "" : "Stock must be a non-negative integer"
-        };
+  validate() {
+    const errors = {
+      brand: this.validateBrand() ? '' : 'Brand is required',
+      name: this.validateName() ? '' : 'Name is required',
+      description: this.validateDescription() ? '' : 'Description is required',
+      category: this.validateCategory() ? '' : 'Category is required',
+      type: this.validateType() ? '' : 'Type is required',
+      color: this.validateColor() ? '' : 'Color is required',
+      price: this.validatePrice() ? '' : 'Price must be a positive number',
+      countInStock: this.validateCountInStock()
+        ? ''
+        : 'Stock must be a non-negative integer',
+    };
 
-        return {
-            isValid: Object.values(errors).every(error => error === ""),
-            errors
-        };
-    }
+    return {
+      isValid: Object.values(errors).every((error) => error === ''),
+      errors,
+    };
+  }
 
-    render() {
-        const { wasSubmittedAtLeastOnce, errorMessage, errors } = this.state;
+  render() {
+    const { wasSubmittedAtLeastOnce, errorMessage, errors } = this.state;
 
         return (
             <div className="form-container">

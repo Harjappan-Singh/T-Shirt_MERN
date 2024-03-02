@@ -101,7 +101,15 @@ export default class DisplayTshirts extends Component {
 
   handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
-    this.setState({ searchName: value, brand: value, sizes: value, description: value, price: value, color: value,category: value  });
+    this.setState({
+      searchName: value,
+      brand: value,
+      sizes: value,
+      description: value,
+      price: value,
+      color: value,
+      category: value,
+    });
   };
 
   render() {
@@ -131,7 +139,11 @@ export default class DisplayTshirts extends Component {
         tshirt.name.toLowerCase().includes(searchName.toLowerCase());
       // Return true if all filters match
       return (
-        matchesGender && matchesColor && matchesBrand && matchesSizes && matchesSearchName
+        matchesGender &&
+        matchesColor &&
+        matchesBrand &&
+        matchesSizes &&
+        matchesSearchName
       );
     });
 
@@ -228,3 +240,4 @@ export default class DisplayTshirts extends Component {
     );
   }
 }
+
