@@ -5,7 +5,6 @@ import HeartIcon from './HeartIcon';
 import { Link } from 'react-router-dom';
 import { ACCESS_LEVEL_ADMIN } from '../config/global_constants';
 
-
 class ProductScreen extends Component {
   componentDidUpdate(prevProps) {
     // Log a message when the component updates
@@ -47,19 +46,13 @@ class ProductScreen extends Component {
                 Add
               </Link>
             )}
-            {accessLevel >= ACCESS_LEVEL_ADMIN && (
-              <Link
-                className="red-button"
-                to={`/DeleteTshirt/${product._id}`}
-              >
+            {accessLevel === ACCESS_LEVEL_ADMIN && (
+              <Link className="red-button" to={`/DeleteTshirt/${product._id}`}>
                 Delete
               </Link>
             )}
-            {accessLevel >= ACCESS_LEVEL_ADMIN && (
-              <Link
-                className="green-button"
-                to={`/EditTshirt/${product._id}`}
-              >
+            {accessLevel === ACCESS_LEVEL_ADMIN && (
+              <Link className="green-button" to={`/EditTshirt/${product._id}`}>
                 Edit
               </Link>
             )}
