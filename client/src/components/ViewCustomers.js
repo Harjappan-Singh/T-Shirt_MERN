@@ -51,6 +51,7 @@ export default class ViewCustomers extends Component {
       const response = await axios.get(
         `${SERVER_HOST}/orderHistory/${customerEmail}`
       );
+      console.log('Response from backend:', response.data); // Add this debugging statement
       this.setState({
         showOrderHistory: true,
         selectedCustomer: { email: customerEmail, orderHistory: response.data },
@@ -59,6 +60,7 @@ export default class ViewCustomers extends Component {
       console.error('Error fetching order history:', error);
     }
   };
+  
 
   handleCloseOrderHistory = () => {
     this.setState({
@@ -153,13 +155,14 @@ export default class ViewCustomers extends Component {
                 <div style={{ marginTop: '10px' }}>
                   <h3>Order History for {selectedCustomer.email}</h3>
                   <ul>
-                    {selectedCustomer.orderHistory.map((order, index) => (
-                      <li key={index}>
-                        <div>Order ID: {order.orderId}</div>
-                        <div>Total Amount: {order.totalAmount}</div>
-                       
-                      </li>
-                    ))}
+                  {selectedCustomer.orderHistory.map((order, index) => (
+  <li key={index}>
+    <div>Item Name: {order.item_name}</div>
+    <div>Date: {new Date(order.date).toLocaleDateString()}</div>
+    <div>Time: {new Date(order.date).toLocaleTimeString()}</div>
+    <div>Cost: {order.cost}</div>
+  </li>
+))}
                   </ul>
                   <button onClick={this.handleCloseOrderHistory}>Close</button>
                 </div>
