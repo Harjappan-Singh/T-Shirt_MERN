@@ -41,7 +41,7 @@ export default class DisplayTshirts extends Component {
   componentDidMount() {
     this.fetchData();
   }
-  
+
   async fetchData() {
     try {
       const result = await axios.get(`${SERVER_HOST}/tshirts`);
@@ -54,10 +54,10 @@ export default class DisplayTshirts extends Component {
 
   updateProduct = (updatedProduct) => {
     // Update the product in the state
-    this.setState(prevState => ({
-      products: prevState.products.map(product =>
+    this.setState((prevState) => ({
+      products: prevState.products.map((product) =>
         product._id === updatedProduct._id ? updatedProduct : product
-      )
+      ),
     }));
   };
 
@@ -101,8 +101,6 @@ export default class DisplayTshirts extends Component {
     this.setState({ brandFilter: event.target.value });
   };
 
-
-
   render() {
     const {
       products,
@@ -116,9 +114,6 @@ export default class DisplayTshirts extends Component {
       searchName,
     } = this.state;
 
-
-
-    
     let filteredTshirts = products.filter((tshirt) => {
       const matchesGender =
         genderFilter === 'All' || tshirt.category === genderFilter;
@@ -156,6 +151,13 @@ export default class DisplayTshirts extends Component {
    <Banner />
        <div className='page-setting'>
 {/* 
+
+      <>
+        <div className="bannerimg">
+          <Banner />
+          <div className="page-setting">
+            {/* 
+
         {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
           <Link to="/ViewCustomers" className="green-button">
             View customers
@@ -175,8 +177,7 @@ export default class DisplayTshirts extends Component {
           </div>
         ) : ( */}
 
-
-          {/* <div>
+            {/* <div>
 
             <Link className="green-button" to={'/Login'}>
               Login
@@ -191,6 +192,7 @@ export default class DisplayTshirts extends Component {
             <br />
             <br />
           </div> */}
+
         
        {/* <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
           View Orders
@@ -258,17 +260,13 @@ export default class DisplayTshirts extends Component {
                 <div key={product.slug} className="product">
                  
                   <ProductScreen product={product} updateProduct={this.updateProduct} />
-                </div>
-              ))}
-            </div>
-         
-          </div>
 
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
         </div>
       </>
     );
   }
 }
-
