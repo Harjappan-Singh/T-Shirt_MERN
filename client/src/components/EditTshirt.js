@@ -34,7 +34,7 @@ export default class EditTshirt extends Component {
     }
 
     componentDidMount() {
-        console.log("GET request URL:", `${SERVER_HOST}/tshirts/${this.props.match.params.id}`);
+      
 
         axios.get(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, { headers: { "authorization": localStorage.token } })
         .then(res => {

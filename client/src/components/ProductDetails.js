@@ -16,6 +16,7 @@ class ProductDetails extends Component {
       product: {},
       quantity: 1,
       selectedSize: '',
+      
     };
   }
 
@@ -122,7 +123,7 @@ class ProductDetails extends Component {
               <button className="blue-button" onClick={this.addToCart}>
                 Add to Cart
               </button>
-              <button onClick={this.removeFromCart}>Remove</button>
+             
             </div>
           </div>
         </div>

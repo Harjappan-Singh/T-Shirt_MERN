@@ -110,7 +110,10 @@ export default class ViewCustomers extends Component {
             }}
           >
             <div style={{ marginBottom: '10px' }}>
-              <strong>Name:</strong> {customer.name}, <strong>Email:</strong>{' '}
+              <strong>Name:</strong> {customer.name}
+              </div>
+              <div>
+               <strong>Email:</strong>
               {customer.email}
             </div>
             <div>
@@ -154,7 +157,7 @@ export default class ViewCustomers extends Component {
                       <li key={index}>
                         <div>Order ID: {order.orderId}</div>
                         <div>Total Amount: {order.totalAmount}</div>
-                        {/* Add more details as needed */}
+                       
                       </li>
                     ))}
                   </ul>

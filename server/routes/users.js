@@ -214,8 +214,10 @@ const returnUsersDetailsAsJSON = (req, res) => {
     (err, fileData) => {
       if (fileData) {
         res.json({
-          name: req.data.fullName,
-          email: req.data.email,
+
+          name: req.data.name,
+          email: req.data.email, 
+
           userId: req.data._id,
           accessLevel: req.data.accessLevel,
           profilePhotoFilename: req.data.profilePhotoFilename,

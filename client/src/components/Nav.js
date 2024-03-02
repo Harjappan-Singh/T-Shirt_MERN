@@ -9,14 +9,14 @@ import axios from 'axios';
 import {
   ACCESS_LEVEL_ADMIN,
   ACCESS_LEVEL_NORMAL_USER,
-  SERVER_HOST,
 } from '../config/global_constants';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
 
 class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchValue: '',
       products: [],
       loading: true,
       error: '',
@@ -25,27 +25,19 @@ class Nav extends Component {
     };
   }
 
-  componentDidMount() {
-    this.fetchData(); // Call fetchData directly here
+  async componentDidMount() {
+    await this.fetchData();
   }
-
-  fetchData = async () => {
+  
+  async fetchData() {
     try {
-      const result = await axios.get(`${SERVER_HOST}/tshirts`);
+      const result = await axios.get('/tshirts'); // assuming the endpoint is correct
       this.setState({ products: result.data, loading: false });
     } catch (error) {
       console.error('Error fetching data:', error);
       this.setState({ error: error.message, loading: false });
     }
-  };
-
-  handleSearch = (searchParams) => {
-    const { name } = searchParams;
-    const filteredTshirts = this.state.products.filter((tshirt) =>
-      tshirt.name.toLowerCase().includes(name.toLowerCase())
-    );
-    this.setState({ searchName: name, products: filteredTshirts });
-  };
+  }
 
   toggleSearchVisibility = () => {
     this.setState((prevState) => ({
@@ -56,18 +48,30 @@ class Nav extends Component {
   signoutHandler = () => {
     localStorage.removeItem('userInfo');
     this.setState({ userInfo: null });
-    // this.props.history.push('/');
+    // Redirect to home page or login page if needed
   };
 
   render() {
     const { userInfo } = this.state;
 
     return (
-      <>
-        <div className="top-bar">
-          <Link to="/DisplayTshirts">
-            <img src={wings} alt="icon" />
-          </Link>
+      <div className="top-bar">
+        <a href="/DisplayTshirts">
+          <img src={wings} alt="icon" />
+        </a>
+
+        <div className="AdminFunc">
+          {!userInfo && (
+            <Link className="admin-button1" to={'/Login'}>
+              Login
+            </Link>
+          )}
+
+          {!userInfo && (
+            <Link className="admin-button1" to={'/Register'}>
+              Register
+            </Link>
+          )}
 
           {userInfo && userInfo.accessLevel === ACCESS_LEVEL_NORMAL_USER && (
             <div className="dropdown">
@@ -79,25 +83,22 @@ class Nav extends Component {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                {localStorage.profilePhoto && (
+                {userInfo.profilePhoto && (
                   <img
                     id="profilePhoto"
-                    src={`data:image/jpeg;base64,${localStorage.profilePhoto}`}
+                    src={`data:image/jpeg;base64,${userInfo.profilePhoto}`}
                     alt="Profile"
                   />
                 )}
               </button>
               <div className="dropdown-menu" aria-labelledby="userDropdown">
-                <Link className="dropdown-item" to="/UserProfile">
+                <Link className="dropdown-item" to="/profile">
                   User Profile
                 </Link>
-                <Link
-                  className="dropdown-item"
-                  to={`/ViewOrders/${localStorage.getItem('email')}`}
-                >
-                  View Orders
+                <Link className="dropdown-item" to="/admin/ViewOrders">
+                  Order History
                 </Link>
-
+               
                 <Link
                   className="dropdown-item"
                   to="/"
@@ -122,10 +123,10 @@ class Nav extends Component {
                 Admin
               </button>
               <div className="dropdown-menu" aria-labelledby="adminDropdown">
-                <Link className=" dropdown-item blue-button" to={'/AddTshirt'}>
+                <Link className="dropdown-item" to='/AddTshirt'>
                   Add New T-shirt
                 </Link>
-                <Link className="dropdown-item" to="/ViewCustomers">
+                <Link className="dropdown-item" to="/admin/ViewCustomers">
                   Users
                 </Link>
                 <Link className="dropdown-item" to="/admin/dashboard">
@@ -134,23 +135,11 @@ class Nav extends Component {
                 <Link className="dropdown-item" to="/admin/products">
                   Products
                 </Link>
-                <Link className="dropdown-item" to="/admin/orders">
+                <Link className="dropdown-item" to="/admin/ViewOrders">
                   Orders
-                </Link>
-                <Link
-                  className="dropdown-item"
-                  to="/"
-                  onClick={this.signoutHandler}
-                >
-                  Log Out
                 </Link>
               </div>
             </div>
-          )}
-          {!userInfo && (
-            <Link className="nav-link" to="/Login">
-              Log In
-            </Link>
           )}
         </div>
 
@@ -177,10 +166,21 @@ class Nav extends Component {
                 alt="Cart"
               />
             </Link>
-            <img id="profile-icon" src="profile-icon.png" alt="Profile" />
+            <Link
+                  className="dropdown-item"
+                  to="/"
+                  onClick={this.signoutHandler}
+                >
+                  Log Out
+                </Link>
+
+        
+            {userInfo ? (
+              <img id="profile-icon" src="profile-icon.png" alt="Profile" />
+            ) : null}
           </div>
         </nav>
-      </>
+      </div>
     );
   }
 }
