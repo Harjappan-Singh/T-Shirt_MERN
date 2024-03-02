@@ -1,26 +1,10 @@
-$primary-font-family: 'Arial', sans-serif;
-$border-color: #ccc;
-$primary-color: #333;
-$accent-color: #ff4500;
-$button-bg-color: $accent-color;
-$button-text-color: white;
-$button-border-radius: 5px;
-
 .shopping-cart {
-  font-family: $primary-font-family;
+  font-family: Arial, sans-serif;
 }
 
 .shopping-cart-title {
   text-align: center;
-  font-family: 'Courier New', Courier, monospace;
 }
-
-body {
-  font-family: $primary-font-family;
-}
-
-
-
 
 .cart-container {
   display: flex;
@@ -45,7 +29,7 @@ body {
 .cart-item {
   display: flex;
   padding: 10px;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid #ccc;
 }
 
 .item-details {
@@ -64,7 +48,7 @@ body {
 
 .item-name {
   font-weight: bold;
-  color: $primary-color;
+  color: #333;
 }
 
 .item-size-selector {
@@ -86,21 +70,24 @@ body {
   align-items: center;
 }
 
-.action-button,
-.decrease-button,
-.increase-button,
-.remove-button,
-.clear-cart-button {
+.action-button {
   background-color: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
 }
 
+.decrease-button,
+.increase-button,
+.remove-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 .decrease-button:focus,
 .increase-button:focus,
-.remove-button:focus,
-.clear-cart-button:focus {
+.remove-button:focus {
   outline: none;
 }
 
@@ -108,7 +95,7 @@ body {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;
+  font-size: 24px; /* Preferred icon size */
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
@@ -128,11 +115,11 @@ body {
 }
 
 .clear-cart-button {
-  background-color: $button-bg-color;
-  color: $button-text-color;
+  background-color: #ff4500;
+  color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: $button-border-radius;
+  border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
 }

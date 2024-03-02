@@ -5,6 +5,7 @@ import '../css/ProductDetail.css';
 import Loading from './Loading';
 import Message from './Message';
 import { SERVER_HOST } from '../config/global_constants';
+import Banner from './Banner';
 
 class ProductDetails extends Component {
   constructor(props) {
@@ -71,9 +72,10 @@ class ProductDetails extends Component {
       );
     } else {
       return (
+        <div className="page-container">
         <div className="product-details-container">
           <div className="product-details-header">
-            <h1>{product.name}</h1>
+            <h2>{product.name}</h2>
           </div>
           <div className="product-details-content">
             <div className="product-image-container">
@@ -124,6 +126,10 @@ class ProductDetails extends Component {
              
             </div>
           </div>
+        </div>
+        <div className="banner-container">
+        {/* <Banner /> */}
+        </div>
         </div>
       );
     }

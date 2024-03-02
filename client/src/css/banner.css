@@ -1,20 +1,72 @@
-.banner {
-  width: 100%;
-  height: 400px;
-  background-size: cover;
+@font-face {
+  font-family: "Nexa";
+  src: url("../css/fonts/Nexa-Heavy.ttf") format("woff2"), url("../css/fonts/Nexa-Heavy.ttf") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+.banner-container {
   position: relative;
   overflow: hidden;
-  animation: slideBanner 5s infinite; /* Adjust the duration to match the interval in milliseconds */
+}
+.banner-container .thin-banner-text {
+  display: flex;
+  justify-content: space-between;
+  color: #000000;
+  text-align: center;
+  padding: 5px 0;
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: slideText 10s infinite linear;
+  height: 40px;
+}
+.banner-container p {
+  margin: 0;
+  flex: 1;
+}
+@keyframes slideText {
+  0% {
+    transform: translateX(-100vw); /* Start from the middle of the viewport */
+  }
+  10% {
+    transform: translateX(-70vw);
+  }
+  40% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10vw); /* Slow down in the middle */
+  }
+  70% {
+    transform: translateX(25vw);
+  }
+  90% {
+    transform: translateX(50vw);
+  }
+  100% {
+    transform: translateX(100vw); /* Disappear on the left side */
+  }
+}
+.banner-container .banner {
+  width: 100%;
+  height: 700px;
+  position: relative;
+  overflow: hidden;
+  background-size: cover;
+}
+.banner-container .banner .images {
+  display: flex;
+  animation: slideBanner 5s infinite;
 }
 @keyframes slideBanner {
   0% {
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-200%); /* Adjust the percentage based on the number of images */
+    transform: translateX(-200%);
   }
 }
-.banner .dots {
+.banner-container .banner .dots {
   position: absolute;
   bottom: 20px;
   left: 50%;
@@ -23,15 +75,44 @@
   justify-content: center;
   align-items: center;
 }
-.banner .dot {
+.banner-container .banner .dots .dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: #ccc; /* Inactive dot color */
+  background-color: #ccc;
   margin: 0 5px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
 }
-.banner .dot.active {
-  background-color: #333; /* Active dot color */
+.banner-container .banner .dots .dot.active {
+  background-color: #333;
+}
+.banner-container .banner .text-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.banner-container .banner .text-container h1 {
+  font-size: 6em;
+  color: #1e6091;
+}
+.banner-container .banner .text-container h1.angel-blue {
+  font-weight: 700;
+  font-size: 7em;
+  color: #ffffff;
+  -webkit-text-stroke: 0.5px #ffffff;
+  text-stroke: 6px #ffffff;
+}
+.banner-container .banner .text-container .angel-blue-image {
+  max-width: 100%;
+  height: auto;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+}
+.banner-container .banner img {
+  max-width: 100%;
+  height: auto;
 }/*# sourceMappingURL=banner.css.map */

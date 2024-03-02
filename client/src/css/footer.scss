@@ -1,73 +1,57 @@
-$lightPink: #1e6091;
-$blue: #007bff;
-
-/* footer.scss */
 
 .footer {
-  background-color: white; /* Light Pink */
+  background-color: #1e6091;
   padding: 2em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: $lightPink;
-  border-top: 2px solid $lightPink; /* Blue border with 2px width */
-  /* border-radius: 5px; Rounded corners */
-  overflow: hidden;
 
-  img {
-    max-width: 80px; /* Adjust as needed */
-    margin-bottom: 1em;
-  }
-
-  div {
-    margin-top: 0.7em;
+  .footer-social-icons {
     display: flex;
-    color: $lightPink;
+    gap: 1em;
 
     box-icon {
-      margin: 0 0.5em;
-      font-size: 2em; /* Adjust as needed */
-      color: $lightPink;
+      font-size: 2em;
+      color: white;
     }
   }
 
-  &-section {
+  .footer-section {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-top: 1em;
     width: 100%;
-    margin-left: 50%;
-  }
 
-  &-pages {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 50%;
+    .footer-pages,
+    .footer-creators {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
 
-    a {
-      color: $lightPink;
-      text-decoration: none;
-      margin: 0 1em;
-      transition: color 0.3s ease;
+     .footer-pages {
+      a {
+        color: #ffffff;
+        text-decoration: none;
+        margin: 0 1em;
+        transition: color 0.3s ease;
 
-      &:hover {
-        color: $blue;
+        &:hover {
+          color: #f0f0f0;
+        }
       }
     }
-  }
 
-  &-creators {
-    text-align: center;
-    width: 50%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-
-    h3 {
-      margin: 0.5em 0;
-      font-size: 1.2em;
-      color: $blue;
+    .footer-creators {
+      h3 {
+        margin: 0.5em 1em;
+        font-size: 1.2em;
+        color: #f0f0f0;
+        display: block; /* Ensures each creator is on a new line */
+      }
     }
   }
 }
