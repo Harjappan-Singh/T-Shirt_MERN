@@ -1,29 +1,38 @@
 const router = require('express').Router();
 const tshirtsModel = require('../models/tshirts');
-const express = require('express');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
-const JWT_PRIVATE_KEY = fs.readFileSync(
-  process.env.JWT_PRIVATE_KEY_FILENAME,
-  'utf8'
-);
 
-// Middleware to verify user's JWT password and check if user is an administrator
+const JWT_PRIVATE_KEY = fs.readFileSync(process.env.JWT_PRIVATE_KEY_FILENAME, 'utf8')
+
 const verifyUsersJWTPassword = (req, res, next) => {
+  const token = req.headers.authorization;
+
+  if (!token || !token.startsWith('Bearer ')) {
+    return res
+      .status(401)
+      .json({ errorMessage: 'Unauthorized: Missing or invalid token' });
+  }
+
+  const tokenWithoutBearer = token.split(' ')[1];
+
   jwt.verify(
-       req.headers.authorization,
-        JWT_PRIVATE_KEY,
-       { algorithm: 'HS256' },
-        (err, decodedToken) => {
-          if (err) {
-            res.status(401).json({ errorMessage: 'User is not logged in' });
-           } else {
-             req.decodedToken = decodedToken;
-             next();
-           }
-     }
- );
+    tokenWithoutBearer,
+    JWT_PRIVATE_KEY,
+    { algorithm: 'HS256' },
+    (err, decodedToken) => {
+      if (err) {
+        return res
+          .status(401)
+          .json({ errorMessage: 'Unauthorized: Invalid token' });
+      } else {
+        req.decodedToken = decodedToken;
+        next();
+      }
+    }
+  );
 };
+
 const deleteTshirtDocument = (req, res) => {
   tshirtsModel.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {
@@ -38,19 +47,41 @@ const deleteTshirtDocument = (req, res) => {
   });
 };
 
+const updateTshirtDocument = (req, res) => {
+  const updatedDetails = {
+    brand: req.body.brand,
+    name: req.body.name,
+    description: req.body.description,
+    category: req.body.category,
+    type: req.body.type,
+    color: req.body.color,
+    sizes: Array.isArray(req.body.sizes) ? req.body.sizes : [],
+    price: req.body.price,
+    countInStock: req.body.countInStock,
+    rating: req.body.rating,
+    numReviews: req.body.numReviews,
+    photos: [],
+  };
 
+  tshirtsModel.findByIdAndUpdate(req.params.id, updatedDetails, { new: true }, (error, updatedTshirt) => {
+    if (error) {
+      console.error('Error updating T-shirt document:', error);
+      return res.status(500).json({ errorMessage: 'Internal server error' });
+    } else {
+      if (updatedTshirt) {
+        console.log('T-shirt document updated successfully');
+        return res.json(updatedTshirt);
+      } else {
+        return res.status(404).json({ errorMessage: 'T-shirt not found' });
+      }
+    }
+  });
+};
 
+router.delete('/tshirts/:id', deleteTshirtDocument);
 
+router.put('/tshirts/:id', updateTshirtDocument);
 
-// Delete one T-shirt record
-router.delete(
-  '/tshirts/:id',
-  verifyUsersJWTPassword,
-  deleteTshirtDocument
-);
-
-
-// Read all records
 router.get('/tshirts', (req, res) => {
   tshirtsModel.find({}, (error, data) => {
     if (error) {
@@ -61,7 +92,6 @@ router.get('/tshirts', (req, res) => {
   });
 });
 
-// Read one record
 router.get('/tshirts/:id', (req, res) => {
   tshirtsModel.findById(req.params.id, (error, data) => {
     if (error) {
@@ -76,48 +106,6 @@ router.get('/tshirts/:id', (req, res) => {
   });
 });
 
-// Add a new T-shirt record
-const createNewTshirtDocument = (req, res) => {
-  try {
-    // Use the new T-shirt details to create a new T-shirt document
-    let tshirtDetails = {
-      brand: req.body.brand,
-      name: req.body.name,
-      description: req.body.description,
-      category: req.body.category,
-      type: req.body.type,
-      color: req.body.color,
-      sizes: Array.isArray(req.body.sizes) ? req.body.sizes : [],
-      price: req.body.price,
-      countInStock: req.body.countInStock,
-      rating: req.body.rating,
-      numReviews: req.body.numReviews,
-      photos: [],
-    };
-
-    req.files.forEach((file, index) => {
-      tshirtDetails.photos[index] = { filename: file.filename };
-    });
-
-    // Uncomment the next line to add the T-shirt document to the database
-    tshirtsModel.create(tshirtDetails, (error, data) => {
-      if (error) {
-        console.error('Error creating new T-shirt document:', error);
-        return res.status(500).json({ errorMessage: 'Internal server error' });
-      } else {
-        console.log('New T-shirt document created successfully');
-        return res.status(201).json(data);
-      }
-    });
-  } catch (error) {
-    console.error('Error processing request:', error);
-    return res.status(400).json({ errorMessage: 'Bad request' });
-  }
-};
-
-router.post('/tshirts', createNewTshirtDocument);
-
-
-
+router.post('/tshirts', deleteTshirtDocument);
 
 module.exports = router;
