@@ -214,25 +214,37 @@ const returnUsersDetailsAsJSON = (req, res) => {
     (err, fileData) => {
       if (fileData) {
         res.json({
-          name: req.data.name,
-          email: req.data.email, // Include email in the response
+          name: req.data.fullName,
+          email: req.data.email,
           userId: req.data._id,
           accessLevel: req.data.accessLevel,
-          profilePhoto: fileData,
+          profilePhotoFilename: req.data.profilePhotoFilename,
+          fullName: req.data.fullName,
+          dateOfBirth: req.data.dateOfBirth,
+          gender: req.data.gender,
+          phoneNumber: req.data.phoneNumber,
+          address: req.data.address,
+          accountCreationDate: req.data.accountCreationDate,
           token: token,
         });
       } else {
         res.json({
-        name: req.data.name,
-          email: req.data.email, // Include email in the response
+          name: req.data.fullName,
+          email: req.data.email,
+          userId: req.data._id,
           accessLevel: req.data.accessLevel,
+          fullName: req.data.fullName,
+          dateOfBirth: req.data.dateOfBirth,
+          gender: req.data.gender,
+          phoneNumber: req.data.phoneNumber,
+          address: req.data.address,
+          accountCreationDate: req.data.accountCreationDate,
           profilePhoto: null,
           token: token,
         });
       }
     }
   );
-
 };
 
 router.delete('/users/:userId', (req, res) => {
@@ -303,7 +315,12 @@ router.post(
   checkThatJWTPasswordIsValid,
   returnUsersDetailsAsJSON
 );
-
+// Route to fetch user details based on email
+router.get(
+  '/users/:email',
+  checkThatUserExistsInUsersCollection,
+  returnUsersDetailsAsJSON
+);
 router.post(`/users/logout`, logout);
 
 module.exports = router;

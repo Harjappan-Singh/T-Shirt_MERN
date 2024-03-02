@@ -5,25 +5,14 @@ import SearchBar from './Searchbar';
 import bagImage from '../css/images/bag.png';
 import searchicon from '../css/images/search.png';
 import wings from '../css/images/logobw.png';
-import DisplayTshirts from "./DisplayTshirts";
 import axios from 'axios';
-
-
-import { ACCESS_LEVEL_ADMIN, SERVER_HOST} from '../config/global_constants';
-
-
-
-
 import {
   ACCESS_LEVEL_ADMIN,
   ACCESS_LEVEL_NORMAL_USER,
+  SERVER_HOST,
 } from '../config/global_constants';
-import Login from './Login';
-import ViewCustomers from './ViewCustomers';
 
 class Nav extends Component {
-
-
   constructor(props) {
     super(props);
     this.state = {
@@ -37,21 +26,10 @@ class Nav extends Component {
   }
 
   componentDidMount() {
-    console.log(
-      'localStorage.profilePhoto:',
-      JSON.parse(localStorage.getItem('userInfo'))
-    );
+    this.fetchData(); // Call fetchData directly here
   }
 
-  updateUserInfo = (userInfo) => {
-    this.setState({ userInfo: userInfo });
-  };
-
-  async componentDidMount() {
-    await this.fetchData(); // Change to async/await
-  }
-  
-  async fetchData() { // Change to async
+  fetchData = async () => {
     try {
       const result = await axios.get(`${SERVER_HOST}/tshirts`);
       this.setState({ products: result.data, loading: false });
@@ -59,41 +37,16 @@ class Nav extends Component {
       console.error('Error fetching data:', error);
       this.setState({ error: error.message, loading: false });
     }
-  }
+  };
 
   handleSearch = (searchParams) => {
     const { name } = searchParams;
-    // Filter products based on the name
     const filteredTshirts = this.state.products.filter((tshirt) =>
       tshirt.name.toLowerCase().includes(name.toLowerCase())
     );
-  
-    // Update the state with the filtered data
     this.setState({ searchName: name, products: filteredTshirts });
   };
-  
 
-  handleSearchClick = () => {
-    const { onSearch } = this.props;
-    const { searchValue } = this.state;
-  
-    onSearch({ name: searchValue });
-  };
-  
-
-
-  // toggleSearchVisibility = () => {
-  //   this.setState((prevState) => ({
-  //     isSearchVisible: !prevState.isSearchVisible,
-  //   }), () => {
-  //     // Focus on the input field when the search bar is made visible
-  //     if (this.state.isSearchVisible) {
-  //       this.searchInput.focus();
-  //     }
-  //   });
-  // };
-  
-  
   toggleSearchVisibility = () => {
     this.setState((prevState) => ({
       isSearchVisible: !prevState.isSearchVisible,
@@ -107,56 +60,10 @@ class Nav extends Component {
   };
 
   render() {
-
-    const { searchValue } = this.state;
-
-    
     const { userInfo } = this.state;
 
     return (
       <>
-
-<div className="top-bar">
-<a href="/DisplayTshirts">
-<img src={wings} alt="icon" />
-</a>
-
-<div className="AdminFunc">
-  {/* for admin use */}
-  {localStorage.accessLevel === ACCESS_LEVEL_ADMIN && (
-  <Link to="/ViewCustomers">
-    <button className="admin-button">Customers</button>
-  </Link>
-)}
-
-
-
-
-
- {/* {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
-          <div className="logout">
-            {localStorage.profilePhoto !== 'null' ? (
-              <img
-                id="profilePhoto"
-                src={`data:;base64,${localStorage.profilePhoto}`}
-                alt=""
-              />
-            ) : null}
-            <Logout />
-          </div>
- ) */}
-
-
-
-            
-
-
-  <Link className="admin-button1" to={'/Login'}>
-    Login
-  </Link>
-  <Link className="admin-button1" to={'/Register'}>
-    Register
-  </Link>
         <div className="top-bar">
           <Link to="/DisplayTshirts">
             <img src={wings} alt="icon" />
@@ -172,23 +79,25 @@ class Nav extends Component {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                {/* {userInfo.name}
-                {console.log(userInfo)} */}
-                {userInfo.profilePhoto && (
+                {localStorage.profilePhoto && (
                   <img
                     id="profilePhoto"
-                    src={`data:image/jpeg;base64,${userInfo.profilePhoto}`}
+                    src={`data:image/jpeg;base64,${localStorage.profilePhoto}`}
                     alt="Profile"
                   />
                 )}
               </button>
               <div className="dropdown-menu" aria-labelledby="userDropdown">
-                <Link className="dropdown-item" to="/profile">
+                <Link className="dropdown-item" to="/UserProfile">
                   User Profile
                 </Link>
-                <Link className="dropdown-item" to="/ViewOrders/${localStorage.getItem('email')">
-                  Order History
+                <Link
+                  className="dropdown-item"
+                  to={`/ViewOrders/${localStorage.getItem('email')}`}
+                >
+                  View Orders
                 </Link>
+
                 <Link
                   className="dropdown-item"
                   to="/"
@@ -228,13 +137,6 @@ class Nav extends Component {
                 <Link className="dropdown-item" to="/admin/orders">
                   Orders
                 </Link>
-
-{/* <Link className="red-button" to={'/ResetDatabase'}>
-  Reset Database
-</Link> */}
-</div>
-
-  </div>
                 <Link
                   className="dropdown-item"
                   to="/"
@@ -252,26 +154,9 @@ class Nav extends Component {
           )}
         </div>
 
-  <nav>
-          <div className="left-section">
-            {/* <img
-              id="search-icon"
-              src={searchicon}
-              alt="Search"
-              onClick={this.handleSearchClick}
-            />
-          */}
-  </div>
-         
-          <div className="center-section">
-            <h1>Closet</h1>
-          </div>
         <nav>
           <div className="left-section">
-            <SearchBar
-            // handleSearch={handleSearch}
-            // isVisible={isSearchVisible}
-            />
+            <SearchBar />
             <img
               id="search-icon"
               src={searchicon}
@@ -284,23 +169,6 @@ class Nav extends Component {
             <h1>Closet</h1>
           </div>
 
-        <div className="right-section">
-          <Link to="/ShoppingCart">
-            <img src={bagImage} style={{ width: '20px', height: '20px' }} alt="Cart" />
-          </Link>
-
-          
-          <img id="profile-icon" src="profile-icon.png" alt="Profile" />
-
-
-
-        
-
-
-</div>
-      </nav>
-      
-</>
           <div className="right-section">
             <Link to="/ShoppingCart">
               <img
@@ -309,6 +177,7 @@ class Nav extends Component {
                 alt="Cart"
               />
             </Link>
+            <img id="profile-icon" src="profile-icon.png" alt="Profile" />
           </div>
         </nav>
       </>
