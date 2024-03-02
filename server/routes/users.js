@@ -205,6 +205,7 @@ const returnUsersDetailsAsJSON = (req, res) => {
     JWT_PRIVATE_KEY,
     { algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRY }
   );
+
   console.log(req.data);
 
   fs.readFile(
@@ -231,7 +232,9 @@ const returnUsersDetailsAsJSON = (req, res) => {
       }
     }
   );
+
 };
+
 router.delete('/users/:userId', (req, res) => {
   const userId = req.params.userId;
 

@@ -1,94 +1,89 @@
-// import React, { Component } from 'react';
-// import '../css/banner.css';
-
-// class Banner extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       images: ["/path/to/image1.jpg", "/path/to/image2.jpg", "/path/to/image3.jpg"], // Add your image paths here
-//       currentImageIndex: 0
-//     };
-//   }
-
-//   componentDidMount() {
-//     this.interval = setInterval(this.changeImage, 5000); // Change image every 5 seconds (adjust as needed)
-//   }
-
-//   componentWillUnmount() {
-//     clearInterval(this.interval);
-//   }
-
-//   changeImage = () => {
-//     const { images, currentImageIndex } = this.state;
-//     const nextIndex = (currentImageIndex + 1) % images.length;
-//     this.setState({ currentImageIndex: nextIndex });
-//   };
-
-//   render() {
-//     const { images, currentImageIndex } = this.state;
-//     const bannerStyle = {
-//       backgroundImage: `linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%), url(${images[currentImageIndex]})`
-//     };
-
-//     return (
-//       <div className="banner" style={bannerStyle}>
-//         {/* You can add any content or overlay text here */}
-//       </div>
-//     );
-//   }
-// }
-
-// export default Banner;
-
-
 import React, { Component } from 'react';
 import '../css/banner.css';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import angelblue from '../css/images/angelblue.png';
+import angelwhite from '../css/images/angelwhite.png';
 
 class Banner extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      colors: ['#e3ffe7', '#d9e7ff', '#ffc0cb'], // Add your gradient colors here
-      currentColorIndex: 0
+      imageUrls: [
+        require('../css/images/frontpage.jpeg'),
+        require('../css/images/img2.png'),
+        require('../css/images/heaven.jpeg'),
+      ],
+      currentImageIndex: 0,
     };
   }
 
   componentDidMount() {
-    this.interval = setInterval(this.changeColor, 5000); // Change color every 5 seconds (adjust as needed)
+    this.interval = setInterval(this.changeImage, 5000);
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
 
-  changeColor = () => {
-    const { colors, currentColorIndex } = this.state;
-    const nextIndex = (currentColorIndex + 1) % colors.length;
-    this.setState({ currentColorIndex: nextIndex });
+  changeImage = () => {
+    const { imageUrls, currentImageIndex } = this.state;
+    const nextIndex = (currentImageIndex + 1) % imageUrls.length;
+    this.setState({ currentImageIndex: nextIndex });
   };
 
   handleDotClick = (index) => {
-    this.setState({ currentColorIndex: index });
+    this.setState({ currentImageIndex: index });
   };
 
   render() {
-    const { colors, currentColorIndex } = this.state;
+    const { imageUrls, currentImageIndex } = this.state;
     const bannerStyle = {
-      backgroundImage: `linear-gradient(90deg, ${colors[currentColorIndex]} 0%, ${colors[(currentColorIndex + 1) % colors.length]} 100%)`
+      backgroundImage: `url(${imageUrls[currentImageIndex]})`,
     };
 
+
+    const bannerTexts = [
+      "Explore Our Member-Exclusive Heaven Collection",
+      "Explore our SS24 Menswear",
+      "Discover Trending Styles",
+    ];
+    
+
     return (
+      
+      <div className="banner-container">
+      <div className="thin-banner-text">
+        <p>50% OFF! Use code DEREK </p>
+        <p>Free Shipping on all orders over €50</p>
+        <p>Redeem Member-Exclusive Coupon: HEAVEN</p>
+      </div>
+      
+
+      
+
+      
+
+        {/* Main banner */}
       <div className="banner" style={bannerStyle}>
+        <div className="text-container">
+        <h1 className="angel-blue">{bannerTexts[currentImageIndex]}</h1>
+          <Link to="/Login">
+          <img className="angel-blue-image" src={angelwhite} alt="Login" />
+            </Link>
+        </div>
+
         <div className="dots">
-          {colors.map((color, index) => (
+          {imageUrls.map((url, index) => (
             <div
               key={index}
-              className={`dot ${index === currentColorIndex ? 'active' : ''}`}
+              className={`dot ${index === currentImageIndex ? 'active' : ''}`}
               onClick={() => this.handleDotClick(index)}
             />
           ))}
         </div>
-      </div>
+        </div>
+        </div>
+      
     );
   }
 }

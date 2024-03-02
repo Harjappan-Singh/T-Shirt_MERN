@@ -1,22 +1,58 @@
 const express = require('express');
 const router = express.Router();
-const Order = require('../models/orderHistory');
+const OrderHistory = require('../models/orderHistory');
 
 router.get('/orderHistory/:email', (req, res) => {
-    const email = req.params.email;
-    
-    Order.find({ email: email }, (error, orderHistory) => { 
-        if (error) {
-            return res.status(500).json({ errorMessage: 'Internal Server Error' });
-        }
+  const email = req.params.email;
 
-        if (!orderHistory || orderHistory.length === 0) {
-            return res.status(404).json({ errorMessage: 'No order history found for the customer' });
-        }
+  OrderHistory.find({ email: email }, (error, orderHistory) => {
+    if (error) {
+      return res.status(500).json({ errorMessage: 'Internal Server Error' });
+    }
 
-        
-        res.json(orderHistory);
-    });
+    if (!orderHistory || orderHistory.length === 0) {
+      return res
+        .status(404)
+        .json({ errorMessage: 'No order history found for the customer' });
+    }
+
+    res.json(orderHistory);
+  });
+});
+
+// Route to add order data to the database
+router.post('/orders/add', (req, res) => {
+  // Extract order data from the request body
+  const {
+    userId,
+    email,
+    items,
+    transactionId,
+    orderTime,
+    totalCost,
+    shippingAddress,
+  } = req.body;
+
+  // Create a new order instance
+  const newOrder = new OrderHistory({
+    userId: userId,
+    email: email,
+    items: items,
+    transactionId: transactionId,
+    orderTime: orderTime,
+    totalCost: totalCost,
+    shippingAddress: shippingAddress,
+  });
+
+  // Save the order to the database
+  newOrder.save((err, order) => {
+    if (err) {
+      console.error('Error saving order:', err);
+      return res.status(500).json({ errorMessage: 'Internal Server Error' });
+    }
+    console.log('Order saved successfully:', order);
+    res.status(201).json(order); // Respond with the saved order
+  });
 });
 
 module.exports = router;

@@ -6,7 +6,7 @@ require(`./config/db`);
 const createError = require('http-errors');
 
 // Express
-const express = require(`express`);
+const express = require('express');
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(require(`body-parser`).json());
@@ -17,7 +17,6 @@ app.use(require(`cors`)({ credentials: true, origin: process.env.LOCAL_HOST }));
 app.use(require(`./routes/users`));
 app.use(require(`./routes/tshirts`));
 app.use(require(`./routes/orderHistory`));
-app.use(require(`./routes/addresses`));
 // Port
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`Connected to port ` + process.env.SERVER_PORT);

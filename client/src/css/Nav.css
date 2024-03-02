@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "LovelyLove";
-  src: url("./images/lovelove.regular.ttf") format("truetype");
+  font-family: 'LovelyLove';
+  src: url('./images/lovelove.regular.ttf') format('truetype');
   font-weight: bold;
 }
 * {
@@ -23,7 +23,7 @@
   width: 60px;
   height: 70px;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   margin-left: 5px;
 }
 
@@ -72,37 +72,11 @@ a {
 }
 
 h1 {
-  font-family: "LovelyLove";
+  font-family: 'LovelyLove';
   margin: 0;
   color: #1e6091;
   font-weight: 400px;
-  font-size: 3em;
-}
-
-.search-bar {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-input {
-  margin-top: 10px;
-  padding: 8px;
-  border: none;
-  border-bottom: 2px solid #1e6091;
-  outline: none;
-  width: calc(100% - 16px);
-  box-sizing: border-box;
-}
-
-input:focus {
-  border-bottom: 2px solid #1e6091;
-  box-shadow: none;
+  font-size: 4em;
 }
 
 .admin-button,
@@ -136,4 +110,7 @@ input:focus {
 
 .AdminFunc a {
   padding: 8px 12px;
-}/*# sourceMappingURL=Nav.css.map */
+} /*# sourceMappingURL=Nav.css.map */
+
+/* harjappan css */
+/* Custom styles for the profile picture */
