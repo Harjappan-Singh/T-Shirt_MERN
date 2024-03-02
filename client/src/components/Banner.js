@@ -10,8 +10,8 @@ class Banner extends Component {
     this.state = {
       imageUrls: [
         require('../css/images/frontpage.jpeg'),
-        require('../css/images/frontpage.jpeg'),
-        require('../css/images/frontpage.jpeg'),
+        require('../css/images/img2.png'),
+        require('../css/images/heaven.jpeg'),
       ],
       currentImageIndex: 0,
     };
@@ -41,6 +41,14 @@ class Banner extends Component {
       backgroundImage: `url(${imageUrls[currentImageIndex]})`,
     };
 
+
+    const bannerTexts = [
+      "Explore Our Member-Exclusive Heaven Collection",
+      "Explore our SS24 Menswear",
+      "Discover Trending Styles",
+    ];
+    
+
     return (
       
       <div className="banner-container">
@@ -53,10 +61,12 @@ class Banner extends Component {
 
       
 
+      
+
         {/* Main banner */}
       <div className="banner" style={bannerStyle}>
         <div className="text-container">
-        <h1 className="angel-blue">Explore Our Member-Exclusive Heaven Collection</h1>
+        <h1 className="angel-blue">{bannerTexts[currentImageIndex]}</h1>
           <Link to="/Login">
           <img className="angel-blue-image" src={angelwhite} alt="Login" />
             </Link>
@@ -72,7 +82,8 @@ class Banner extends Component {
           ))}
         </div>
         </div>
-      </div>
+        </div>
+      
     );
   }
 }

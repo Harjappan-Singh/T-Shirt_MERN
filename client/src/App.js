@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './css/App.css';
-
+import SearchBar from './components/Searchbar';
 import Register from './components/Register';
 import ResetDatabase from './components/ResetDatabase';
 import Login from './components/Login';
@@ -38,15 +38,13 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bannerPosition: 0,
+      searchResults: [], 
     };
   }
 
 
-  moveBannerDown = () => {
-    this.setState((prevState) => ({
-      bannerPosition: prevState.bannerPosition + 5, // Move the banner down by 5%
-    }));
+  handleSearch = (searchResults) => {
+    this.setState({ searchResults });
   };
 
 
@@ -56,8 +54,8 @@ export default class App extends Component {
 
     return (
       <BrowserRouter>
-       <div className="main-content"> 
-       <Nav />
+      <div className="main-content">
+      <Nav />
 <div className='page-content'>
         <Switch>
           <>
@@ -70,10 +68,16 @@ export default class App extends Component {
             <Route exact path="/AddTshirt/:id" component={AddTshirt} />
             <LoggedInRoute exact path="/DeleteTshirt/:id" component={DeleteTshirt} />
             {/* <Route exact path="/DisplayTshirts" component={DisplayTshirts} ></Route> */}
-
+{/* 
             <Route exact path="/DisplayTshirts" render={(props) => (
-                <DisplayTshirts {...props} moveBannerDown={this.moveBannerDown} /> )}  />
-
+                <DisplayTshirts {...props} moveBannerDown={this.moveBannerDown} /> )}  /> */}
+  <Route
+  exact
+  path="/DisplayTshirts"
+  render={(props) => (
+    <DisplayTshirts {...props} searchResults={this.state.searchResults} />
+  )}
+/>
             <Route exact path="/TshirtDetails/:id" component={TshirtDetails} />
             <Route path="/product/:id" component={ProductDetails} />
             <Route path="/ShoppingCart"  render={(props) => ( <ShoppingCart {...props} trackPurchase={this.trackPurchase} />)}/>

@@ -108,25 +108,7 @@ export default class DisplayTshirts extends Component {
     this.setState({ brandFilter: event.target.value });
   };
 
-  // handleSearchName = (event) => {
-  //   this.setState({ searchName: event.target.value });
-  // };
 
-  handleSearch = (event) => {
-    const value = event.target.value.toLowerCase();
-    this.setState({ searchName: value, brand: value, sizes: value, description: value, price: value, color: value,category: value  });
-  };
-
-  handleSearchClick = () => {
-    // Call the prop method to move the banner down
-    this.props.moveBannerDown();
-  };
-
-  // toggleSearchVisibility = () => {
-  //   this.setState((prevState) => ({
-  //     isSearchVisible: !prevState.isSearchVisible,
-  //   }));
-  // };
 
   render() {
     const {

@@ -9,9 +9,10 @@ import Banner from "./Banner";
 import Logout from "./Logout";
 import wings from '../css/images/logobw.png';
 import DisplayTshirts from "./DisplayTshirts";
+import axios from 'axios';
 
 
-import { ACCESS_LEVEL_ADMIN, ACCESS_LEVEL_GUEST} from '../config/global_constants';
+import { ACCESS_LEVEL_ADMIN, SERVER_HOST} from '../config/global_constants';
 
 
 
@@ -23,40 +24,67 @@ class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchName: '',
-      brand: '',
-      sizes: '',
-      description: '',
-      price: '',
-      category: '',
-      color: '',
+      searchValue: '',
+      products: [],
+      loading: true,
+      error: '',
       isSearchVisible: false,
     };
   }
 
-  handleSearch = (searchValue) => {
-    this.setState({
-      searchName: searchValue,
-      brand: searchValue,
-      sizes: searchValue,
-      description: searchValue,
-      price: searchValue,
-      color: searchValue,
-      category: searchValue,
-    });
-  };
+  async componentDidMount() {
+    await this.fetchData(); // Change to async/await
+  }
+  
+  async fetchData() { // Change to async
+    try {
+      const result = await axios.get(`${SERVER_HOST}/tshirts`);
+      this.setState({ products: result.data, loading: false });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      this.setState({ error: error.message, loading: false });
+    }
+  }
 
-  toggleSearchVisibility = () => {
-    this.setState((prevState) => ({
-      isSearchVisible: !prevState.isSearchVisible,
-    }));
+  handleSearch = (searchParams) => {
+    const { name } = searchParams;
+    // Filter products based on the name
+    const filteredTshirts = this.state.products.filter((tshirt) =>
+      tshirt.name.toLowerCase().includes(name.toLowerCase())
+    );
+  
+    // Update the state with the filtered data
+    this.setState({ searchName: name, products: filteredTshirts });
   };
+  
+
+  handleSearchClick = () => {
+    const { onSearch } = this.props;
+    const { searchValue } = this.state;
+  
+    onSearch({ name: searchValue });
+  };
+  
+
+
+  // toggleSearchVisibility = () => {
+  //   this.setState((prevState) => ({
+  //     isSearchVisible: !prevState.isSearchVisible,
+  //   }), () => {
+  //     // Focus on the input field when the search bar is made visible
+  //     if (this.state.isSearchVisible) {
+  //       this.searchInput.focus();
+  //     }
+  //   });
+  // };
+  
+  
 
   render() {
-    const { handleSearch } = this.props;
-    const { isSearchVisible } = this.state;
-    const accessLevel = localStorage.accessLevel;
 
+    const { searchValue } = this.state;
+
+    
     return (
       <>
 
@@ -109,29 +137,20 @@ class Nav extends Component {
 
   </div>
 
-      <nav>
-        <div className="left-section">
-          {/* <SearchBar handleSearch={handleSearch} isVisible={isSearchVisible} />
-          <img
-            id="search-icon"
-            src={searchicon}
-            alt="Search"
-            onClick={this.toggleSearchVisibility, }
-          /> */}
-              <SearchBar handleSearch={handleSearch} isVisible={isSearchVisible} />
-        {/* Search icon */}
-        <img
-          id="search-icon"
-          src={searchicon}
-          alt="Search"
-          onClick={this.props.moveBannerDown}
-        />
-        </div>
-
-        <div className="center-section">
-          <h1>Closet</h1>
-
-        </div>
+  <nav>
+          <div className="left-section">
+            {/* <img
+              id="search-icon"
+              src={searchicon}
+              alt="Search"
+              onClick={this.handleSearchClick}
+            />
+          */}
+  </div>
+         
+          <div className="center-section">
+            <h1>Closet</h1>
+          </div>
 
         <div className="right-section">
           <Link to="/ShoppingCart">

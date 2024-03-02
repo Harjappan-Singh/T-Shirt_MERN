@@ -124,7 +124,7 @@ $whitecolor: #ffffff;
     &.angel-blue {
       // Styles for the "angel blue" variation
       font-weight: 700;
-      font-size: 5em; // Adjust the font size as needed
+      font-size: 7em; // Adjust the font size as needed
       color: $whitecolor; // Example color, replace with your desired color
       -webkit-text-stroke: 0.5px $whitecolor; // WebKit (Safari, Chrome) syntax
         text-stroke: 6px $whitecolor; // Standard syntax
@@ -138,6 +138,7 @@ $whitecolor: #ffffff;
     height: auto;
     height: 40px;
     width: 40px;
+    cursor: pointer;
   }
 }
   img {

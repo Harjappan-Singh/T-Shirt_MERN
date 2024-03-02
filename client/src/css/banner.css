@@ -100,7 +100,7 @@
 }
 .banner-container .banner .text-container h1.angel-blue {
   font-weight: 700;
-  font-size: 5em;
+  font-size: 7em;
   color: #ffffff;
   -webkit-text-stroke: 0.5px #ffffff;
   text-stroke: 6px #ffffff;
@@ -110,6 +110,7 @@
   height: auto;
   height: 40px;
   width: 40px;
+  cursor: pointer;
 }
 .banner-container .banner img {
   max-width: 100%;
