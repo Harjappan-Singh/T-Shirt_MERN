@@ -14,7 +14,10 @@ export default class ViewOrderHistory extends Component {
       loading: true,
       error: '',
       sortByDateAsc: true, // Flag to track sorting order
-      customerEmail: props.customerEmail || localStorage.getItem('email'), // Initialize customerEmail state with prop or local storage
+     // customerEmail: props.customerEmail || localStorage.getItem('email'), 
+      customerEmail: props.customerEmail || JSON.parse(localStorage.getItem('userInfo'))?.email,
+
+      // Initialize customerEmail state with prop or local storage
     };
   }
 

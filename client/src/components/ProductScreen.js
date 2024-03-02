@@ -55,7 +55,7 @@ class ProductScreen extends Component {
                 Delete
               </Link>
             )}
-            {accessLevel >= ACCESS_LEVEL_ADMIN && (
+           {accessLevel >= ACCESS_LEVEL_ADMIN && (
               <Link
                 className="green-button"
                 to={`/EditTshirt/${product._id}`}

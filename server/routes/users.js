@@ -213,17 +213,17 @@ const returnUsersDetailsAsJSON = (req, res) => {
     (err, fileData) => {
       if (fileData) {
         res.json({
-          fullName: req.data.fullName,
+          name: req.data.name,
+          email: req.data.email, // Include email in the response
           userId: req.data._id,
           accessLevel: req.data.accessLevel,
-          email: req.data.email,
           profilePhoto: fileData,
           token: token,
         });
       } else {
         res.json({
-          fullName: req.data.fullName,
-          //   email: req.data.email,s
+        name: req.data.name,
+          email: req.data.email, // Include email in the response
           accessLevel: req.data.accessLevel,
           profilePhoto: null,
           token: token,

@@ -53,12 +53,12 @@ export default class Register extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
+  
     if (!this.state.selectedFile) {
       console.error('No file was selected to be uploaded');
       return; // Abort the registration process
     }
-
+  
     // Create FormData object to send file data
     const formData = new FormData();
     formData.append('profilePhoto', this.state.selectedFile);
@@ -73,13 +73,23 @@ export default class Register extends Component {
     formData.append('city', this.state.city);
     formData.append('county', this.state.county);
     formData.append('eircode', this.state.eircode);
-
+  
     // Register the user
     axios
       .post(`${SERVER_HOST}/users/register`, formData)
       .then((res) => {
         if (res.data && !res.data.errorMessage) {
           console.log('User registered successfully');
+          const userInfo = {
+            name: this.state.name,
+            email: this.state.email,
+            accessLevel: 1, 
+            profilePhoto: res.data.profilePhoto,
+            token: res.data.token,
+          };
+          localStorage.setItem('userInfo', JSON.stringify(userInfo));
+  
+          // Redirect after successful registration
           this.setState({ isRegistered: true });
         } else {
           console.log('User registration failed:', res.data.errorMessage);
@@ -89,7 +99,7 @@ export default class Register extends Component {
         console.error('Error registering user:', error);
       });
   };
-
+  
   render() {
     return (
       <form
@@ -216,9 +226,40 @@ export default class Register extends Component {
           onChange={this.handleChange}
         >
           <option value="">Select County</option>
-          <option value="Antrim">Antrim</option>
-          <option value="Armagh">Armagh</option>
-          {/* Add other county options here */}
+         
+    <option value="Antrim">Antrim</option>
+    <option value="Armagh">Armagh</option>
+    <option value="Carlow">Carlow</option>
+    <option value="Cavan">Cavan</option>
+    <option value="Clare">Clare</option>
+    <option value="Cork">Cork</option>
+    <option value="Derry">Derry</option>
+    <option value="Donegal">Donegal</option>
+    <option value="Down">Down</option>
+    <option value="Dublin">Dublin</option>
+    <option value="Fermanagh">Fermanagh</option>
+    <option value="Galway">Galway</option>
+    <option value="Kerry">Kerry</option>
+    <option value="Kildare">Kildare</option>
+    <option value="Kilkenny">Kilkenny</option>
+    <option value="Laois">Laois</option>
+    <option value="Leitrim">Leitrim</option>
+    <option value="Limerick">Limerick</option>
+    <option value="Longford">Longford</option>
+    <option value="Louth">Louth</option>
+    <option value="Mayo">Mayo</option>
+    <option value="Meath">Meath</option>
+    <option value="Monaghan">Monaghan</option>
+    <option value="Offaly">Offaly</option>
+    <option value="Roscommon">Roscommon</option>
+    <option value="Sligo">Sligo</option>
+    <option value="Tipperary">Tipperary</option>
+    <option value="Tyrone">Tyrone</option>
+    <option value="Waterford">Waterford</option>
+    <option value="Westmeath">Westmeath</option>
+    <option value="Wexford">Wexford</option>
+    <option value="Wicklow">Wicklow</option>
+       
         </select>
         <br />
 

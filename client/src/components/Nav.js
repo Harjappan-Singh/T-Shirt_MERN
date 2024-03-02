@@ -66,7 +66,7 @@ class Nav extends Component {
                 <Link className="dropdown-item" to="/profile">
                   User Profile
                 </Link>
-                <Link className="dropdown-item" to="/orderhistory">
+                <Link className="dropdown-item" to="/ViewOrders/${localStorage.getItem('email')">
                   Order History
                 </Link>
                 <Link
