@@ -1,3 +1,5 @@
+// tshirtsRoutes.js
+
 const router = require('express').Router();
 const tshirtsModel = require('../models/tshirts');
 const jwt = require('jsonwebtoken');
@@ -33,7 +35,9 @@ const verifyUsersJWTPassword = (req, res, next) => {
   );
 };
 
+// Handler to delete a T-shirt document
 const deleteTshirtDocument = (req, res) => {
+  // Using Mongoose's findByIdAndRemove method to delete the T-shirt document
   tshirtsModel.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {
       res.status(500).json({ errorMessage: 'Error deleting T-shirt document' });
@@ -46,6 +50,11 @@ const deleteTshirtDocument = (req, res) => {
     }
   });
 };
+
+// DELETE endpoint to delete a T-shirt document
+router.delete('/tshirts/:id', verifyUsersJWTPassword, deleteTshirtDocument);
+
+module.exports = router;
 
 const updateTshirtDocument = (req, res) => {
   const updatedDetails = {
@@ -78,7 +87,6 @@ const updateTshirtDocument = (req, res) => {
   });
 };
 
-router.delete('/tshirts/:id', deleteTshirtDocument);
 
 router.put('/tshirts/:id', updateTshirtDocument);
 
@@ -106,6 +114,6 @@ router.get('/tshirts/:id', (req, res) => {
   });
 });
 
-router.post('/tshirts', deleteTshirtDocument);
+
 
 module.exports = router;

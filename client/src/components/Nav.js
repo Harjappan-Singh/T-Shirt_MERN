@@ -93,7 +93,7 @@ class Nav extends Component {
                 Admin
               </button>
               <div className="dropdown-menu" aria-labelledby="adminDropdown">
-                <Link className=" dropdown-item blue-button" to={'/AddTshirt'}>
+                <Link className=" dropdown-item" to='/AddTshirt'>
                   Add New T-shirt
                 </Link>
                 <Link className="dropdown-item" to="/ViewCustomers">
@@ -105,7 +105,7 @@ class Nav extends Component {
                 <Link className="dropdown-item" to="/admin/products">
                   Products
                 </Link>
-                <Link className="dropdown-item" to="/admin/orders">
+                <Link className="dropdown-item" to="/ViewOrders">
                   Orders
                 </Link>
 

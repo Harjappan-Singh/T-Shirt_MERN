@@ -157,9 +157,7 @@ export default class DisplayTshirts extends Component {
 
     return (
       <>
-        <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
-          View Orders
-        </Link>
+        
         <select value={sizesFilter} onChange={this.handleSizesFilter}>
           <option value="All">Sizes</option>
           <option value="XXS">XXS</option>

@@ -214,7 +214,7 @@ const returnUsersDetailsAsJSON = (req, res) => {
       if (fileData) {
         res.json({
           name: req.data.name,
-          email: req.data.email, // Include email in the response
+          email: req.data.email, 
           userId: req.data._id,
           accessLevel: req.data.accessLevel,
           profilePhoto: fileData,
