@@ -51,7 +51,11 @@ class ProductScreen extends Component {
                 Add
               </Link>
             )}
+
+
             {accessLevel === ACCESS_LEVEL_ADMIN && (
+              //<Link className="red-button" to={`/DeleteTshirt/${product._id}`}>
+             
               <Link className="red-button" to={`/DeleteTshirt/${product._id}`}>
                 Delete
               </Link>

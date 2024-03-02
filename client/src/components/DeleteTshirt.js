@@ -9,28 +9,33 @@ export default class DeleteTshirt extends Component {
 
         this.state = {
             redirectToDisplayTshirts: false,
+            loading: true,
             error: null
         };
     }
 
     componentDidMount() {
-        axios.delete(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, { headers: { "authorization": localStorage.token } })
-            .then(res => {
-                if (res.data.errorMessage) {
-                    this.setState({ error: res.data.errorMessage });
-                } else {
-                    console.log("Record deleted");
-                    this.setState({ redirectToDisplayTshirts: true });
-                }
-            })
-            .catch(error => {
-                console.error("Error deleting record:", error);
-                this.setState({ error: "Error deleting record" });
-            });
+        const { id } = this.props.match.params; 
+
+        axios.delete(`${SERVER_HOST}/tshirts/${id}`, { 
+            headers: { "authorization": localStorage.token } 
+        })
+        .then(res => {
+            console.log("Response:", res.data);
+            console.log("Record deleted");
+            this.setState({ redirectToDisplayTshirts: true, loading: false });
+        })
+        .catch(error => {
+            console.error("Error deleting record:", error.response.data);
+            this.setState({ error: "Error deleting record", loading: false });
+        });
     }
 
     render() {
-        const { redirectToDisplayTshirts, error } = this.state;
+        const { redirectToDisplayTshirts, error, loading } = this.state;
+        if (loading) {
+            return <p>Loading...</p>; 
+        }
         if (redirectToDisplayTshirts) {
             return <Redirect to="/DisplayTshirts" />;
         }

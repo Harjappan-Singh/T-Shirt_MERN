@@ -153,7 +153,7 @@ export default class DisplayTshirts extends Component {
 
     <>
   <div className='bannerimg'>
-    <Banner />
+   <Banner />
        <div className='page-setting'>
 {/* 
         {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
@@ -192,9 +192,9 @@ export default class DisplayTshirts extends Component {
             <br />
           </div> */}
         
-        <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
+       {/* <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
           View Orders
-        </Link>
+        </Link>*/}
         <select value={sizesFilter} onChange={this.handleSizesFilter}>
           <option value="All">Sizes</option>
           <option value="XXS">XXS</option>

@@ -52,9 +52,9 @@ const deleteTshirtDocument = (req, res) => {
 };
 
 // DELETE endpoint to delete a T-shirt document
-router.delete('/tshirts/:id', verifyUsersJWTPassword, deleteTshirtDocument);
+router.delete('/tshirts/:id', deleteTshirtDocument);
 
-module.exports = router;
+
 
 const updateTshirtDocument = (req, res) => {
   const updatedDetails = {

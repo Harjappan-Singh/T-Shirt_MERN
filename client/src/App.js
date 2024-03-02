@@ -21,6 +21,7 @@ import ViewCustomers from './components/ViewCustomers';
 import ViewOrders from './components/ViewOrderHistory';
 import Nav from './components/Nav';
 
+
 import { ACCESS_LEVEL_GUEST } from './config/global_constants';
 import ProductDetails from './components/ProductDetails';
 import Footer from './components/Footer';
@@ -65,7 +66,7 @@ export default class App extends Component {
             <LoggedInRoute exact path="/Logout" component={Logout} />
             <Route exact path="/EditTshirt/:id" component={EditTshirt} />
             <Route exact path="/AddTshirt/:id" component={AddTshirt} />
-            <LoggedInRoute exact path="/DeleteTshirt/:id" component={DeleteTshirt} />
+            <Route exact path="/DeleteTshirt/:id" component={DeleteTshirt} />
             {/* <Route exact path="/DisplayTshirts" component={DisplayTshirts} ></Route> */}
 {/* 
             <Route exact path="/DisplayTshirts" render={(props) => (
@@ -84,6 +85,12 @@ export default class App extends Component {
            <LoggedInRoute exact path="/ViewCustomers" component={ViewCustomers} />
             <LoggedInRoute exact path="/ViewOrders" component={ViewOrders} />
           <LoggedInRoute path="/ViewOrders/:_id" component={ViewOrders} />
+          <Route exact path="/admin/AddTshirt" component={AddTshirt} />
+
+<Route exact path="/admin/ViewCustomers" component={ViewCustomers} />
+<Route exact path="/admin/ViewOrders" component={ViewOrders} />
+
+          
           </>
         </Switch>
         
