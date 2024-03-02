@@ -58,7 +58,9 @@ class Nav extends Component {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                {userInfo.name}
+                {/* {userInfo.name}
+                {console.log(userInfo)} */}
+                User
               </button>
               <div className="dropdown-menu" aria-labelledby="userDropdown">
                 <Link className="dropdown-item" to="/profile">
@@ -94,6 +96,9 @@ class Nav extends Component {
                 <Link className=" dropdown-item blue-button" to={'/AddTshirt'}>
                   Add New T-shirt
                 </Link>
+                <Link className="dropdown-item" to="/ViewCustomers">
+                  Users
+                </Link>
                 <Link className="dropdown-item" to="/admin/dashboard">
                   Dashboard
                 </Link>
@@ -102,9 +107,6 @@ class Nav extends Component {
                 </Link>
                 <Link className="dropdown-item" to="/admin/orders">
                   Orders
-                </Link>
-                <Link className="dropdown-item" to={<ViewCustomers />}>
-                  Users
                 </Link>
 
                 <Link

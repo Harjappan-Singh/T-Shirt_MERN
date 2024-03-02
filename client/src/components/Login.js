@@ -65,43 +65,49 @@ export default class Login extends Component {
 
   render() {
     return (
-      <form
-        className="form-container"
-        noValidate={true}
-        id="loginOrRegistrationForm"
-      >
-        <h2>Login</h2>
-        {this.state.isLoggedIn ? <Redirect to="/DisplayTshirts" /> : null}
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          autoComplete="email"
-          value={this.state.email}
-          onChange={this.handleChange}
-        />
-        <br />
+      <>
+        <form
+          className="form-container"
+          noValidate={true}
+          id="loginOrRegistrationForm"
+        >
+          <h2>Login</h2>
+          {this.state.isLoggedIn ? <Redirect to="/DisplayTshirts" /> : null}
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            autoComplete="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
+          <br />
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          autoComplete="password"
-          value={this.state.password}
-          onChange={this.handleChange}
-        />
-        <br />
-        <br />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            autoComplete="password"
+            value={this.state.password}
+            onChange={this.handleChange}
+          />
+          <br />
+          <br />
 
-        <LinkInClass
-          value="Login"
-          className="green-button"
-          onClick={this.handleSubmit}
-        />
-        <Link className="red-button" to={'/DisplayTshirts'}>
-          Cancel
+          <LinkInClass
+            value="Login"
+            className="green-button"
+            onClick={this.handleSubmit}
+          />
+          <Link className="red-button" to={'/DisplayTshirts'}>
+            Cancel
+          </Link>
+        </form>
+        Don't Have an account{' '}
+        <Link to={'/Register'}>
+          <span style={{ color: 'red' }}>Register</span>
         </Link>
-      </form>
+      </>
     );
   }
 }
