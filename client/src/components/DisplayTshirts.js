@@ -33,6 +33,8 @@ export default class DisplayTshirts extends Component {
       price: '',
       category: '',
       color: '',
+
+      isSearchVisible: false,
     };
   }
 
@@ -99,18 +101,7 @@ export default class DisplayTshirts extends Component {
     this.setState({ brandFilter: event.target.value });
   };
 
-  handleSearch = (event) => {
-    const value = event.target.value.toLowerCase();
-    this.setState({
-      searchName: value,
-      brand: value,
-      sizes: value,
-      description: value,
-      price: value,
-      color: value,
-      category: value,
-    });
-  };
+
 
   render() {
     const {
@@ -125,6 +116,9 @@ export default class DisplayTshirts extends Component {
       searchName,
     } = this.state;
 
+
+
+    
     let filteredTshirts = products.filter((tshirt) => {
       const matchesGender =
         genderFilter === 'All' || tshirt.category === genderFilter;
@@ -156,7 +150,48 @@ export default class DisplayTshirts extends Component {
     }
 
     return (
-      <>
+
+    <>
+  <div className='bannerimg'>
+    <Banner />
+       <div className='page-setting'>
+{/* 
+        {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
+          <Link to="/ViewCustomers" className="green-button">
+            View customers
+          </Link>
+        )} 
+
+         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
+          <div className="logout">
+            {localStorage.profilePhoto !== 'null' ? (
+              <img
+                id="profilePhoto"
+                src={`data:;base64,${localStorage.profilePhoto}`}
+                alt=""
+              />
+            ) : null}
+            <Logout />
+          </div>
+        ) : ( */}
+
+
+          {/* <div>
+
+            <Link className="green-button" to={'/Login'}>
+              Login
+            </Link>
+            <Link className="blue-button" to={'/Register'}>
+              Register
+            </Link>
+            <Link className="red-button" to={'/ResetDatabase'}>
+              Reset Database
+            </Link>
+            <br />
+            <br />
+            <br />
+          </div> */}
+        
         <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
           View Orders
         </Link>
@@ -228,13 +263,9 @@ export default class DisplayTshirts extends Component {
             </div>
          
           </div>
-          {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
-            <div className="add-new-tshirt">
-              <Link className="blue-button" to={'/AddTshirt'}>
-                Add New T-shirt
-              </Link>
-            </div>
-          ) : null}
+
+          </div>
+        </div>
         </div>
       </>
     );

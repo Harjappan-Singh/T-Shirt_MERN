@@ -1,12 +1,19 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 100% of the viewport height */
+}
+
 .product-details-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
 }
 
-.product-details-header h1 {
+.product-details-header h2 {
   font-size: 24px;
   margin-bottom: 10px;
+  font-family: "Verdana", sans-serif;
 }
 
 .product-details-content {
