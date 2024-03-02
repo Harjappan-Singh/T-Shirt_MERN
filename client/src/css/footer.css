@@ -1,60 +1,45 @@
-/* footer.scss */
 .footer {
-  background-color: white; /* Light Pink */
+  background-color: #1e6091;
   padding: 2em;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #1e6091;
-  border-top: 2px solid #1e6091; /* Blue border with 2px width */
-  /* border-radius: 5px; Rounded corners */
-  overflow: hidden;
 }
-.footer img {
-  max-width: 80px; /* Adjust as needed */
-  margin-bottom: 1em;
-}
-.footer div {
-  margin-top: 0.7em;
+.footer .footer-social-icons {
   display: flex;
-  color: #1e6091;
+  gap: 1em;
 }
-.footer div box-icon {
-  margin: 0 0.5em;
-  font-size: 2em; /* Adjust as needed */
-  color: #1e6091;
+.footer .footer-social-icons box-icon {
+  font-size: 2em;
+  color: white;
 }
-.footer-section {
+.footer .footer-section {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-top: 1em;
   width: 100%;
-  margin-left: 50%;
 }
-.footer-pages {
+.footer .footer-section .footer-pages,
+.footer .footer-section .footer-creators {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  width: 50%;
+  width: 100%;
 }
-.footer-pages a {
-  color: #1e6091;
+.footer .footer-section .footer-pages a {
+  color: #ffffff;
   text-decoration: none;
   margin: 0 1em;
   transition: color 0.3s ease;
 }
-.footer-pages a:hover {
-  color: #007bff;
+.footer .footer-section .footer-pages a:hover {
+  color: #f0f0f0;
 }
-.footer-creators {
-  text-align: center;
-  width: 50%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.footer-creators h3 {
-  margin: 0.5em 0;
+.footer .footer-section .footer-creators h3 {
+  margin: 0.5em 1em;
   font-size: 1.2em;
-  color: #007bff;
+  color: #f0f0f0;
+  display: block; /* Ensures each creator is on a new line */
 }/*# sourceMappingURL=footer.css.map */
