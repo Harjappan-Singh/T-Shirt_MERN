@@ -11,7 +11,6 @@ import {
   SERVER_HOST,
 } from '../config/global_constants';
 import Banner from './Banner';
-
 import Logout from './Logout';
 
 export default class DisplayTshirts extends Component {
@@ -23,12 +22,10 @@ export default class DisplayTshirts extends Component {
       error: '',
       sortByRating: false,
       sortByPrice: false,
-
       genderFilter: 'All',
       colorFilter: 'All',
       brandFilter: 'All',
       sizesFilter: 'All',
-
       searchName: '',
       brand: '',
       sizes: '',
@@ -42,11 +39,9 @@ export default class DisplayTshirts extends Component {
   componentDidMount() {
     this.fetchData();
   }
-
+  
   async fetchData() {
     try {
-      //${SERVER_HOST}/tshirts`
-      //   const result = await axios.get('http://localhost:4000/api/products');
       const result = await axios.get(`${SERVER_HOST}/tshirts`);
       this.setState({ products: result.data, loading: false });
     } catch (error) {
@@ -55,31 +50,33 @@ export default class DisplayTshirts extends Component {
     }
   }
 
+  updateProduct = (updatedProduct) => {
+    // Update the product in the state
+    this.setState(prevState => ({
+      products: prevState.products.map(product =>
+        product._id === updatedProduct._id ? updatedProduct : product
+      )
+    }));
+  };
+
   handleSortByRating = () => {
     const { products, sortByRating } = this.state;
-
     const sortedProducts = [...products];
-
     sortedProducts.sort((a, b) => {
       return sortByRating ? b.rating - a.rating : a.rating - b.rating;
     });
-
     this.setState({
       products: sortedProducts,
-
       sortByRating: !sortByRating,
     });
   };
 
   handleSortByPrice = () => {
     const { products, sortByPrice } = this.state;
-
     const sortedProducts = [...products];
-
     sortedProducts.sort((a, b) => {
       return sortByPrice ? b.price - a.price : a.price - b.price;
     });
-
     this.setState({
       products: sortedProducts,
       sortByPrice: !sortByPrice,
@@ -93,6 +90,7 @@ export default class DisplayTshirts extends Component {
   handleColorFilter = (event) => {
     this.setState({ colorFilter: event.target.value });
   };
+
   handleSizesFilter = (event) => {
     this.setState({ sizesFilter: event.target.value });
   };
@@ -100,10 +98,6 @@ export default class DisplayTshirts extends Component {
   handleBrandFilter = (event) => {
     this.setState({ brandFilter: event.target.value });
   };
-
-  // handleSearchName = (event) => {
-  //   this.setState({ searchName: event.target.value });
-  // };
 
   handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
@@ -143,7 +137,6 @@ export default class DisplayTshirts extends Component {
       const matchesSearchName =
         searchName === '' ||
         tshirt.name.toLowerCase().includes(searchName.toLowerCase());
-
       // Return true if all filters match
       return (
         matchesGender &&
@@ -164,49 +157,9 @@ export default class DisplayTshirts extends Component {
 
     return (
       <>
-        {/* 
-        {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
-          <Link to="/ViewCustomers" className="green-button">
-            View customers
-          </Link>
-        )} 
-
-         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
-          <div className="logout">
-            {localStorage.profilePhoto !== 'null' ? (
-              <img
-                id="profilePhoto"
-                src={`data:;base64,${localStorage.profilePhoto}`}
-                alt=""
-              />
-            ) : null}
-            <Logout />
-          </div>
-        ) : ( */}
-
-        {/* <div>
-
-            <Link className="green-button" to={'/Login'}>
-              Login
-            </Link>
-            <Link className="blue-button" to={'/Register'}>
-              Register
-            </Link>
-            <Link className="red-button" to={'/ResetDatabase'}>
-              Reset Database
-            </Link>
-            <br />
-            <br />
-            <br />
-          </div> */}
-
-        <Link
-          to={`/ViewOrders/${localStorage.getItem('email')}`}
-          className="green-button"
-        >
+        <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
           View Orders
         </Link>
-
         <select value={sizesFilter} onChange={this.handleSizesFilter}>
           <option value="All">Sizes</option>
           <option value="XXS">XXS</option>
@@ -218,7 +171,6 @@ export default class DisplayTshirts extends Component {
           <option value="XXL">XXL</option>
           <option value="XXXL">XXXL</option>
         </select>
-
         <select value={genderFilter} onChange={this.handleGenderFilter}>
           <option value="All">All</option>
           <option value="Men">Men</option>
@@ -235,7 +187,6 @@ export default class DisplayTshirts extends Component {
           <option value="Green">Green</option>
           <option value="Gray">Gray</option>
         </select>
-
         <select value={brandFilter} onChange={this.handleBrandFilter}>
           <option value="All">All Brands</option>
           <option value="Nike">Nike</option>
@@ -245,13 +196,12 @@ export default class DisplayTshirts extends Component {
           <option value="Puma">Puma</option>
           <option value="Under Armour">Under Armour</option>
           <option value="Gildan">Gildan</option>
-          <option value="American Apparel">American Apparel</option>
+          <option value="American Apparel">American Apparel</option> 
           <option value="Bella + Canvas">Bella + Canvas</option>
           <option value="Fruit of the Loom">Fruit of the Loom</option>
           <option value="Champion">Champion</option>
           <option value="Next Level">Next Level</option>
         </select>
-
         <div className="table-container">
           <div className="sort-by-rating">
             <button onClick={this.handleSortByRating}>
@@ -265,24 +215,29 @@ export default class DisplayTshirts extends Component {
               {this.state.sortByPrice ? '(Low to High)' : '(High to Low)'}
             </button>
           </div>
-
-          {/* <Table tshirts={filteredTshirts} /> */}
-          {/* <DocumentTitle title="Home"></DocumentTitle> */}
-
           <div>
             {loading && <Loading />}
             {error && <Message variant="danger">{error}</Message>}
-
             <div className="products">
               {filteredTshirts.map((product) => (
                 <div key={product.slug} className="product">
-                  <ProductScreen product={product} />
+                 
+                  <ProductScreen product={product} updateProduct={this.updateProduct} />
                 </div>
               ))}
             </div>
+         
           </div>
+          {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
+            <div className="add-new-tshirt">
+              <Link className="blue-button" to={'/AddTshirt'}>
+                Add New T-shirt
+              </Link>
+            </div>
+          ) : null}
         </div>
       </>
     );
   }
 }
+
