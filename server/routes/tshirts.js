@@ -38,9 +38,41 @@ const deleteTshirtDocument = (req, res) => {
   });
 };
 
+// Update one T-shirt record
+// Update one T-shirt record
+const updateTshirtDocument = (req, res) => {
+  // Extract updated t-shirt details from the request body
+  const updatedDetails = {
+    brand: req.body.brand,
+    name: req.body.name,
+    description: req.body.description,
+    category: req.body.category,
+    type: req.body.type,
+    color: req.body.color,
+    sizes: Array.isArray(req.body.sizes) ? req.body.sizes : [],
+    price: req.body.price,
+    countInStock: req.body.countInStock,
+    rating: req.body.rating,
+    numReviews: req.body.numReviews,
+    photos: [], // You may handle photos update separately if needed
+  };
 
-
-
+  // Update the t-shirt document in the database
+  tshirtsModel.findByIdAndUpdate(req.params.id, updatedDetails, { new: true }, (error, updatedTshirt) => {
+    if (error) {
+      console.error('Error updating T-shirt document:', error);
+      return res.status(500).json({ errorMessage: 'Internal server error' });
+    } else {
+      if (updatedTshirt) {
+        console.log('T-shirt document updated successfully');
+        // Send the updated T-shirt data in the response
+        return res.json(updatedTshirt);
+      } else {
+        return res.status(404).json({ errorMessage: 'T-shirt not found' });
+      }
+    }
+  });
+};
 
 // Delete one T-shirt record
 router.delete(
@@ -49,6 +81,8 @@ router.delete(
   deleteTshirtDocument
 );
 
+// Update one T-shirt record route
+router.put('/tshirts/:id', verifyUsersJWTPassword, updateTshirtDocument);
 
 // Read all records
 router.get('/tshirts', (req, res) => {
@@ -116,8 +150,5 @@ const createNewTshirtDocument = (req, res) => {
 };
 
 router.post('/tshirts', createNewTshirtDocument);
-
-
-
 
 module.exports = router;

@@ -3,11 +3,29 @@ import Rating from './Rating';
 import '../css/Product.css';
 import HeartIcon from './HeartIcon';
 import { Link } from 'react-router-dom';
-import { ACCESS_LEVEL_ADMIN, SERVER_HOST } from '../config/global_constants';
+import { ACCESS_LEVEL_ADMIN } from '../config/global_constants';
 
 class ProductScreen extends Component {
+  componentDidUpdate(prevProps) {
+    // Log a message when the component updates
+    console.log('ProductScreen updated');
+    // Check if product props have changed
+    if (this.props.product !== prevProps.product) {
+      console.log('Product prop updated:', this.props.product);
+    }
+  }
+
   render() {
     const { product } = this.props;
+
+    // Check if product is not null or undefined
+    if (!product) {
+      return <div>No product data available.</div>;
+    }
+
+    // Check if localStorage.accessLevel is defined
+    const accessLevel = localStorage.accessLevel || 0;
+
     return (
       <div className="product-card">
         <div className="product-image">
@@ -23,31 +41,27 @@ class ProductScreen extends Component {
           <Rating rating={product.rating} numReviews={product.numReviews} />
           <div className="product-price">€{product.price}</div>
           <div>
-            {' '}
-            {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
-              <Link
-                className="blue-button"
-                to={'/AddTshirt/' + this.props.product._id}
-              >
+            {accessLevel >= ACCESS_LEVEL_ADMIN && (
+              <Link className="blue-button" to={`/AddTshirt/${product._id}`}>
                 Add
               </Link>
-            ) : null}
-            {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
+            )}
+            {accessLevel >= ACCESS_LEVEL_ADMIN && (
               <Link
                 className="red-button"
-                to={'/DeleteTshirt/' + this.props.product._id}
+                to={`/DeleteTshirt/${product._id}`}
               >
                 Delete
               </Link>
-            ) : null}
-            {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? (
+            )}
+            {accessLevel >= ACCESS_LEVEL_ADMIN && (
               <Link
                 className="green-button"
-                to={'/EditTshirt/' + this.props.product._id}
+                to={`/EditTshirt/${product._id}`}
               >
                 Edit
               </Link>
-            ) : null}
+            )}
           </div>
         </div>
       </div>
