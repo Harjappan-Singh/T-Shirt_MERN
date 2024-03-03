@@ -148,7 +148,7 @@ class Nav extends Component {
 
         <nav>
           <div className="left-section">
-          {isSearchVisible && (
+       {/*   {isSearchVisible && (
               <SearchBar
                 ref={(input) => {
                   this.searchInput = input;
@@ -160,13 +160,13 @@ class Nav extends Component {
               src={searchicon}
               alt="Search"
               onClick={this.toggleSearchVisibility}
-            />
-          </div>
+              />*/}
+              </div>
 
           <div className="center-section">
             <h1>Closet</h1>
           </div>
-
+              
           <div className="right-section">
             <Link to="/ShoppingCart">
               Basket
