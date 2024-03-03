@@ -138,6 +138,13 @@ class Nav extends Component {
                 <Link className="dropdown-item" to="/admin/ViewOrders">
                   Orders
                 </Link>
+                <Link
+                  className="dropdown-item"
+                  to="/"
+                  onClick={this.signoutHandler}
+                >
+                  Log Out
+                </Link>
               </div>
             </div>
           )}
@@ -160,6 +167,7 @@ class Nav extends Component {
 
           <div className="right-section">
             <Link to="/ShoppingCart">
+              Basket
               <img
                 src={bagImage}
                 style={{ width: '20px', height: '20px' }}
@@ -175,9 +183,10 @@ class Nav extends Component {
                 </Link>
 
         
-            {userInfo ? (
+           {/* {userInfo ? (
               <img id="profile-icon" src="profile-icon.png" alt="Profile" />
             ) : null}
+           */}
           </div>
         </nav>
       </div>
