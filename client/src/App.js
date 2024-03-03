@@ -20,11 +20,12 @@ import PayPalMessage from './components/PayPalMessage';
 import ViewCustomers from './components/ViewCustomers';
 import ViewOrders from './components/ViewOrderHistory';
 import Nav from './components/Nav';
+import UserProfile from './components/UserProfile';
 
 import { ACCESS_LEVEL_GUEST } from './config/global_constants';
 import ProductDetails from './components/ProductDetails';
 import Footer from './components/Footer';
-import UserProfile from './components/UserProfile';
+import ViewUserOrderHistory from './components/ViewUserOrderHistory';
 
 if (typeof localStorage.accessLevel === 'undefined') {
   localStorage.name = 'GUEST';
@@ -99,20 +100,23 @@ export default class App extends Component {
                   path="/PayPalMessage/:messageType/:payPalPaymentID"
                   component={PayPalMessage}
                 />
-                <LoggedInRoute
-                  exact
-                  path="/ViewCustomers"
-                  component={ViewCustomers}
-                />
-                <LoggedInRoute
-                  exact
-                  path="/ViewOrders"
-                  component={ViewOrders}
-                />
+                {/*<LoggedInRoute exact path="/ViewCustomers" component={ViewCustomers} />
+            <LoggedInRoute exact path="/ViewOrders" component={ViewOrders} />*/}
                 <LoggedInRoute path="/ViewOrders/:_id" component={ViewOrders} />
                 <Route exact path="/admin/AddTshirt" component={AddTshirt} />
+
+                <Route
+                  exact
+                  path="/admin/ViewCustomers"
+                  component={ViewCustomers}
+                />
+                <Route exact path="/admin/ViewOrders" component={ViewOrders} />
                 <Route exact path="/UserProfile" component={UserProfile} />
-                <LoggedInRoute path="/ViewOrders/:_id" component={ViewOrders} />
+                <Route
+                  exact
+                  path="/ViewOrders"
+                  component={ViewUserOrderHistory}
+                />
               </>
             </Switch>
           </div>

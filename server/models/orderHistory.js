@@ -7,21 +7,21 @@ const orderHistorySchema = new mongoose.Schema(
     items: [
       {
         itemName: { type: String, required: true }, // Name of the item
-        quantity: { type: Number, required: true }, // Quantity of the item
+        quantity: { type: Number }, // Quantity of the item
         price: { type: Number, required: true }, // Price of the item
       },
     ],
     transactionId: { type: String, required: true }, // Transaction ID provided by PayPal
     orderTime: { type: Date, default: Date.now }, // Date and time when the order was placed
-    totalCost: { type: Number, required: true }, // Total cost of the order
+    totalCost: { type: Number }, // Total cost of the order
     shippingAddress: {
       // Shipping address of the user
-      name: { type: String, required: true }, // Name
-      addressLine1: { type: String, required: true }, // Address Line 1
+      name: { type: String }, // Name
+      addressLine1: { type: String }, // Address Line 1
       addressLine2: { type: String }, // Address Line 2 (optional)
-      city: { type: String, required: true }, // City
-      county: { type: String, required: true }, // County
-      eircode: { type: String, required: true }, // Eircode
+      city: { type: String }, // City
+      county: { type: String }, // County
+      eircode: { type: String }, // Eircode
     },
   },
   {

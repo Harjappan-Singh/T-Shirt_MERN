@@ -217,7 +217,6 @@ const returnUsersDetailsAsJSON = (req, res) => {
     { algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRY }
   );
 
-  console.log(req.data);
 
   fs.readFile(
     `${process.env.UPLOADED_FILES_FOLDER}/${req.data.profilePhotoFilename}`,

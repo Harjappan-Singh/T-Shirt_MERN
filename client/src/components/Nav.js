@@ -24,20 +24,6 @@ class Nav extends Component {
     };
   }
 
-  async componentDidMount() {
-    await this.fetchData();
-  }
-
-  async fetchData() {
-    try {
-      const result = await axios.get('/tshirts'); // assuming the endpoint is correct
-      this.setState({ products: result.data, loading: false });
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      this.setState({ error: error.message, loading: false });
-    }
-  }
-
   toggleSearchVisibility = () => {
     this.setState((prevState) => ({
       isSearchVisible: !prevState.isSearchVisible,
@@ -91,7 +77,7 @@ class Nav extends Component {
                 <Link className="dropdown-item" to="/UserProfile">
                   User Profile
                 </Link>
-                <Link className="dropdown-item" to="/admin/ViewOrders">
+                <Link className="dropdown-item" to="/ViewOrders">
                   Order History
                 </Link>
 
@@ -176,11 +162,6 @@ class Nav extends Component {
                 alt="Cart"
               />
             </Link>
-
-            {/* {userInfo ? (
-              <img id="profile-icon" src="profile-icon.png" alt="Profile" />
-            ) : null}
-           */}
           </div>
         </nav>
       </div>

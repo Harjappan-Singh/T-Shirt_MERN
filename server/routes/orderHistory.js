@@ -23,7 +23,6 @@ router.get('/orderHistory/:email', (req, res) => {
   });
 });
 
-
 // Route to add order data to the database
 router.post('/orders/add', (req, res) => {
   // Extract order data from the request body
@@ -41,7 +40,11 @@ router.post('/orders/add', (req, res) => {
   const newOrder = new OrderHistory({
     userId: userId,
     email: email,
-    items: items,
+    items: items.map((item) => ({
+      itemName: item.itemName,
+      quantity: item.quantity,
+      price: item.price,
+    })),
     transactionId: transactionId,
     orderTime: orderTime,
     totalCost: totalCost,
@@ -57,6 +60,17 @@ router.post('/orders/add', (req, res) => {
     console.log('Order saved successfully:', order);
     res.status(201).json(order); // Respond with the saved order
   });
+});
+
+router.get('/orders/user/:email', async (req, res) => {
+  try {
+    const userEmail = req.params.email;
+    const orders = await OrderHistory.find({ email: userEmail });
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error('Error fetching order history:', error);
+    res.status(500).json({ errorMessage: 'Internal Server Error' });
+  }
 });
 
 module.exports = router;

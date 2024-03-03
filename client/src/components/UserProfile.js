@@ -44,7 +44,6 @@ class UserProfile extends Component {
 
   render() {
     const { userDetails } = this.state;
-    console.log(userDetails);
 
     return (
       <div style={styles.container}>
