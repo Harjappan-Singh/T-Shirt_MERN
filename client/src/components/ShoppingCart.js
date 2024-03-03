@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect, Link } from 'react-router-dom';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+
 import {
   SANDBOX_CLIENT_ID,
   SERVER_HOST,
@@ -234,6 +235,14 @@ class ShoppingCart extends Component {
   };
 
   render() {
+   
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const isLoggedIn = userInfo && userInfo.accessLevel > ACCESS_LEVEL_GUEST;
+  
+  
+    console.log('isLoggedIn:', isLoggedIn);
+
+
     const { cartItems, errors } = this.state;
     const shippingCost = 4; // Flat rate shipping cost
     const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
@@ -297,8 +306,7 @@ class ShoppingCart extends Component {
         <button className="buttonclear" onClick={this.handleClearCart}>Clear Cart</button>
         
 
-        {localStorage.accessLevel > ACCESS_LEVEL_GUEST ||
-        this.state.addressSubmitted ? (
+        {isLoggedIn ? (
           <div>
             {this.state.redirectToPayPalMessage && (
               <Redirect

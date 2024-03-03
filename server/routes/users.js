@@ -205,6 +205,7 @@ const returnUsersDetailsAsJSON = (req, res) => {
     JWT_PRIVATE_KEY,
     { algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRY }
   );
+
   console.log(req.data);
 
   fs.readFile(
@@ -213,18 +214,33 @@ const returnUsersDetailsAsJSON = (req, res) => {
     (err, fileData) => {
       if (fileData) {
         res.json({
-          fullName: req.data.fullName,
+
+          name: req.data.name,
+          email: req.data.email, 
+
           userId: req.data._id,
           accessLevel: req.data.accessLevel,
-          email: req.data.email,
-          profilePhoto: fileData,
+          profilePhotoFilename: req.data.profilePhotoFilename,
+          fullName: req.data.fullName,
+          dateOfBirth: req.data.dateOfBirth,
+          gender: req.data.gender,
+          phoneNumber: req.data.phoneNumber,
+          address: req.data.address,
+          accountCreationDate: req.data.accountCreationDate,
           token: token,
         });
       } else {
         res.json({
-          fullName: req.data.fullName,
-          //   email: req.data.email,s
+          name: req.data.fullName,
+          email: req.data.email,
+          userId: req.data._id,
           accessLevel: req.data.accessLevel,
+          fullName: req.data.fullName,
+          dateOfBirth: req.data.dateOfBirth,
+          gender: req.data.gender,
+          phoneNumber: req.data.phoneNumber,
+          address: req.data.address,
+          accountCreationDate: req.data.accountCreationDate,
           profilePhoto: null,
           token: token,
         });
@@ -232,6 +248,7 @@ const returnUsersDetailsAsJSON = (req, res) => {
     }
   );
 };
+
 router.delete('/users/:userId', (req, res) => {
   const userId = req.params.userId;
 
@@ -300,7 +317,12 @@ router.post(
   checkThatJWTPasswordIsValid,
   returnUsersDetailsAsJSON
 );
-
+// Route to fetch user details based on email
+router.get(
+  '/users/:email',
+  checkThatUserExistsInUsersCollection,
+  returnUsersDetailsAsJSON
+);
 router.post(`/users/logout`, logout);
 
 module.exports = router;

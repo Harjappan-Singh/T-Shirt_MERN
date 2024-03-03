@@ -13,8 +13,8 @@ export default class ViewOrderHistory extends Component {
       orderHistory: [],
       loading: true,
       error: '',
-      sortByDateAsc: true, // Flag to track sorting order
-      customerEmail: props.customerEmail || localStorage.getItem('email'), // Initialize customerEmail state with prop or local storage
+      sortByDateAsc: true,
+      customerEmail: props.customerEmail || JSON.parse(localStorage.getItem('userInfo'))?.email,
     };
   }
 
@@ -30,6 +30,7 @@ export default class ViewOrderHistory extends Component {
   async fetchOrderHistory(customerEmail) {
     try {
       const response = await axios.get(`${SERVER_HOST}/orderHistory/${customerEmail}`);
+      console.log('Order history:', response.data); // Debugging statement
       this.setState({ orderHistory: response.data, loading: false });
     } catch (error) {
       console.error('Error fetching order history', error);
@@ -46,7 +47,7 @@ export default class ViewOrderHistory extends Component {
     });
     this.setState({
       orderHistory: sortedOrderHistory,
-      sortByDateAsc: !sortByDateAsc, // Toggle sorting order
+      sortByDateAsc: !sortByDateAsc,
     });
   };
 

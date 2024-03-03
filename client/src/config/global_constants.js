@@ -7,7 +7,7 @@ export const ACCESS_LEVEL_NORMAL_USER = 1
 export const ACCESS_LEVEL_ADMIN = 2
 
 // Server
-export const SERVER_HOST = `http://localhost:4000`
+export const SERVER_HOST = `http://localhost:3000`
 
 // PayPal
 export const SANDBOX_CLIENT_ID = "AcJNgPJl0ZJKncN9hwMiO7Ew4OSzZRw7cLgwl_NNxbB0K4fJ6J6NmSSNERG9uYuENd_UlpJpU2WFXIk7"

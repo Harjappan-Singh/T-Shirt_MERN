@@ -1,4 +1,3 @@
-// 
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
@@ -35,12 +34,13 @@ export default class Login extends Component {
           } else {
             // user successfully logged in
             console.log('User logged in');
+            
             const userInfo = {
               name: res.data.name,
+              email: res.data.email,
               accessLevel: res.data.accessLevel,
               profilePhoto: res.data.profilePhoto,
               token: res.data.token,
-              email: res.data.email,
             };
             localStorage.setItem('userInfo', JSON.stringify(userInfo));
             this.setState({

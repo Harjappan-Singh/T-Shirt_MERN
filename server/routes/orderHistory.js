@@ -7,18 +7,22 @@ router.get('/orderHistory/:email', (req, res) => {
 
   OrderHistory.find({ email: email }, (error, orderHistory) => {
     if (error) {
+      console.error('Error fetching order history:', error); // Add this debugging statement
       return res.status(500).json({ errorMessage: 'Internal Server Error' });
     }
 
     if (!orderHistory || orderHistory.length === 0) {
+      console.log('No order history found for customer:', email); // Add this debugging statement
       return res
         .status(404)
         .json({ errorMessage: 'No order history found for the customer' });
     }
 
+    console.log('Order history found:', orderHistory); // Add this debugging statement
     res.json(orderHistory);
   });
 });
+
 
 // Route to add order data to the database
 router.post('/orders/add', (req, res) => {
