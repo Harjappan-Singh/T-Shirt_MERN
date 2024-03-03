@@ -125,7 +125,7 @@ export default class AddTshirt extends Component {
   //   }
   handleSubmit = (e) => {
     e.preventDefault();
-  
+    
     const tshirtObject = {
       brand: this.state.brand,
       name: this.state.name,
@@ -140,25 +140,26 @@ export default class AddTshirt extends Component {
       numReviews: this.state.numReviews,
     };
   
-    axios.post(`${SERVER_HOST}/tshirts`, tshirtObject)
-      .then((res) => {
-        if (res.data) {
-          if (res.data.errorMessage) {
-            console.log(res.data.errorMessage);
-          } else {
-            console.log('Record added');
-            this.setState({ redirectToDisplayAllTshirts: true });
-          }
+    axios.post(`${SERVER_HOST}/tshirts`, tshirtObject, {
+      headers: { "authorization": localStorage.token }
+    })
+    .then((res) => {
+      if (res.data) {
+        if (res.data.errorMessage) {
+          console.log(res.data.errorMessage);
         } else {
-          console.log('Record not added');
+          console.log('Record added');
+          this.setState({ redirectToDisplayAllTshirts: true });
         }
-      })
-      .catch((error) => {
-        console.error('Error creating T-shirt document:', error);
-        this.setState({ errorMessage: 'Internal server error' });
-      });
+      } else {
+        console.log('Record not added');
+      }
+    })
+    .catch((error) => {
+      console.error('Error creating T-shirt document:', error);
+      this.setState({ errorMessage: 'Internal server error' });
+    });
   };
-
   
   render() {
     return (
