@@ -16,3 +16,236 @@ $margin-size: 1rem;
 body {
   background-color: white;
 }
+
+
+// Add this at the top of your SCSS file to define color variables
+$bluecolor: #1e6091;
+$fff: #ffffff;
+
+// Rest of your existing SCSS code...
+
+.table-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  select {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .sort-by-rating,
+  .sort-by-price {
+    button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.select-options {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.green-button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .product {
+    margin-bottom: 20px;
+    width: calc(30% - 10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .products .product {
+    width: calc(50% - 10px);
+  }
+}
+
+@media (max-width: 480px) {
+  .products .product {
+    width: 100%;
+  }
+}
+
+.page-setting {
+  margin-top: 5%;
+}
+
+@media (max-width: 480px) {
+  .bannerimg {
+    width: 100%;
+    height: auto;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+}
+
+.select-container {
+  
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  select {
+    margin: 0 10px;
+    padding: 8px;
+    border: 1px solid $bluecolor;
+    border-radius: 5px;
+    background-color: $fff;
+    color: black;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: darken($bluecolor, 10%);
+    }
+  }
+}
+
+
+.search-bar {
+  margin: $margin-size;
+  position: relative;
+
+  input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid $bluecolor;
+    border-radius: 5px;
+    background-color: $fff;
+    color: black;
+    outline: none;
+
+    &::placeholder {
+      color: #aaa;
+    }
+  }
+
+  button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: $bluecolor;
+    color: $fff;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}
+
+.table-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  select {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .sort-by-rating,
+  .sort-by-price {
+    button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.select-options {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.green-button {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .product {
+    margin-bottom: 20px;
+    width: calc(30% - 10px);
+  }
+}
+
+@media (max-width: 768px) {
+  .products .product {
+    width: calc(50% - 10px);
+  }
+}
+
+@media (max-width: 480px) {
+  .products .product {
+    width: 100%;
+  }
+}
+
+.page-setting {
+  margin-top: 5%;
+}
+
+@media (max-width: 480px) {
+  .bannerimg {
+    width: 100%;
+    height: auto;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+}
+
+.select-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+
+  select {
+    margin: 0 10px;
+    padding: 8px;
+    border: 1px solid $bluecolor;
+    border-radius: 5px;
+    background-color: $fff;
+    color: black;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: darken($bluecolor, 10%);
+    }
+  }
+}
+
+
+
