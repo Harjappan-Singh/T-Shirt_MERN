@@ -86,16 +86,13 @@ export default class App extends Component {
             <LoggedInRoute exact path="/ViewOrders" component={ViewOrders} />
           <LoggedInRoute path="/ViewOrders/:_id" component={ViewOrders} />
           <Route exact path="/admin/AddTshirt" component={AddTshirt} />
+                <Route exact path="/UserProfile" component={UserProfile} />
+                <LoggedInRoute path="/ViewOrders/:_id" component={ViewOrders} />
+              </>
+            </Switch>
+          </div>
+          <Footer />
 
-<Route exact path="/admin/ViewCustomers" component={ViewCustomers} />
-<Route exact path="/admin/ViewOrders" component={ViewOrders} />
-
-          
-          </>
-        </Switch>
-        
-        </div>
-        <Footer />
         </div>
       </BrowserRouter>
     );

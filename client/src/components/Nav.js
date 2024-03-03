@@ -47,12 +47,14 @@ class Nav extends Component {
 
   signoutHandler = () => {
     localStorage.removeItem('userInfo');
+    localStorage.clear();
     this.setState({ userInfo: null });
     // Redirect to home page or login page if needed
   };
 
   render() {
     const { userInfo } = this.state;
+    // console.log(userInfo.profilePhoto);s
 
     return (
       <div className="top-bar">
@@ -82,6 +84,7 @@ class Nav extends Component {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                onClick={(e) => e.stopPropagation()}
               >
                 {userInfo.profilePhoto && (
                   <img

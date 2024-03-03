@@ -177,9 +177,46 @@ const returnUsersDetailsAsJSON = (req, res) => {
     JWT_PRIVATE_KEY,
     { algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRY }
   );
-  fs.readFile(`${process.env.UPLOADED_FILES_FOLDER}/${req.data.profilePhotoFilename}`, 'base64', (err, fileData) => {
-    if (err) {
-      return res.status(500).json({ errorMessage: 'Error reading profile photo' });
+
+  console.log(req.data);
+
+  fs.readFile(
+    `${process.env.UPLOADED_FILES_FOLDER}/${req.data.profilePhotoFilename}`,
+    'base64',
+    (err, fileData) => {
+      if (fileData) {
+        res.json({
+          name: req.data.fullName,
+          email: req.data.email,
+          userId: req.data._id,
+          accessLevel: req.data.accessLevel,
+          // profilePhotoFilename: req.data.profilePhotoFilename,
+          profilePhoto: fileData,
+          fullName: req.data.fullName,
+          dateOfBirth: req.data.dateOfBirth,
+          gender: req.data.gender,
+          phoneNumber: req.data.phoneNumber,
+          address: req.data.address,
+          accountCreationDate: req.data.accountCreationDate,
+          token: token,
+        });
+      } else {
+        res.json({
+          name: req.data.fullName,
+          email: req.data.email,
+          userId: req.data._id,
+          accessLevel: req.data.accessLevel,
+          fullName: req.data.fullName,
+          dateOfBirth: req.data.dateOfBirth,
+          gender: req.data.gender,
+          phoneNumber: req.data.phoneNumber,
+          address: req.data.address,
+          accountCreationDate: req.data.accountCreationDate,
+          profilePhoto: null,
+          token: token,
+        });
+      }
+
     }
     res.json({
       name: req.data.fullName,
