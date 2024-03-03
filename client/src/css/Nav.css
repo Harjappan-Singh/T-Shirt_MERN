@@ -1,6 +1,8 @@
 @font-face {
   font-family: 'LovelyLove';
   src: url('./images/lovelove.regular.ttf') format('truetype');
+  font-family: 'LovelyLove';
+  src: url('./images/lovelove.regular.ttf') format('truetype');
   font-weight: bold;
 }
 * {
@@ -23,6 +25,7 @@
   width: 60px;
   height: 70px;
   -o-object-fit: contain;
+  object-fit: contain;
   object-fit: contain;
   margin-left: 5px;
 }
@@ -73,10 +76,27 @@ a {
 
 h1 {
   font-family: 'LovelyLove';
+  font-family: 'LovelyLove';
   margin: 0;
   color: #1e6091;
   font-weight: 400px;
   font-size: 4em;
+}
+
+.AdminFunc {
+  position: absolute;
+  top: 10px; /* Adjusted margin from the top */
+  right: 10px; /* Adjusted margin from the right */
+  display: flex;
+  align-items: center;
+}
+.AdminFunc .admin-button {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
 .admin-button,
@@ -90,15 +110,6 @@ h1 {
   transition: background-color 0.3s ease;
 }
 
-.admin-button {
-  background-color: #fff;
-  color: #000;
-  margin-left: auto;
-}
-.admin-button:hover {
-  background-color: #1e6091;
-}
-
 .admin-button1 {
   color: #fff;
 }
@@ -110,7 +121,48 @@ h1 {
 
 .AdminFunc a {
   padding: 8px 12px;
-} /*# sourceMappingURL=Nav.css.map */
+}
 
-/* harjappan css */
-/* Custom styles for the profile picture */
+.dropdown {
+  padding-right: 20px;
+  position: relative;
+}
+.dropdown-toggle {
+  color: rgb(10, 30, 93);
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  min-width: 160px;
+  border-radius: 5px;
+  padding: 10px 0;
+}
+.dropdown-item {
+  color: black;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-item:hover {
+  background-color: #f9f9f9;
+}
+.dropdown-toggle:focus + .dropdown-menu {
+  display: block;
+}
+.dropdown-menu a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+}
+.dropdown-menu a:hover {
+  background-color: #f9f9f9;
+}/*# sourceMappingURL=Nav.css.map */

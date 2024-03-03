@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import '../css/Nav.css';
+import axios from 'axios';
 import SearchBar from './Searchbar';
+import DisplayTshirts from './DisplayTshirts';
+import Login from './Login';
+import ViewCustomers from './ViewCustomers';
+import wings from '../css/images/logobw.png';
 import bagImage from '../css/images/bag.png';
 import searchicon from '../css/images/search.png';
-import wings from '../css/images/logobw.png';
-import axios from 'axios';
+import '../css/Nav.css';
+import { SERVER_HOST } from '../config/global_constants';
+
+
+
+
+
+
 import {
   ACCESS_LEVEL_ADMIN,
   ACCESS_LEVEL_NORMAL_USER,
@@ -16,9 +26,6 @@ class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: [],
-      loading: true,
-      error: '',
       isSearchVisible: false,
       userInfo: JSON.parse(localStorage.getItem('userInfo')) || null,
     };
@@ -34,7 +41,7 @@ class Nav extends Component {
     localStorage.removeItem('userInfo');
     localStorage.clear();
     this.setState({ userInfo: null });
-    // Redirect to home page or login page if needed
+    // this.props.history.push('/');
   };
 
   render() {
@@ -118,7 +125,7 @@ class Nav extends Component {
                 <Link className="dropdown-item" to="/admin/products">
                   Products
                 </Link>
-                <Link className="dropdown-item" to="/admin/ViewOrders">
+                <Link className="dropdown-item" to="/admin/viewOrders">
                   Orders
                 </Link>
                 <Link
@@ -141,7 +148,13 @@ class Nav extends Component {
 
         <nav>
           <div className="left-section">
-            <SearchBar />
+          {isSearchVisible && (
+              <SearchBar
+                ref={(input) => {
+                  this.searchInput = input;
+                }}
+              />
+            )}
             <img
               id="search-icon"
               src={searchicon}

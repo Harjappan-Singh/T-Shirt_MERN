@@ -1,3 +1,21 @@
+@font-face {
+  font-family: "Nexa";
+  src: url("../css/fonts/Nexa-Heavy.ttf") format("woff"), url("../css/fonts/Nexa-Heavy.ttf") format("woff2");
+  /* Add more formats if needed */
+  font-weight: normal;
+  font-style: normal;
+}
+.cart-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center; /* Center children horizontally */
+  padding-top: 1.5%;
+}
+.cart-content h2 {
+  margin-bottom: 20px !important;
+}
+
 .shopping-cart {
   font-family: "Arial", sans-serif;
 }
@@ -141,4 +159,100 @@ body {
 .total-text::before {
   content: attr(data-label);
   font-weight: bold;
+}
+
+.buttonclear {
+  width: 150px;
+  height: 30px;
+  display: inline-block;
+  background-color: transparent;
+  color: #333;
+  border: 2px solid #333;
+  border-radius: 5px;
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border 0.3s;
+}
+
+.buttonclear:hover {
+  background-color: #1e6091;
+  color: white;
+  transition: background-color 0.3s, color 0.3s, border 0.3s;
+}
+
+.paypal-buttons {
+  margin-top: 10px; /* Add margin for spacing */
+}
+
+.paypal-buttons button {
+  width: 150px; /* Set the width to match the "Clear Cart" button */
+  height: 30px; /* Set the height to match the "Clear Cart" button */
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: transparent;
+  color: #333;
+  border: 2px solid #333;
+  border-radius: 5px;
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border 0.3s;
+}
+
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center children vertically */
+}
+
+/* Apply the class to the container that wraps everything else except h2 */
+.centered-container > * {
+  margin: 10px; /* Adjust margin as needed for space between elements */
+}
+
+.item-size-selector {
+  margin-top: 5px;
+}
+
+.removebutton {
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  margin-left: 10px; /* Adjust the margin to add space */
+  background-color: transparent;
+  color: #333;
+  border: 2px solid #333;
+  border-radius: 5px;
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, border 0.3s;
+}
+
+.removebutton:hover {
+  background-color: #1e6091;
+  color: white;
+  transition: background-color 0.3s, color 0.3s, border 0.3s;
+}
+
+.empty-cart-message {
+  margin-top: 40px;
+}
+
+.empty-cart-message h2 {
+  font-size: 5em;
+  margin-top: 20%;
+  font-family: "Nexa", sans-serif;
+  color: #981c1c;
+}
+
+.empty-cart-message p {
+  font-size: 1em;
+  margin-left: 25%;
+  font-family: "Nexa", sans-serif;
+  color: black;
 }/*# sourceMappingURL=ShoppingCart.css.map */
