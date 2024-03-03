@@ -101,11 +101,12 @@ class Nav extends Component {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                onClick={(e) => e.stopPropagation()}
               >
                 Admin
               </button>
               <div className="dropdown-menu" aria-labelledby="adminDropdown">
-                <Link className="dropdown-item" to="/AddTshirt">
+                <Link className="dropdown-item" to="/admin/AddTshirt">
                   Add New T-shirt
                 </Link>
                 <Link className="dropdown-item" to="/admin/ViewCustomers">

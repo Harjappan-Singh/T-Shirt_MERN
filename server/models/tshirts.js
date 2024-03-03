@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 
 let tshirtsSchema = new mongoose.Schema(
   {
-    brand: { type: String, required: true },
+    brand: { type: String },
     slug: { type: String },
-    name: { type: String, required: true },
-    description: { type: String, required: true },
-    category: { type: String, required: true },
-    type: { type: String, required: true },
-    color: { type: String, required: true },
+    name: { type: String },
+    description: { type: String },
+    category: { type: String },
+    type: { type: String },
+    color: { type: String },
     productImage: { type: String },
     images: [{ type: String }],
-    sizes: [{ type: String, required: true }],
+    sizes: [{ type: String }],
     price: { type: Number },
     countInStock: { type: Number },
     rating: { type: Number },
