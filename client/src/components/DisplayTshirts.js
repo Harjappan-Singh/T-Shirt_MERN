@@ -12,6 +12,7 @@ import {
 } from '../config/global_constants';
 import Banner from './Banner';
 import Logout from './Logout';
+// import '../css/DisplayTshirts.scss';
 
 export default class DisplayTshirts extends Component {
   constructor(props) {
@@ -151,6 +152,7 @@ export default class DisplayTshirts extends Component {
       <>
         <div className='bannerimg'>
           <Banner />
+          <div className="select-container">
           <div className='page-setting'>
             <select value={sizesFilter} onChange={this.handleSizesFilter}>
               <option value="All">Sizes</option>
@@ -207,6 +209,7 @@ export default class DisplayTshirts extends Component {
                   Sort by Price{' '}
                   {this.state.sortByPrice ? '(Low to High)' : '(High to Low)'}
                 </button>
+              </div>
               </div>
               <input
   type="text"

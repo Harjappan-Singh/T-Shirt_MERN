@@ -1,128 +1,151 @@
-.table-container {
+@font-face {
+  font-family: "Nexa";
+  src: url("../css/fonts/Nexa-Heavy.ttf") format("woff"), url("../css/fonts/Nexa-Heavy.ttf") format("woff2");
+  /* Add more formats if needed */
+  font-weight: normal;
+  font-style: normal;
+}
+.page-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px 0;
+}
+
+.form-container {
+  margin-top: 4%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 800px;
+  margin: auto;
+  padding: 20px;
+  background-color: #cee4f2;
+  border: 1px solid #1e6091;
+  border-radius: 10px;
+  color: black;
+}
+.form-container .addnew {
+  font-size: 25px;
+  color: #1e6091;
+  margin-bottom: 20px;
+  font-family: "Nexa", sans-serif;
+}
+.form-container div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+.form-container div label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.form-container div input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.form-container .input-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Adjust as needed */
+}
+.form-container .input-row > div {
+  width: calc(28% - 2px); /* Adjust as needed, subtracting 5px for space */
+}
+.form-container .add-button,
+.form-container .cancel-button {
+  width: calc(50% - 5px); /* 5px space between buttons */
+  background-color: #02b168;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-bottom: 10px; /* Space between buttons */
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+.form-container .cancel-button {
+  background-color: #d9534f;
+}
+.form-container .add-button:hover {
+  background-color: #02b168;
+}
+.form-container .cancel-button:hover {
+  background-color: #c9302c;
+}
+
+nav {
+  margin-bottom: 30px;
+}
+
+.select-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.select-container select {
+  margin: 0 10px;
+  padding: 8px;
+  border: 1px solid #1e6091;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: black;
+  cursor: pointer;
+}
+.select-container select:focus {
+  outline: none;
+  border-color: #154467;
+}
+.select-container .table-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 20px;
 }
-.table-container select {
+.select-container .table-container select {
   margin-bottom: 10px;
   width: 100%;
 }
-.table-container .sort-by-rating button,
-.table-container .sort-by-price button {
+.select-container .table-container .sort-by-rating button,
+.select-container .table-container .sort-by-price button {
+  width: 48%; /* Adjust as needed */
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: 1px solid black;
+  color: black;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+.select-container .table-container .sort-by-rating button:hover,
+.select-container .table-container .sort-by-price button:hover {
+  background-color: #1e6091; /* Change to your desired hover background color */
+  color: white; /* Change to your desired hover text color */
+}
+.select-container .table-container .sort-by-rating button {
+  margin-right: 2%; /* Add a small margin to separate buttons */
+}
+.select-container .table-container .sort-by-price button {
+  margin-left: 2%; /* Add a small margin to separate buttons */
+}
+.select-container .table-container input {
   width: 100%;
   margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #1e6091;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: black;
+  cursor: text;
 }
-
-.select-options {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.green-button {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.products {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.products .product {
-  margin-bottom: 20px;
-  width: calc(30% - 10px);
-}
-
-@media (max-width: 768px) {
-  .products .product {
-    width: calc(50% - 10px);
-  }
-}
-@media (max-width: 480px) {
-  .products .product {
-    width: 100%;
-  }
-}
-.page-setting {
-  margin-top: 5%;
-}
-
-@media (max-width: 480px) {
-  .bannerimg {
-    width: 100%;
-    height: auto;
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-}
-.table-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-.table-container select {
-  margin-bottom: 10px;
-  width: 100%;
-}
-.table-container .sort-by-rating button,
-.table-container .sort-by-price button {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.select-options {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.green-button {
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.products {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.products .product {
-  margin-bottom: 20px;
-  width: calc(30% - 10px);
-}
-
-@media (max-width: 768px) {
-  .products .product {
-    width: calc(50% - 10px);
-  }
-}
-@media (max-width: 480px) {
-  .products .product {
-    width: 100%;
-  }
-}
-.page-setting {
-  margin-top: 5%;
-}
-
-@media (max-width: 480px) {
-  .bannerimg {
-    width: 100%;
-    height: auto;
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .bannerimg img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+.select-container .table-container input:focus {
+  outline: none;
+  border-color: #154467;
 }/*# sourceMappingURL=DisplayTshirts.css.map */
