@@ -110,7 +110,7 @@ export default class App extends Component {
                   path="/admin/ViewCustomers"
                   component={ViewCustomers}
                 />
-                <Route exact path="/admin/ViewOrders" component={ViewOrders} />
+                <Route exact path="/ViewOrders" component={ViewOrders} />
                 <Route exact path="/UserProfile" component={UserProfile} />
                 <Route
                   exact
