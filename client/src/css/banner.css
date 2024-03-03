@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Nexa";
-  src: url("../css/fonts/Nexa-Heavy.ttf") format("woff2"), url("../css/fonts/Nexa-Heavy.ttf") format("woff");
+  src: url("../css/fonts/Nexa-ExtraLight.ttf") format("woff2"); /* Replace with the actual path to your font files */
   font-weight: normal;
   font-style: normal;
 }
@@ -12,12 +12,13 @@
   display: flex;
   justify-content: space-between;
   color: #000000;
+  text-align: center;
+  padding: 5px 0;
   font-size: 16px;
   white-space: nowrap;
   overflow: hidden;
   animation: slideText 10s infinite linear;
-  padding-bottom: 1%;
-  border-bottom: 1px #1e6091;
+  height: 40px;
 }
 .banner-container p {
   margin: 0;
@@ -94,17 +95,18 @@
   text-align: center;
 }
 .banner-container .banner .text-container h1 {
-  font-size: 6em;
-  color: #1e6091;
+  font-family: "Nexa", sans-serif;
+  padding: 20px;
 }
-.banner-container .banner .text-container h1.angel-blue {
+.banner-container .banner .text-container .angel-blue {
   font-weight: 700;
-  font-size: 7em;
+  font-size: 2em; /* Adjust the font size as needed */
   color: #ffffff;
   -webkit-text-stroke: 0.5px #ffffff;
   text-stroke: 6px #ffffff;
 }
 .banner-container .banner .text-container .angel-blue-image {
+  text-decoration: underline;
   max-width: 100%;
   height: auto;
   height: 40px;

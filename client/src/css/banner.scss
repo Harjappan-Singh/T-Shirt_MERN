@@ -4,8 +4,7 @@ $whitecolor: #ffffff;
 
 @font-face {
   font-family: 'Nexa';
-  src: url('../css/fonts/Nexa-Heavy.ttf') format('woff2'), /* Replace with the actual path to your font files */
-       url('../css/fonts/Nexa-Heavy.ttf') format('woff');
+  src: url('../css/fonts/Nexa-ExtraLight.ttf') format('woff2'); /* Replace with the actual path to your font files */
   font-weight: normal;
   font-style: normal;
 }
@@ -70,6 +69,9 @@ $whitecolor: #ffffff;
   overflow: hidden;
   background-size: cover;
 
+
+
+  
   .images {
     display: flex; // Ensure images are displayed in a row
     animation: slideBanner 5s infinite; // Adjust the duration to match the interval in milliseconds
@@ -107,43 +109,43 @@ $whitecolor: #ffffff;
       }
     }
   }
-
-
-.text-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-
-  h1 {
-    // font-family: 'Nexa', sans-serif;
-    font-size: 6em;
-    color: $bluecolor; 
-
-    &.angel-blue {
-      // Styles for the "angel blue" variation
+  .text-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  
+    h1 {
+      font-family: 'Nexa', sans-serif;
+      padding: 20px;
+    }
+  
+    .angel-blue {
       font-weight: 700;
-      font-size: 7em; // Adjust the font size as needed
-      color: $whitecolor; // Example color, replace with your desired color
-      -webkit-text-stroke: 0.5px $whitecolor; // WebKit (Safari, Chrome) syntax
-        text-stroke: 6px $whitecolor; // Standard syntax
-        // text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); // Add a drop shadow
+      font-size: 2em; /* Adjust the font size as needed */
+      color: $whitecolor;
+      -webkit-text-stroke: 0.5px $whitecolor;
+      text-stroke: 6px $whitecolor;
+      
+    }
+  
+    .angel-blue-image {
+      text-decoration:underline;
+      max-width: 100%;
+      height: auto;
+      height: 40px;
+      width: 40px;
+      cursor: pointer;
+    
     }
   }
+  
 
-  .angel-blue-image {
-    // Styles for the "angel blue" image
-    max-width: 100%;
-    height: auto;
-    height: 40px;
-    width: 40px;
-    cursor: pointer;
-  }
-}
   img {
     max-width: 100%;
     height: auto;
+    
   }
 }
 

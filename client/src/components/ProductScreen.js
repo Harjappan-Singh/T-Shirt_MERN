@@ -29,10 +29,7 @@ class ProductScreen extends Component {
     // Access accessLevel from userInfo
     const accessLevel = userInfo ? userInfo.accessLevel : 0;
     // Parse userInfo from localStorage
-    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-
-    // Access accessLevel from userInfo
-    const accessLevel = userInfo ? userInfo.accessLevel : 0;
+  
 
     return (
       <div className="product-card">
@@ -53,7 +50,6 @@ class ProductScreen extends Component {
           <Rating rating={product.rating} numReviews={product.numReviews} />
           <div className="product-price">€{product.price}</div>
           <div>
-            {accessLevel === ACCESS_LEVEL_ADMIN && (
             {accessLevel === ACCESS_LEVEL_ADMIN && (
               <Link className="blue-button" to={`/AddTshirt/${product._id}`}>
                 Add

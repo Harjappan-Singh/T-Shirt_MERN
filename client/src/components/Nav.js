@@ -26,16 +26,11 @@ class Nav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSearchVisible: false,
       userInfo: JSON.parse(localStorage.getItem('userInfo')) || null,
     };
   }
 
-  toggleSearchVisibility = () => {
-    this.setState((prevState) => ({
-      isSearchVisible: !prevState.isSearchVisible,
-    }));
-  };
+
 
   signoutHandler = () => {
     localStorage.removeItem('userInfo');
@@ -147,8 +142,8 @@ class Nav extends Component {
         )}
 
         <nav>
-          <div className="left-section">
-          {isSearchVisible && (
+          {/* <div className="left-section"> */}
+          {/* {isSearchVisible && (
               <SearchBar
                 ref={(input) => {
                   this.searchInput = input;
@@ -161,7 +156,7 @@ class Nav extends Component {
               alt="Search"
               onClick={this.toggleSearchVisibility}
             />
-          </div>
+          </div> */}
 
           <div className="center-section">
             <h1>Closet</h1>
