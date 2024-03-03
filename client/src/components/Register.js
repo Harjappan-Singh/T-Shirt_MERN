@@ -89,8 +89,30 @@ export default class Register extends Component {
           };
           localStorage.setItem('userInfo', JSON.stringify(userInfo));
 
-          // Redirect after successful registration
-          this.setState({ isRegistered: true });
+          // Add user address
+          const addressData = {
+            name: this.state.name,
+            email: this.state.email,
+            addressLine1: this.state.addressLine1,
+            addressLine2: this.state.addressLine2,
+            city: this.state.city,
+            county: this.state.county,
+            eircode: this.state.eircode,
+          };
+          axios
+            .post(`${SERVER_HOST}/addresses/add`, addressData)
+            .then((addressRes) => {
+              if (addressRes.data && !addressRes.data.errorMessage) {
+                console.log('Address added successfully');
+                // Redirect after successful registration
+                this.setState({ isRegistered: true });
+              } else {
+                console.log('Address addition failed:', addressRes.data.errorMessage);
+              }
+            })
+            .catch((addressError) => {
+              console.error('Error adding address:', addressError);
+            });
         } else {
           console.log('User registration failed:', res.data.errorMessage);
         }
