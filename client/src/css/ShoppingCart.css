@@ -5,15 +5,32 @@
   font-weight: normal;
   font-style: normal;
 }
-.cart-content {
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.page-content {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  align-items: center; /* Center children horizontally */
+  background-color: #fff;
+}
+
+.cart-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-top: 1.5%;
 }
-.cart-content h2 {
-  margin-bottom: 20px !important;
+
+/* Add these styles for the footer */
+.footer {
+  margin-top: auto; /* Push the footer to the bottom */
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: center;
 }
 
 .shopping-cart {
@@ -27,6 +44,8 @@
 
 body {
   font-family: "Arial", sans-serif;
+  height: 100%;
+  margin: 0;
 }
 
 .cart-container {
@@ -241,8 +260,10 @@ body {
 
 .empty-cart-message {
   margin-top: 40px;
+  text-align: center; /* Center the message horizontally */
 }
 
+/* Add these styles to make the "Oh no" message big and centered */
 .empty-cart-message h2 {
   font-size: 5em;
   margin-top: 20%;
@@ -252,7 +273,6 @@ body {
 
 .empty-cart-message p {
   font-size: 1em;
-  margin-left: 25%;
   font-family: "Nexa", sans-serif;
   color: black;
 }/*# sourceMappingURL=ShoppingCart.css.map */

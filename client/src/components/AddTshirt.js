@@ -4,6 +4,8 @@ import axios from 'axios';
 import LinkInClass from '../components/LinkInClass';
 import { ACCESS_LEVEL_ADMIN, SERVER_HOST } from '../config/global_constants';
 import '../css/DisplayTshirts.css';
+import '../css/Add.css';
+
 
 export default class AddTshirt extends Component {
   constructor(props) {
@@ -91,7 +93,9 @@ export default class AddTshirt extends Component {
             this.setState({ errorMessage: res.data.errorMessage });
           } else {
             console.log(`Record added`);
+            this.props.history.push('/DisplayTshirts');
             this.setState({ redirectToDisplayAllTshirts: true });
+            
           }
         } else {
           console.log(`Record not added`);
@@ -104,8 +108,12 @@ export default class AddTshirt extends Component {
 
   render() {
     return (
+      <>
+      <div className="page-content">
+     
       <div className="form-container">
         <div>
+        <h1 className='addnew'>Add New Product</h1>
           <label htmlFor="brand">Brand</label>
           <input
             ref={(input) => {
@@ -190,13 +198,15 @@ export default class AddTshirt extends Component {
         <br />
         <LinkInClass
           value="Add"
-          className="green-button"
+          className="add-button"
           onClick={this.handleSubmit}
         />
-        <Link className="red-button" to={'/DisplayTshirts'}>
+        <Link className="cancel-button" to={'/DisplayTshirts'}>
           Cancel
         </Link>
       </div>
+      </div>
+      </>
     );
   }
 }

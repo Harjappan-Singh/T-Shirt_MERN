@@ -80,19 +80,13 @@ h1 {
 }
 
 .AdminFunc {
-  position: absolute;
-  top: 10px; /* Adjusted margin from the top */
-  right: 10px; /* Adjusted margin from the right */
   display: flex;
   align-items: center;
+  margin-right: 10px; /* Adjust the margin as needed */
 }
-.AdminFunc .admin-button {
-  background-color: white;
-  color: black;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
+
+.admin-button1 {
+  margin-right: 10px; /* Adjust the margin as needed */
 }
 
 .admin-button,

@@ -44,6 +44,7 @@ class Nav extends Component {
     // console.log(userInfo.profilePhoto);s
 
     return (
+      <>
       <div className="top-bar">
         <a href="/DisplayTshirts">
           <img src={wings} alt="icon" />
@@ -133,28 +134,23 @@ class Nav extends Component {
               </div>
             </div>
           )}
-        </div>
+       
+      
+
 
         {!userInfo && (
           <Link className="admin-button1" to={'/Login'}>
             Login
           </Link>
         )}
-
+         </div>
+  </div>
         <nav>
-          {/* <div className="left-section"> */}
-          {/* {isSearchVisible && (
-              <SearchBar
-                ref={(input) => {
-                  this.searchInput = input;
-                }}
-              />
-            )}
+        {/* <div className="left-section">
             <img
               id="search-icon"
               src={searchicon}
               alt="Search"
-              onClick={this.toggleSearchVisibility}
             />
           </div> */}
 
@@ -164,7 +160,6 @@ class Nav extends Component {
 
           <div className="right-section">
             <Link to="/ShoppingCart">
-              Basket
               <img
                 src={bagImage}
                 style={{ width: '20px', height: '20px' }}
@@ -173,7 +168,7 @@ class Nav extends Component {
             </Link>
           </div>
         </nav>
-      </div>
+    </>
     );
   }
 }

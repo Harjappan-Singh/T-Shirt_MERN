@@ -1,0 +1,107 @@
+$white-color: #ffffff;
+$blue-color: #1e6091;
+
+@font-face {
+    font-family: 'Nexa';
+    src: url('../css/fonts/Nexa-Heavy.ttf') format('woff'),
+         url('../css/fonts/Nexa-Heavy.ttf') format('woff2');
+    /* Add more formats if needed */
+    font-weight: normal;
+    font-style: normal;
+  }
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px 0; 
+
+}
+
+.form-container {
+    margin-top: 4%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #cee4f2;
+    border: 1px solid $blue-color;
+    border-radius: 10px;
+    color: black;
+    
+    .addnew {
+        font-size: 25px;
+        color: $blue-color;
+        margin-bottom: 20px;
+        font-family: 'Nexa', sans-serif;
+      }
+  
+    div {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+  
+      label {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+  
+      input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+    }
+  
+    .input-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%; /* Adjust as needed */
+    }
+
+
+    .input-row > div {
+        width: calc(28% - 2px); /* Adjust as needed, subtracting 5px for space */
+      }
+ 
+    .add-button,
+    .cancel-button {
+      width: calc(50% - 5px); /* 5px space between buttons */
+      background-color: #02b168;
+      color: white;
+      padding: 10px 15px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-bottom: 10px; /* Space between buttons */
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+  
+    .cancel-button {
+      background-color: #d9534f;
+    }
+  
+    .add-button:hover {
+      background-color: #02b168;
+    }
+  
+    .cancel-button:hover {
+      background-color: #c9302c;
+    }
+  }
+  
+  nav {
+    margin-bottom: 30px; // Adjust the value as needed
+  }
+  
+
+  
+
+  

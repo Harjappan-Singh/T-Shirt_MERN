@@ -1,0 +1,85 @@
+@font-face {
+  font-family: "Nexa";
+  src: url("../css/fonts/Nexa-Heavy.ttf") format("woff"), url("../css/fonts/Nexa-Heavy.ttf") format("woff2");
+  /* Add more formats if needed */
+  font-weight: normal;
+  font-style: normal;
+}
+.page-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px 0;
+}
+
+.form-container {
+  margin-top: 4%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 800px;
+  margin: auto;
+  padding: 20px;
+  background-color: #cee4f2;
+  border: 1px solid #1e6091;
+  border-radius: 10px;
+  color: black;
+}
+.form-container .addnew {
+  font-size: 25px;
+  color: #1e6091;
+  margin-bottom: 20px;
+  font-family: "Nexa", sans-serif;
+}
+.form-container div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+.form-container div label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.form-container div input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.form-container .input-row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Adjust as needed */
+}
+.form-container .input-row > div {
+  width: calc(28% - 2px); /* Adjust as needed, subtracting 5px for space */
+}
+.form-container .add-button,
+.form-container .cancel-button {
+  width: calc(50% - 5px); /* 5px space between buttons */
+  background-color: #02b168;
+  color: white;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-bottom: 10px; /* Space between buttons */
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+.form-container .cancel-button {
+  background-color: #d9534f;
+}
+.form-container .add-button:hover {
+  background-color: #02b168;
+}
+.form-container .cancel-button:hover {
+  background-color: #c9302c;
+}
+
+nav {
+  margin-bottom: 30px;
+}/*# sourceMappingURL=Add.css.map */

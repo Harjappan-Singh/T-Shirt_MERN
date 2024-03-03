@@ -5,6 +5,7 @@ import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { SANDBOX_CLIENT_ID, SERVER_HOST, ACCESS_LEVEL_GUEST,
 } from '../config/global_constants';
 import PayPalMessage from './PayPalMessage';
+import '../css/ShoppingCart.css';
 
 class ShoppingCart extends Component {
   state = {
@@ -200,7 +201,7 @@ class ShoppingCart extends Component {
 
   render() {
     const { errors, cartItems } = this.state;
-
+    const isCartEmpty = cartItems.length === 0;
     const shippingCost = 4; // Flat rate shipping cost
     const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
     const totalCost = subtotal + shippingCost;
@@ -208,7 +209,7 @@ class ShoppingCart extends Component {
     const accessLevel = userInfo ? userInfo.accessLevel : 0;
 
     return (
-      
+      <div className={`page-content ${isCartEmpty ? 'empty-cart-background' : ''}`}>
       <div className='cart-content'>
         <h2>Your Bag</h2>
 
@@ -217,6 +218,7 @@ class ShoppingCart extends Component {
           <div className="empty-cart-message">
             <h2>Oh no :(</h2>
             <p>Your cart is empty.</p>
+            
           </div>
         ) : (
           <>
@@ -390,8 +392,9 @@ class ShoppingCart extends Component {
             <button onClick={this.handleSubmit}>Submit</button>
             </div>
             )}
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
     );
   }

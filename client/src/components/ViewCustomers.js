@@ -6,6 +6,7 @@ import {
   ACCESS_LEVEL_ADMIN,
   SERVER_HOST,
 } from '../config/global_constants';
+import '../css/View.css';
 
 export default class ViewCustomers extends Component {
   constructor(props) {
@@ -58,7 +59,7 @@ export default class ViewCustomers extends Component {
       });
     } catch (error) {
       console.error('Error fetching order history:', error);
-    }
+    }s
   };
   
 
@@ -90,6 +91,7 @@ export default class ViewCustomers extends Component {
     );
 
     return (
+      <div className='container'>
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
         <h2 style={{ marginBottom: '20px' }}>Customers</h2>
         <input
@@ -174,6 +176,7 @@ export default class ViewCustomers extends Component {
               )}
           </div>
         ))}
+      </div>
       </div>
     );
   }

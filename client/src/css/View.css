@@ -1,0 +1,61 @@
+@font-face {
+  font-family: "Nexa";
+  src: url("../css/fonts/Nexa-Heavy.ttf") format("woff"), url("../css/fonts/Nexa-Heavy.ttf") format("woff2");
+  /* Add more formats if needed */
+  font-weight: normal;
+  font-style: normal;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #1e6091;
+}
+.container h2 {
+  margin-bottom: 20px;
+}
+.container input[type=text] {
+  margin-bottom: 20px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.container .customer-card {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #1e6091;
+  border-radius: 5px;
+}
+.container .customer-card > div {
+  margin-bottom: 10px;
+}
+.container .customer-card strong {
+  display: inline-block;
+  width: 120px;
+}
+.container .customer-card button {
+  margin-right: 10px;
+}
+.container .order-history {
+  margin-top: 10px;
+}
+.container .order-history h3 {
+  margin-bottom: 10px;
+}
+.container .order-history ul {
+  list-style-type: none;
+  padding: 0;
+}
+.container .order-history ul li {
+  border: 1px solid #1e6091;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+.container .order-history ul li > div {
+  margin-bottom: 5px;
+}
+.container .order-history button {
+  margin-top: 10px;
+}/*# sourceMappingURL=View.css.map */
