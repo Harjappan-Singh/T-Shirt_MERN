@@ -19,6 +19,13 @@ class ShoppingCart extends Component {
     city: '',
     county: '',
     eircode: '',
+    errors: {
+      name: '',
+      email: '',
+      addressLine1: '',
+      city: '',
+      eircode: ''
+    }
   };
 
   componentDidMount() {
@@ -54,15 +61,19 @@ class ShoppingCart extends Component {
   };
 
   handleSubmit = () => {
+    if (!this.validateForm()) {
+      return; 
+    }
+
+    // If validation passes, proceed with form submission
     const addressData = {
       name: this.state.name,
       email: this.state.email,
       addressLine1: this.state.addressLine1,
-      addressLine2: this.state.addressLine2,
       city: this.state.city,
-      county: this.state.county,
-      eircode: this.state.eircode,
+      eircode: this.state.eircode
     };
+
 
     axios
       .post(`${SERVER_HOST}/addresses/add`, addressData)
@@ -117,12 +128,12 @@ class ShoppingCart extends Component {
           0
         ), // Calculate total cost based on cartItems
         shippingAddress: {
-          name: userDetails.fullName, // Assuming userDetails contains the user's full name
-          addressLine1: '123 Main St', // Example address, replace with actual address data
-          addressLine2: '', // Optional, leave empty if not applicable
-          city: 'City', // Example city, replace with actual city data
-          county: 'County', // Example county, replace with actual county data
-          eircode: '12345', // Example eircode, replace with actual eircode data
+          name: userDetails.fullName, 
+          addressLine1: '123 Main St', 
+          addressLine2: '', 
+          city: 'City', 
+          county: 'County', 
+          eircode: '12345', 
         },
       };
 
@@ -158,9 +169,38 @@ class ShoppingCart extends Component {
       redirectToPayPalMessage: true,
     });
   };
+  validateForm = () => {
+    const { name, email, addressLine1, city, eircode } = this.state;
+    const errors = {};
+
+    if (!name.trim()) {
+      errors.name = 'Name is required';
+    }
+
+    if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    if (!addressLine1.trim()) {
+      errors.addressLine1 = 'Address Line 1 is required';
+    }
+
+    if (!city.trim()) {
+      errors.city = 'City is required';
+    }
+
+    if (!eircode.trim()) {
+      errors.eircode = 'Eircode is required';
+    }
+
+    this.setState({ errors });
+    return Object.keys(errors).length === 0;
+  };
+
 
   render() {
-    const { cartItems } = this.state;
+    const { errors, cartItems } = this.state;
+
     const shippingCost = 4; // Flat rate shipping cost
     const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
     const totalCost = subtotal + shippingCost;
@@ -236,38 +276,35 @@ class ShoppingCart extends Component {
           <div>
             <h2>Enter Address Details</h2>
             <input
-              name="name"
-              type="text"
-              placeholder="Name"
-              autoComplete="name"
-              value={this.state.name}
-              onChange={this.handleChange}
-              ref={(input) => {
-                this.inputToFocus = input;
-              }}
-            />
-            <br />
+          name="name"
+          type="text"
+          placeholder="Name"
+          autoComplete="name"
+          value={this.state.name}
+          onChange={this.handleChange}
+        />
+        {errors.name && <div className="error-message">{errors.name}</div>}
+        <br />
             <input
-              name="email"
-              type="text"
-              placeholder="Email"
-              autoComplete="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-              ref={(input) => {
-                this.inputToFocus = input;
-              }}
-            />
-            <br />
+          name="email"
+          type="text"
+          placeholder="Email"
+          autoComplete="email"
+          value={this.state.email}
+          onChange={this.handleChange}
+        />
+        {errors.email && <div className="error-message">{errors.email}</div>}
+        <br />
             <input
-              name="addressLine1"
-              type="text"
-              placeholder="Address Line 1"
-              autoComplete="addressLine1"
-              value={this.state.addressLine1}
-              onChange={this.handleChange}
-            />
-            <br />
+          name="addressLine1"
+          type="text"
+          placeholder="Address Line 1"
+          autoComplete="addressLine1"
+          value={this.state.addressLine1}
+          onChange={this.handleChange}
+        />
+        {errors.addressLine1 && <div className="error-message">{errors.addressLine1}</div>}
+        <br />
             <input
               name="addressLine2"
               type="text"
@@ -278,14 +315,15 @@ class ShoppingCart extends Component {
             />
             <br />
             <input
-              name="city"
-              type="text"
-              placeholder="City"
-              autoComplete="city"
-              value={this.state.city}
-              onChange={this.handleChange}
-            />
-            <br />
+          name="city"
+          type="text"
+          placeholder="City"
+          autoComplete="city"
+          value={this.state.city}
+          onChange={this.handleChange}
+        />
+        {errors.city && <div className="error-message">{errors.city}</div>}
+        <br />
 
             <select
               id="county-dropdown"
@@ -329,13 +367,14 @@ class ShoppingCart extends Component {
             </select>
             <br />
             <input
-              name="eircode"
-              type="text"
-              placeholder="Eircode"
-              autoComplete="eircode"
-              value={this.state.eircode}
-              onChange={this.handleChange}
-            />
+          name="eircode"
+          type="text"
+          placeholder="Eircode"
+          value={this.state.eircode}
+          onChange={this.handleChange}
+        />
+        {errors.eircode && <div className="error-message">{errors.eircode}</div>}
+        <br />
             <button onClick={this.handleSubmit}>Submit</button>
           </div>
         )}
