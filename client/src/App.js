@@ -60,7 +60,7 @@ export default class App extends Component {
                 <Route exact path="/Login" component={Login} />
                 <LoggedInRoute exact path="/Logout" component={Logout} />
                 <Route exact path="/EditTshirt/:id" component={EditTshirt} />
-                <Route exact path="/AddTshirt/:id" component={AddTshirt} />
+                <Route exact path="/AddTshirt" component={AddTshirt} />
                 <Route
                   exact
                   path="/DeleteTshirt/:id"
