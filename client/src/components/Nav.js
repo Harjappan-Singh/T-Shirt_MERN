@@ -12,7 +12,6 @@ import {
 } from '../config/global_constants';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-
 class Nav extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +27,7 @@ class Nav extends Component {
   async componentDidMount() {
     await this.fetchData();
   }
-  
+
   async fetchData() {
     try {
       const result = await axios.get('/tshirts'); // assuming the endpoint is correct
@@ -64,12 +63,6 @@ class Nav extends Component {
 
         <div className="AdminFunc">
           {!userInfo && (
-            <Link className="admin-button1" to={'/Login'}>
-              Login
-            </Link>
-          )}
-
-          {!userInfo && (
             <Link className="admin-button1" to={'/Register'}>
               Register
             </Link>
@@ -95,13 +88,13 @@ class Nav extends Component {
                 )}
               </button>
               <div className="dropdown-menu" aria-labelledby="userDropdown">
-                <Link className="dropdown-item" to="/profile">
+                <Link className="dropdown-item" to="/UserProfile">
                   User Profile
                 </Link>
                 <Link className="dropdown-item" to="/admin/ViewOrders">
                   Order History
                 </Link>
-               
+
                 <Link
                   className="dropdown-item"
                   to="/"
@@ -126,7 +119,7 @@ class Nav extends Component {
                 Admin
               </button>
               <div className="dropdown-menu" aria-labelledby="adminDropdown">
-                <Link className="dropdown-item" to='/AddTshirt'>
+                <Link className="dropdown-item" to="/AddTshirt">
                   Add New T-shirt
                 </Link>
                 <Link className="dropdown-item" to="/admin/ViewCustomers">
@@ -153,6 +146,12 @@ class Nav extends Component {
           )}
         </div>
 
+        {!userInfo && (
+          <Link className="admin-button1" to={'/Login'}>
+            Login
+          </Link>
+        )}
+
         <nav>
           <div className="left-section">
             <SearchBar />
@@ -177,16 +176,8 @@ class Nav extends Component {
                 alt="Cart"
               />
             </Link>
-            <Link
-                  className="dropdown-item"
-                  to="/"
-                  onClick={this.signoutHandler}
-                >
-                  Log Out
-                </Link>
 
-        
-           {/* {userInfo ? (
+            {/* {userInfo ? (
               <img id="profile-icon" src="profile-icon.png" alt="Profile" />
             ) : null}
            */}
