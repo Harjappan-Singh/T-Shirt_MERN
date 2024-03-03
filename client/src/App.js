@@ -115,11 +115,7 @@ export default class App extends Component {
                   component={ViewCustomers}
                 />
 
-                <LoggedInRoute
-                  exact
-                  path="/UserProfile"
-                  component={UserProfile}
-                />
+                <Route exact path="/UserProfile" component={UserProfile} />
                 <LoggedInRoute path="/ViewOrders/:_id" component={ViewOrders} />
               </>
             </Switch>

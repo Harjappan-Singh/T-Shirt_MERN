@@ -34,7 +34,8 @@ export default class Login extends Component {
           } else {
             // user successfully logged in
             console.log('User logged in');
-            
+            // console.log(res.data);
+
             const userInfo = {
               name: res.data.name,
               email: res.data.email,

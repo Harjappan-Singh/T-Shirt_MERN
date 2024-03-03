@@ -55,12 +55,14 @@ class Nav extends Component {
 
   signoutHandler = () => {
     localStorage.removeItem('userInfo');
+    localStorage.clear();
     this.setState({ userInfo: null });
     // this.props.history.push('/');
   };
 
   render() {
     const { userInfo } = this.state;
+    // console.log(userInfo.profilePhoto);s
 
     return (
       <>
@@ -78,11 +80,12 @@ class Nav extends Component {
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
+                onClick={(e) => e.stopPropagation()}
               >
-                {localStorage.profilePhoto && (
+                {userInfo.profilePhoto && (
                   <img
                     id="profilePhoto"
-                    src={`data:image/jpeg;base64,${localStorage.profilePhoto}`}
+                    src={`data:image/jpeg;base64,${userInfo.profilePhoto}`}
                     alt="Profile"
                   />
                 )}
