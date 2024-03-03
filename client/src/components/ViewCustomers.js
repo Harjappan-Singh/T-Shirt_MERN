@@ -51,6 +51,7 @@ export default class ViewCustomers extends Component {
       const response = await axios.get(
         `${SERVER_HOST}/orderHistory/${customerEmail}`
       );
+      console.log('Response from backend:', response.data); // Add this debugging statement
       this.setState({
         showOrderHistory: true,
         selectedCustomer: { email: customerEmail, orderHistory: response.data },
@@ -59,6 +60,7 @@ export default class ViewCustomers extends Component {
       console.error('Error fetching order history:', error);
     }
   };
+  
 
   handleCloseOrderHistory = () => {
     this.setState({
@@ -82,12 +84,17 @@ export default class ViewCustomers extends Component {
       searchQuery,
     } = this.state;
 
+    // Filter customers based on the search query
+    const filteredCustomers = customers.filter(customer =>
+      customer.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
         <h2 style={{ marginBottom: '20px' }}>Customers</h2>
         <input
           type="text"
-          placeholder="Search by name"
+          placeholder="Search by email"
           value={searchQuery}
           onChange={this.handleSearchChange}
           style={{
@@ -99,7 +106,7 @@ export default class ViewCustomers extends Component {
         />
         {loading && <p>Loading...</p>}
         {error && <p>Error: {error}</p>}
-        {customers.map((customer) => (
+        {filteredCustomers.map((customer) => (
           <div
             key={customer._id}
             style={{
@@ -110,7 +117,10 @@ export default class ViewCustomers extends Component {
             }}
           >
             <div style={{ marginBottom: '10px' }}>
-              <strong>Name:</strong> {customer.name}, <strong>Email:</strong>{' '}
+              <strong>Name:</strong> {customer.name}
+              </div>
+              <div>
+               <strong>Email:</strong>
               {customer.email}
             </div>
             <div>
@@ -150,13 +160,14 @@ export default class ViewCustomers extends Component {
                 <div style={{ marginTop: '10px' }}>
                   <h3>Order History for {selectedCustomer.email}</h3>
                   <ul>
-                    {selectedCustomer.orderHistory.map((order, index) => (
-                      <li key={index}>
-                        <div>Order ID: {order.orderId}</div>
-                        <div>Total Amount: {order.totalAmount}</div>
-                        {/* Add more details as needed */}
-                      </li>
-                    ))}
+                  {selectedCustomer.orderHistory.map((order, index) => (
+  <li key={index}>
+    <div>Item Name: {order.item_name}</div>
+    <div>Date: {new Date(order.date).toLocaleDateString()}</div>
+    <div>Time: {new Date(order.date).toLocaleTimeString()}</div>
+    <div>Cost: {order.cost}</div>
+  </li>
+))}
                   </ul>
                   <button onClick={this.handleCloseOrderHistory}>Close</button>
                 </div>
