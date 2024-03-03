@@ -334,17 +334,22 @@ class Nav extends Component {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                {/* {userInfo.name}
-                {console.log(userInfo)} */}
-                User
+                {userInfo.profilePhoto && (
+                  <img
+                    id="profilePhoto"
+                    src={`data:image/jpeg;base64,${userInfo.profilePhoto}`}
+                    alt="Profile"
+                  />
+                )}
               </button>
               <div className="dropdown-menu" aria-labelledby="userDropdown">
                 <Link className="dropdown-item" to="/profile">
                   User Profile
                 </Link>
-                <Link className="dropdown-item" to="/orderhistory">
+                <Link className="dropdown-item" to="/admin/ViewOrders">
                   Order History
                 </Link>
+               
                 <Link
                   className="dropdown-item"
                   to="/"
@@ -395,13 +400,9 @@ class Nav extends Component {
               </div>
             </div>
           )}
-          {!userInfo && (
-            <Link className="nav-link" to="/Login">
-              Log In
-            </Link>
-          )}
         </div>
 
+        <nav>
         <nav>
           <div className="left-section">
           {isSearchVisible && (
@@ -431,10 +432,21 @@ class Nav extends Component {
                 alt="Cart"
               />
             </Link>
-            <img id="profile-icon" src="profile-icon.png" alt="Profile" />
+            <Link
+                  className="dropdown-item"
+                  to="/"
+                  onClick={this.signoutHandler}
+                >
+                  Log Out
+                </Link>
+
+        
+            {userInfo ? (
+              <img id="profile-icon" src="profile-icon.png" alt="Profile" />
+            ) : null}
           </div>
         </nav>
-      </>
+      </div>
     );
   }
 }
