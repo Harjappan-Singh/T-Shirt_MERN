@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
-import {
-  SANDBOX_CLIENT_ID,
-  SERVER_HOST,
-  ACCESS_LEVEL_GUEST,
+import { SANDBOX_CLIENT_ID, SERVER_HOST, ACCESS_LEVEL_GUEST,
 } from '../config/global_constants';
 import PayPalMessage from './PayPalMessage';
 
