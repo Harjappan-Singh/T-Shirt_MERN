@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
-
-import {
-  SANDBOX_CLIENT_ID,
-  SERVER_HOST,
-  ACCESS_LEVEL_GUEST,
+import { SANDBOX_CLIENT_ID, SERVER_HOST, ACCESS_LEVEL_GUEST,
 } from '../config/global_constants';
 import PayPalMessage from './PayPalMessage';
-import '../css/ShoppingCart.css';
 
 class ShoppingCart extends Component {
   state = {
@@ -24,9 +19,13 @@ class ShoppingCart extends Component {
     city: '',
     county: '',
     eircode: '',
-    addressSubmitted: false,
-    errors: {},
-    wasSubmittedAtLeastOnce: false,
+    errors: {
+      name: '',
+      email: '',
+      addressLine1: '',
+      city: '',
+      eircode: ''
+    }
   };
 
   componentDidMount() {
@@ -35,11 +34,7 @@ class ShoppingCart extends Component {
 
   loadCartItems = () => {
     const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartItemsWithIds = cartItems.map((item, index) => ({
-      ...item,
-      id: item._id + '_' + item.size, // Unique ID based on item ID and size
-    }));
-    this.setState({ cartItems: cartItemsWithIds });
+    this.setState({ cartItems });
   };
 
   handleRemoveItem = (index) => {
@@ -51,18 +46,7 @@ class ShoppingCart extends Component {
 
   handleSizeChange = (index, newSize) => {
     const updatedCartItems = [...this.state.cartItems];
-    updatedCartItems[index] = { ...updatedCartItems[index], size: newSize };
-    this.setState({ cartItems: updatedCartItems });
-    localStorage.setItem('cart', JSON.stringify(updatedCartItems));
-  };
-
-  updateCartHandler = (item, newQuantity) => {
-    const updatedCartItems = this.state.cartItems.map((cartItem) => {
-      if (cartItem.id === item.id) {
-        return { ...cartItem, quantity: newQuantity };
-      }
-      return cartItem;
-    });
+    updatedCartItems[index].size = newSize;
     this.setState({ cartItems: updatedCartItems });
     localStorage.setItem('cart', JSON.stringify(updatedCartItems));
   };
@@ -77,143 +61,95 @@ class ShoppingCart extends Component {
   };
 
   handleSubmit = () => {
+    if (!this.validateForm()) {
+      return; 
+    }
+
+    // If validation passes, proceed with form submission
     const addressData = {
       name: this.state.name,
       email: this.state.email,
       addressLine1: this.state.addressLine1,
-      addressLine2: this.state.addressLine2,
       city: this.state.city,
-      county: this.state.county,
-      eircode: this.state.eircode,
+      eircode: this.state.eircode
     };
 
+
     axios
-      .post('http://localhost:4000/addresses/add', addressData)
+      .post(`${SERVER_HOST}/addresses/add`, addressData)
       .then((response) => {
-        if (response.data.errorMessage) {
-          console.log(response.data.errorMessage);
-        } else console.log('Address added:', response.data);
+        console.log('Address added:', response.data);
+
         this.setState({ addressSubmitted: true });
       })
       .catch((error) => {
         console.error('Error adding address:', error);
       });
   };
-  validateName = () => {
-    return this.state.name.trim() !== '';
-  };
-
-  validateEmail = () => {
-    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return pattern.test(this.state.email);
-  };
-
-  validateAddressLine1 = () => {
-    return this.state.addressLine1.trim() !== '';
-  };
-
-  validateCity = () => {
-    return this.state.city.trim() !== '';
-  };
-
-  validateCounty = () => {
-    return this.state.county !== '';
-  };
-
-  validateEircode = () => {
-    const pattern =
-      '\\b(?:(' +
-      'a(4[125s]|6[37]|7[5s]|[8b][1-6s]|9[12468b])|' +
-      'c1[5s]|' +
-      'd([0o][1-9sb]|1[0-8osb]|2[024o]|6w)|' +
-      'e(2[15s]|3[24]|4[15s]|[5s]3|91)|' +
-      'f(12|2[368b]|3[15s]|4[25s]|[5s][26]|9[1-4])|' +
-      'h(1[2468b]|23|[5s][34]|6[25s]|[79]1)|' +
-      'k(3[246]|4[5s]|[5s]6|67|7[8b])|' +
-      'n(3[79]|[49]1)|' +
-      'p(1[247]|2[45s]|3[126]|4[37]|[5s][16]|6[17]|7[25s]|[8b][15s])|' +
-      'r(14|21|3[25s]|4[25s]|[5s][16]|9[35s])|' +
-      't(12|23|34|4[5s]|[5s]6)|' +
-      'v(1[45s]|23|3[15s]|42|9[2-5s])|' +
-      'w(12|23|34|91)|' +
-      'x(3[5s]|42|91)|' +
-      'y(14|2[15s]|3[45s])' +
-      ')\\s?[abcdefhknoprtsvwxy\\d]{4})\\b';
-    return pattern.test(this.state.eircode);
-  };
-
-  validate = () => {
-    return {
-      name: this.validateName(),
-      email: this.validateEmail(),
-      addressLine1: this.validateAddressLine1(),
-      city: this.validateCity(),
-      county: this.validateCounty(),
-      eircode: this.validateEircode(),
-    };
-  };
 
   createOrder = (data, actions) => {
-    return new Promise((resolve, reject) => {
-      resolve(
-        actions.order.create({
-          purchase_units: [{ amount: { value: this.calculateTotalCost() } }],
-        })
-      );
+    return actions.order.create({
+      purchase_units: [{ amount: { value: this.calculateTotalCost() } }],
     });
   };
 
   calculateTotalCost = () => {
     const shippingCost = 4; // Flat rate shipping cost
-    const totalItemsCost = this.state.cartItems.reduce(
-      (total, item) => total + (item.price * item.quantity || 0),
+    const subtotal = this.state.cartItems.reduce(
+      (total, item) => total + item.price,
       0
     );
-    return (totalItemsCost + shippingCost).toFixed(2);
+    return (subtotal + shippingCost).toFixed(2);
   };
 
   onApprove = (data, actions) => {
+    const userDetails = JSON.parse(localStorage.getItem('userInfo'));
     console.log('Payment approved:', data);
     return actions.order.capture().then((details) => {
       console.log('Payment details:', details);
+      this.setState({
+        payPalMessageType: PayPalMessage.messageType.SUCCESS,
+        payPalOrderID: data.orderID,
+        redirectToPayPalMessage: true,
+      });
 
-      // Prepare data to be sent to the backend
+      // Prepare the data to be sent to the backend
       const orderData = {
-        userId: '<userId>', // Replace <userId> with the actual user ID
-        email: '<userEmail>', // Replace <userEmail> with the actual user's email
+        email: userDetails.email, // Assuming userDetails contains the user's email
         items: this.state.cartItems.map((item) => ({
-          itemName: item.name, // Name of the item
-          quantity: item.quantity, // Quantity of the item
-          price: item.price, // Price of the item
+          itemName: item.name, // Assuming each item in cartItems has a name property
+          quantity: item.quantity, // Assuming each item in cartItems has a quantity property
+          price: item.price, // Assuming each item in cartItems has a price property
         })),
-        transactionId: data.orderID, // Transaction ID provided by PayPal
-        orderTime: new Date(), // Date and time when the order was placed
-        totalCost: this.calculateTotalCost(), // Total cost of the order
+        transactionId: data.orderID, // Assuming orderID is the transaction ID
+        orderTime: new Date().toISOString(), // Current time as the order time
+        totalCost: this.state.cartItems.reduce(
+          (total, item) => total + item.quantity * item.price,
+          0
+        ), // Calculate total cost based on cartItems
         shippingAddress: {
-          name: this.state.name, // Name
-          addressLine1: this.state.addressLine1, // Address Line 1
-          addressLine2: this.state.addressLine2, // Address Line 2
-          city: this.state.city, // City
-          county: this.state.county, // County
-          eircode: this.state.eircode, // Eircode
+          name: userDetails.fullName, 
+          addressLine1: '123 Main St', 
+          addressLine2: '', 
+          city: 'City', 
+          county: 'County', 
+          eircode: '12345', 
         },
       };
 
-      // Send a POST request to your backend API to store the order
+      localStorage.removeItem('cart');
+      console.log(orderData);
+
+      // Make an HTTP POST request to the backend
       axios
-        .post('http://localhost:4000/orders/add', orderData)
+        .post(`${SERVER_HOST}/orders/add`, orderData)
         .then((response) => {
-          console.log('Order stored in database:', response.data);
-          localStorage.removeItem('cart');
-          this.setState({
-            payPalMessageType: PayPalMessage.messageType.SUCCESS,
-            payPalOrderID: data.orderID,
-            redirectToPayPalMessage: true,
-          });
+          console.log('Order added successfully:', response.data);
+          // Handle any further actions after successful order addition
         })
         .catch((error) => {
-          console.error('Error storing order in database:', error);
-          // Handle error, maybe display a message to the user
+          console.error('Error adding order:', error);
+          // Handle error cases
         });
     });
   };
@@ -233,20 +169,43 @@ class ShoppingCart extends Component {
       redirectToPayPalMessage: true,
     });
   };
+  validateForm = () => {
+    const { name, email, addressLine1, city, eircode } = this.state;
+    const errors = {};
+
+    if (!name.trim()) {
+      errors.name = 'Name is required';
+    }
+
+    if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    if (!addressLine1.trim()) {
+      errors.addressLine1 = 'Address Line 1 is required';
+    }
+
+    if (!city.trim()) {
+      errors.city = 'City is required';
+    }
+
+    if (!eircode.trim()) {
+      errors.eircode = 'Eircode is required';
+    }
+
+    this.setState({ errors });
+    return Object.keys(errors).length === 0;
+  };
+
 
   render() {
-   
-    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    const isLoggedIn = userInfo && userInfo.accessLevel > ACCESS_LEVEL_GUEST;
-  
-  
-    console.log('isLoggedIn:', isLoggedIn);
+    const { errors, cartItems } = this.state;
 
-
-    const { cartItems, errors } = this.state;
     const shippingCost = 4; // Flat rate shipping cost
     const subtotal = cartItems.reduce((total, item) => total + item.price, 0);
     const totalCost = subtotal + shippingCost;
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const accessLevel = userInfo ? userInfo.accessLevel : 0;
 
     return (
       
@@ -306,14 +265,13 @@ class ShoppingCart extends Component {
         <button className="buttonclear" onClick={this.handleClearCart}>Clear Cart</button>
         
 
-        {isLoggedIn ? (
+        {accessLevel > ACCESS_LEVEL_GUEST || this.state.addressSubmitted ? (
           <div>
             {this.state.redirectToPayPalMessage && (
               <Redirect
                 to={`/PayPalMessage/${this.state.payPalMessageType}/${this.state.payPalOrderID}`}
               />
             )}
-
             <PayPalScriptProvider
               options={{ currency: 'EUR', 'client-id': SANDBOX_CLIENT_ID }}
             >
@@ -329,63 +287,56 @@ class ShoppingCart extends Component {
         ) : (
           <div>
             <h2>Enter Address Details</h2>
-            <div className="error">
-              {this.state.wasSubmittedAtLeastOnce &&
-                !errors.name &&
-                'Name is required'}
-            </div>
             <input
-              name="name"
+          name="name"
+          type="text"
+          placeholder="Name"
+          autoComplete="name"
+          value={this.state.name}
+          onChange={this.handleChange}
+        />
+        {errors.name && <div className="error-message">{errors.name}</div>}
+        <br />
+            <input
+          name="email"
+          type="text"
+          placeholder="Email"
+          autoComplete="email"
+          value={this.state.email}
+          onChange={this.handleChange}
+        />
+        {errors.email && <div className="error-message">{errors.email}</div>}
+        <br />
+            <input
+          name="addressLine1"
+          type="text"
+          placeholder="Address Line 1"
+          autoComplete="addressLine1"
+          value={this.state.addressLine1}
+          onChange={this.handleChange}
+        />
+        {errors.addressLine1 && <div className="error-message">{errors.addressLine1}</div>}
+        <br />
+            <input
+              name="addressLine2"
               type="text"
-              placeholder="Name"
-              autoComplete="name"
-              value={this.state.name}
+              placeholder="Address Line 2"
+              autoComplete="addressLine2"
+              value={this.state.addressLine2}
               onChange={this.handleChange}
             />
-            <div className="error">
-              {this.state.wasSubmittedAtLeastOnce &&
-                !errors.email &&
-                'Valid email is required'}
-            </div>
+            <br />
             <input
-              name="email"
-              type="text"
-              placeholder="Email"
-              autoComplete="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-            <div className="error">
-              {this.state.wasSubmittedAtLeastOnce &&
-                !errors.addressLine1 &&
-                'Address Line 1 is required'}
-            </div>
-            <input
-              name="addressLine1"
-              type="text"
-              placeholder="Address Line 1"
-              autoComplete="addressLine1"
-              value={this.state.addressLine1}
-              onChange={this.handleChange}
-            />
-            <div className="error">
-              {this.state.wasSubmittedAtLeastOnce &&
-                !errors.city &&
-                'City is required'}
-            </div>
-            <input
-              name="city"
-              type="text"
-              placeholder="City"
-              autoComplete="city"
-              value={this.state.city}
-              onChange={this.handleChange}
-            />
-            <div className="error">
-              {this.state.wasSubmittedAtLeastOnce &&
-                !errors.county &&
-                'County is required'}
-            </div>
+          name="city"
+          type="text"
+          placeholder="City"
+          autoComplete="city"
+          value={this.state.city}
+          onChange={this.handleChange}
+        />
+        {errors.city && <div className="error-message">{errors.city}</div>}
+        <br />
+
             <select
               id="county-dropdown"
               name="county"
@@ -427,19 +378,15 @@ class ShoppingCart extends Component {
               <option value="Wicklow">Wicklow</option>
             </select>
             <br />
-            <div className="error">
-              {this.state.wasSubmittedAtLeastOnce &&
-                !errors.eircode &&
-                'Valid Eircode is required'}
-            </div>
             <input
-              name="eircode"
-              type="text"
-              placeholder="Eircode"
-              autoComplete="eircode"
-              value={this.state.eircode}
-              onChange={this.handleChange}
-            />
+          name="eircode"
+          type="text"
+          placeholder="Eircode"
+          value={this.state.eircode}
+          onChange={this.handleChange}
+        />
+        {errors.eircode && <div className="error-message">{errors.eircode}</div>}
+        <br />
             <button onClick={this.handleSubmit}>Submit</button>
             </div>
             )}

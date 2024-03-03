@@ -54,12 +54,16 @@ export default class Register extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!this.state.selectedFile) {
-      console.error('No file was selected to be uploaded');
-      return; // Abort the registration process
+    if (!this.validateForm()) {
+      return; // Abort the registration process if validation fails
     }
 
-    // Create FormData object to send file data
+    // Validate password requirements
+    if (!this.isPasswordValid(this.state.password)) {
+      alert('Password must be at least 6 characters long and contain at least one special character and one capital letter.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('profilePhoto', this.state.selectedFile);
     formData.append('name', this.state.name);
@@ -74,39 +78,73 @@ export default class Register extends Component {
     formData.append('county', this.state.county);
     formData.append('eircode', this.state.eircode);
 
-    // Register the user
     axios
       .post(`${SERVER_HOST}/users/register`, formData)
       .then((res) => {
         if (res.data && !res.data.errorMessage) {
           console.log('User registered successfully');
-          const userInfo = {
-            name: this.state.name,
-            email: this.state.email,
-            accessLevel: 1,
-            profilePhoto: res.data.profilePhoto,
-            token: res.data.token,
-          };
-          localStorage.setItem('userInfo', JSON.stringify(userInfo));
-
-          // Redirect after successful registration
+          // Handle successful registration...
           this.setState({ isRegistered: true });
         } else {
           console.log('User registration failed:', res.data.errorMessage);
+          alert('Registration failed. Please try again later.');
         }
       })
       .catch((error) => {
         console.error('Error registering user:', error);
+        alert('Registration failed. Please try again later.');
       });
   };
 
+  // Password validation function
+  isPasswordValid = (password) => {
+    // Password must be at least 6 characters long and contain at least one special character and one capital letter
+    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+    const capitalLetterRegex = /[A-Z]/;
+    return password.length >= 6 && specialCharRegex.test(password) && capitalLetterRegex.test(password);
+  };
+
+  validateForm = () => {
+    const { name, email, password, confirmPassword, addressLine1, city, eircode } = this.state;
+    const errors = {};
+
+    if (!name) {
+      errors.name = 'Name is required';
+    }
+
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    if (!password) {
+      errors.password = 'Password is required';
+    }
+
+    if (confirmPassword !== password) {
+      errors.confirmPassword = 'Passwords do not match';
+    }
+
+    if (!addressLine1) {
+      errors.addressLine1 = 'Address Line 1 is required';
+    }
+
+    if (!city) {
+      errors.city = 'City is required';
+    }
+
+    if (!eircode) {
+      errors.eircode = 'Eircode is required';
+    }
+
+    this.setState({ errors });
+    return Object.keys(errors).length === 0;
+  };
+
   render() {
+    const { errors } = this.state;
+
     return (
-      <form
-        className="form-container"
-        noValidate={true}
-        id="loginOrRegistrationForm"
-      >
+      <form className="form-container" noValidate={true} id="loginOrRegistrationForm">
         {this.state.isRegistered ? <Redirect to="/DisplayTshirts" /> : null}
 
         <h2>New User Registration</h2>
@@ -119,6 +157,7 @@ export default class Register extends Component {
           value={this.state.name}
           onChange={this.handleChange}
         />
+        {errors.name && <div className="error-message">{errors.name}</div>}
         <br />
 
         <input
@@ -129,6 +168,7 @@ export default class Register extends Component {
           value={this.state.email}
           onChange={this.handleChange}
         />
+        {errors.email && <div className="error-message">{errors.email}</div>}
         <br />
 
         <input
@@ -139,6 +179,7 @@ export default class Register extends Component {
           value={this.state.password}
           onChange={this.handleChange}
         />
+        {errors.password && <div className="error-message">{errors.password}</div>}
         <br />
 
         <input
@@ -149,13 +190,10 @@ export default class Register extends Component {
           value={this.state.confirmPassword}
           onChange={this.handleChange}
         />
+        {errors.confirmPassword && <div className="error-message">{errors.confirmPassword}</div>}
         <br />
 
-        <input
-          name="profilePhoto"
-          type="file"
-          onChange={this.handleFileChange}
-        />
+        <input name="profilePhoto" type="file" onChange={this.handleFileChange} />
         <br />
 
         <h2>Personal Information</h2>
@@ -200,6 +238,7 @@ export default class Register extends Component {
           value={this.state.addressLine1}
           onChange={this.handleChange}
         />
+        {errors.addressLine1 && <div className="error-message">{errors.addressLine1}</div>}
         <br />
 
         <input
@@ -218,6 +257,7 @@ export default class Register extends Component {
           value={this.state.city}
           onChange={this.handleChange}
         />
+        {errors.city && <div className="error-message">{errors.city}</div>}
         <br />
 
         <select
@@ -269,6 +309,7 @@ export default class Register extends Component {
           value={this.state.eircode}
           onChange={this.handleChange}
         />
+        {errors.eircode && <div className="error-message">{errors.eircode}</div>}
         <br />
 
         <LinkInClass

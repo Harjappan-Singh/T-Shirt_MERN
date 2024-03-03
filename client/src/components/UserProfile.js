@@ -12,20 +12,34 @@ class UserProfile extends Component {
   }
 
   componentDidMount() {
-    // Make Axios request to fetch user details
-    axios
-      .get(`${SERVER_HOST}/users/${localStorage.getItem('email')}`)
-      .then((res) => {
-        if (res.data && !res.data.errorMessage) {
-          // Set user details in state
-          this.setState({ userDetails: res.data });
-        } else {
-          console.error('Error fetching user details:', res.data.errorMessage);
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching user details:', error);
-      });
+    // Retrieve userInfo from localStorage
+    const userInfoString = localStorage.getItem('userInfo');
+    if (userInfoString) {
+      // Parse userInfo back to an object
+      const userInfo = JSON.parse(userInfoString);
+      // Get the email from userInfo
+      const email = userInfo.email;
+
+      // Make Axios request to fetch user details using the retrieved email
+      axios
+        .get(`${SERVER_HOST}/users/${email}`)
+        .then((res) => {
+          if (res.data && !res.data.errorMessage) {
+            // Set user details in state
+            this.setState({ userDetails: res.data });
+          } else {
+            console.error(
+              'Error fetching user details:',
+              res.data.errorMessage
+            );
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching user details:', error);
+        });
+    } else {
+      console.error('User info not found in localStorage');
+    }
   }
 
   render() {
@@ -38,7 +52,7 @@ class UserProfile extends Component {
           <div style={styles.profileContainer}>
             <div style={styles.imageContainer}>
               <img
-                src={`data:image/jpeg;base64,${localStorage.profilePhoto}`}
+                src={`data:image/jpeg:;base64,${userDetails.profilePhoto}`}
                 alt="Profile"
                 style={styles.profileImage}
                 onError={(e) => console.error('Error loading image:', e)}
@@ -67,11 +81,6 @@ class UserProfile extends Component {
               <p>
                 <strong>Phone Number:</strong> {userDetails.phoneNumber}
               </p>
-              <p>
-                <strong>Profile Photo Filename:</strong>{' '}
-                {userDetails.profilePhotoFilename}
-              </p>
-              {/* Add additional user details here */}
             </div>
           </div>
         ) : (

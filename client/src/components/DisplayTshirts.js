@@ -33,7 +33,6 @@ export default class DisplayTshirts extends Component {
       price: '',
       category: '',
       color: '',
-
       isSearchVisible: false,
     };
   }
@@ -72,7 +71,9 @@ export default class DisplayTshirts extends Component {
       sortByRating: !sortByRating,
     });
   };
-
+  handleSearchByName = (event) => {
+    this.setState({ searchName: event.target.value });
+  };
   handleSortByPrice = () => {
     const { products, sortByPrice } = this.state;
     const sortedProducts = [...products];
@@ -126,7 +127,7 @@ export default class DisplayTshirts extends Component {
       const matchesSearchName =
         searchName === '' ||
         tshirt.name.toLowerCase().includes(searchName.toLowerCase());
-      // Return true if all filters match
+      // Return true if all filters match, including name search
       return (
         matchesGender &&
         matchesColor &&
@@ -135,6 +136,7 @@ export default class DisplayTshirts extends Component {
         matchesSearchName
       );
     });
+     
 
     if (sortByBrand) {
       filteredTshirts.sort((a, b) => {
@@ -143,124 +145,84 @@ export default class DisplayTshirts extends Component {
         return brandA.localeCompare(brandB);
       });
     }
-
+   
+    
     return (
-
-    <>
-  <div className='bannerimg'>
-   <Banner />
-       <div className='page-setting'>
-{/* 
-
       <>
-        <div className="bannerimg">
+        <div className='bannerimg'>
           <Banner />
-          <div className="page-setting">
-            {/* 
+          <div className='page-setting'>
+            <select value={sizesFilter} onChange={this.handleSizesFilter}>
+              <option value="All">Sizes</option>
+              <option value="XXS">XXS</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+              <option value="XXXL">XXXL</option>
+            </select>
 
-        {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN && (
-          <Link to="/ViewCustomers" className="green-button">
-            View customers
-          </Link>
-        )} 
-
-         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
-          <div className="logout">
-            {localStorage.profilePhoto !== 'null' ? (
-              <img
-                id="profilePhoto"
-                src={`data:;base64,${localStorage.profilePhoto}`}
-                alt=""
-              />
-            ) : null}
-            <Logout />
-          </div>
-        ) : ( */}
-
-            {/* <div>
-
-            <Link className="green-button" to={'/Login'}>
-              Login
-            </Link>
-            <Link className="blue-button" to={'/Register'}>
-              Register
-            </Link>
-            <Link className="red-button" to={'/ResetDatabase'}>
-              Reset Database
-            </Link>
-            <br />
-            <br />
-            <br />
-          </div> */}
-
-        
-       {/* <Link to={`/ViewOrders/${localStorage.getItem('email')}`} className="green-button">
-          View Orders
-        </Link>*/}
-        <select value={sizesFilter} onChange={this.handleSizesFilter}>
-          <option value="All">Sizes</option>
-          <option value="XXS">XXS</option>
-          <option value="XS">XS</option>
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L</option>
-          <option value="XL">XL</option>
-          <option value="XXL">XXL</option>
-          <option value="XXXL">XXXL</option>
-        </select>
-        <select value={genderFilter} onChange={this.handleGenderFilter}>
-          <option value="All">All</option>
-          <option value="Men">Men</option>
-          <option value="Women">Women</option>
-          <option value="Unisex">Unisex</option>
-        </select>
-        <select value={colorFilter} onChange={this.handleColorFilter}>
-          <option value="All">All Colors</option>
-          <option value="Black">Black</option>
-          <option value="White">White</option>
-          <option value="Brown">Brown</option>
-          <option value="Blue">Blue</option>
-          <option value="Red">Red</option>
-          <option value="Green">Green</option>
-          <option value="Gray">Gray</option>
-        </select>
-        <select value={brandFilter} onChange={this.handleBrandFilter}>
-          <option value="All">All Brands</option>
-          <option value="Nike">Nike</option>
-          <option value="Hanes">Hanes</option>
-          <option value="Adidas">Adidas</option>
-          <option value="Zara">Zara</option>
-          <option value="Puma">Puma</option>
-          <option value="Under Armour">Under Armour</option>
-          <option value="Gildan">Gildan</option>
-          <option value="American Apparel">American Apparel</option> 
-          <option value="Bella + Canvas">Bella + Canvas</option>
-          <option value="Fruit of the Loom">Fruit of the Loom</option>
-          <option value="Champion">Champion</option>
-          <option value="Next Level">Next Level</option>
-        </select>
-        <div className="table-container">
-          <div className="sort-by-rating">
-            <button onClick={this.handleSortByRating}>
-              Sort by Rating{' '}
-              {this.state.sortByRating ? '(Low to High)' : '(High to Low)'}
-            </button>
-          </div>
-          <div className="sort-by-price">
-            <button onClick={this.handleSortByPrice}>
-              Sort by Price{' '}
-              {this.state.sortByPrice ? '(Low to High)' : '(High to Low)'}
-            </button>
-          </div>
-          <div>
-            {loading && <Loading />}
-            {error && <Message variant="danger">{error}</Message>}
-            <div className="products">
-              {filteredTshirts.map((product) => (
-                <div key={product.slug} className="product">
-                 
-                  <ProductScreen product={product} updateProduct={this.updateProduct} />
-
+            <select value={genderFilter} onChange={this.handleGenderFilter}>
+              <option value="All">All</option>
+              <option value="Men">Men</option>
+              <option value="Women">Women</option>
+              <option value="Unisex">Unisex</option>
+            </select>
+            <select value={colorFilter} onChange={this.handleColorFilter}>
+              <option value="All">All Colors</option>
+              <option value="Black">Black</option>
+              <option value="White">White</option>
+              <option value="Brown">Brown</option>
+              <option value="Blue">Blue</option>
+              <option value="Red">Red</option>
+              <option value="Green">Green</option>
+              <option value="Gray">Gray</option>
+            </select>
+            <select value={brandFilter} onChange={this.handleBrandFilter}>
+              <option value="All">All Brands</option>
+              <option value="Nike">Nike</option>
+              <option value="Hanes">Hanes</option>
+              <option value="Adidas">Adidas</option>
+              <option value="Zara">Zara</option>
+              <option value="Puma">Puma</option>
+              <option value="Under Armour">Under Armour</option>
+              <option value="Gildan">Gildan</option>
+              <option value="American Apparel">American Apparel</option> 
+              <option value="Bella + Canvas">Bella + Canvas</option>
+              <option value="Fruit of the Loom">Fruit of the Loom</option>
+              <option value="Champion">Champion</option>
+              <option value="Next Level">Next Level</option>
+            </select>
+            <div className="table-container">
+              <div className="sort-by-rating">
+                <button onClick={this.handleSortByRating}>
+                  Sort by Rating{' '}
+                  {this.state.sortByRating ? '(Low to High)' : '(High to Low)'}
+                </button>
+              </div>
+              <div className="sort-by-price">
+                <button onClick={this.handleSortByPrice}>
+                  Sort by Price{' '}
+                  {this.state.sortByPrice ? '(Low to High)' : '(High to Low)'}
+                </button>
+              </div>
+              <input
+  type="text"
+  placeholder="Search by Name"
+  value={searchName}
+  onChange={this.handleSearchByName}
+/>
+              <div>
+                {loading && <Loading />}
+                {error && <Message variant="danger">{error}</Message>}
+                <div className="products">
+                  {filteredTshirts.map((product) => (
+                    <div key={product.slug} className="product">
+                      <ProductScreen product={product} updateProduct={this.updateProduct} />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

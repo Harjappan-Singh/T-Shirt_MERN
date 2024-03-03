@@ -84,12 +84,17 @@ export default class ViewCustomers extends Component {
       searchQuery,
     } = this.state;
 
+    // Filter customers based on the search query
+    const filteredCustomers = customers.filter(customer =>
+      customer.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
       <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
         <h2 style={{ marginBottom: '20px' }}>Customers</h2>
         <input
           type="text"
-          placeholder="Search by name"
+          placeholder="Search by email"
           value={searchQuery}
           onChange={this.handleSearchChange}
           style={{
@@ -101,7 +106,7 @@ export default class ViewCustomers extends Component {
         />
         {loading && <p>Loading...</p>}
         {error && <p>Error: {error}</p>}
-        {customers.map((customer) => (
+        {filteredCustomers.map((customer) => (
           <div
             key={customer._id}
             style={{
