@@ -20,6 +20,16 @@ export default class AddTshirt extends Component {
       sizes: [],
       price: '',
       selectedFiles: null,
+      sizesOptions: {
+        XXS: "XXS",
+        XS: "XS",
+        S: "S",
+        M: "M",
+        L: "L",
+        XL: "XL",
+        XXL: "XXL",
+        XXXL: "XXXL",
+      },
       redirectToDisplayAllTshirts:
         localStorage.accessLevel < ACCESS_LEVEL_ADMIN,
     };
@@ -36,6 +46,24 @@ export default class AddTshirt extends Component {
     handleFileChange = (e) => {
         this.setState({ selectedFiles: e.target.files })
     };
+
+    handleCheckboxChange = (e) => {
+      const { value } = e.target;
+      const { sizes } = this.state;
+    
+      if (sizes.includes(value)) {
+        // If the size is already in the array, remove it
+        this.setState({
+          sizes: sizes.filter((size) => size !== value),
+        });
+      } else {
+        // If the size is not in the array, add it
+        this.setState({
+          sizes: [...sizes, value],
+        });
+      }
+    };
+    
 
     validate() {
         const errors = {
@@ -55,46 +83,83 @@ export default class AddTshirt extends Component {
     }
 
 
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //       this.setState({ wasSubmittedAtLeastOnce: true });
+
+  //       const validationResult = this.validate();
+
+  //       if (validationResult.isValid) {
+  //           const tshirtObject = {
+  //               brand: this.state.brand,
+  //               name: this.state.name,
+  //               description: this.state.description,
+  //               category: this.state.category,
+  //               type: this.state.type,
+  //               color: this.state.color,
+  //               product_image: this.state.product_image,
+  //               sizes: this.state.sizes,
+  //               price: this.state.price,
+  //               countInStock: this.state.countInStock
+  //           };
+       
+  //             console.log("GET request URL:", `${SERVER_HOST}/tshirts/${this.props.match.params.id}`);
+      
+  //             axios.get(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, { headers: { "authorization": localStorage.token } })
+  //                .then(res => {
+  //                   if (res.data) {
+  //                       if (res.data.errorMessage) {
+  //                           this.setState({ errorMessage: res.data.errorMessage });
+  //                       } else {
+  //                           console.log(`Record added`);
+  //                           this.setState({ redirectToDisplayAllTshirts: true });
+  //                       }
+  //                   } else {
+  //                       console.log(`Record not added`);
+  //                   }
+  //               });
+  //       } else {
+  //           this.setState({ errors: validationResult.errors });
+  //       }
+  //   }
   handleSubmit = (e) => {
     e.preventDefault();
-
-        this.setState({ wasSubmittedAtLeastOnce: true });
-
-        const validationResult = this.validate();
-
-        if (validationResult.isValid) {
-            const tshirtObject = {
-                brand: this.state.brand,
-                name: this.state.name,
-                description: this.state.description,
-                category: this.state.category,
-                type: this.state.type,
-                color: this.state.color,
-                product_image: this.state.product_image,
-                sizes: this.state.sizes,
-                price: this.state.price,
-                countInStock: this.state.countInStock
-            };
-
-            axios.post(`${SERVER_HOST}/tshirts`, tshirtObject)
-                .then(res => {
-                    if (res.data) {
-                        if (res.data.errorMessage) {
-                            this.setState({ errorMessage: res.data.errorMessage });
-                        } else {
-                            console.log(`Record added`);
-                            this.setState({ redirectToDisplayAllTshirts: true });
-                        }
-                    } else {
-                        console.log(`Record not added`);
-                    }
-                });
+  
+    const tshirtObject = {
+      brand: this.state.brand,
+      name: this.state.name,
+      description: this.state.description,
+      category: this.state.category,
+      type: this.state.type,
+      color: this.state.color,
+      sizes: this.state.sizes,
+      price: this.state.price,
+      countInStock: this.state.countInStock,
+      rating: this.state.rating,
+      numReviews: this.state.numReviews,
+    };
+  
+    axios.post(`${SERVER_HOST}/tshirts`, tshirtObject)
+      .then((res) => {
+        if (res.data) {
+          if (res.data.errorMessage) {
+            console.log(res.data.errorMessage);
+          } else {
+            console.log('Record added');
+            this.setState({ redirectToDisplayAllTshirts: true });
+          }
         } else {
-            this.setState({ errors: validationResult.errors });
+          console.log('Record not added');
         }
-    }
+      })
+      .catch((error) => {
+        console.error('Error creating T-shirt document:', error);
+        this.setState({ errorMessage: 'Internal server error' });
+      });
+  };
 
-
+  
   render() {
     return (
       <div className="form-container">
@@ -133,7 +198,7 @@ export default class AddTshirt extends Component {
                         <input type="text" name="color" value={this.state.color} onChange={this.handleChange} />
                     </div>
 
-                    <div>
+                    {/* <div>
                         <label htmlFor="sizes">Sizes</label><br />
                         <input type="checkbox" name="sizes" value="XXS" checked={this.state.sizes.includes("XXS")} onChange={this.handleCheckboxChange} /> XXS<br />
                         <input type="checkbox" name="sizes" value="XS" checked={this.state.sizes.includes("XS")} onChange={this.handleCheckboxChange} /> XS<br />
@@ -143,7 +208,22 @@ export default class AddTshirt extends Component {
                         <input type="checkbox" name="sizes" value="XL" checked={this.state.sizes.includes("XL")} onChange={this.handleCheckboxChange} /> XL<br />
                         <input type="checkbox" name="sizes" value="XXL" checked={this.state.sizes.includes("XXL")} onChange={this.handleCheckboxChange} /> XXL<br />
                         <input type="checkbox" name="sizes" value="XXXL" checked={this.state.sizes.includes("XXXL")} onChange={this.handleCheckboxChange} /> XXXL<br />
-                    </div>
+                    </div> */}
+                 <div>
+  <label htmlFor="sizes">Sizes</label><br />
+  {Object.keys(this.state.sizesOptions).map((size) => (
+    <div key={size}>
+      <input
+        type="checkbox"
+        name="sizes"
+        value={size}
+        checked={this.state.sizes.includes(size)}
+        onChange={this.handleCheckboxChange}
+      /> {size}<br />
+    </div>
+  ))}
+</div>
+
 
                     <div>
                         <label htmlFor="price">Price</label>

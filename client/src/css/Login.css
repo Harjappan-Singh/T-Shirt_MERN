@@ -3,12 +3,6 @@
   src: url("./images/lovelove.regular.ttf") format("truetype");
   font-weight: normal;
 }
-.page-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* 100% of the viewport height */
-}
-
 .login-container {
   height: 100vh;
   display: flex;
@@ -18,13 +12,14 @@
 
 .form-container {
   width: 350px;
+  height: 400px;
   margin: auto;
   margin-top: 5%;
   padding: 20px;
-  border: 3px solid #1e6091; /* Border color */
+  border: 3px solid #fff;
   border-radius: 10px;
   background-color: white;
-  text-align: center; /* Center text within the form container */
+  border-color: #1e6091;
 }
 .form-container h2 {
   text-align: center;
@@ -32,15 +27,12 @@
   font-family: sans-serif;
 }
 .form-container input {
-  width: calc(100% - 20px); /* Adjust the width as needed */
-  max-width: 300px; /* Set a maximum width if necessary */
+  width: 100%;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
-  text-align: center; /* Center text within the input */
-  font-family: sans-serif; /* Apply the custom font */
 }
 .form-container .loginbutton,
 .form-container .cancelbutton {
@@ -64,20 +56,22 @@
 .form-container .cancelbutton {
   background-color: #e74c3c;
   transition: background-color 0.3s, box-shadow 0.35s, color 0.3s;
+  /* Separate transform transition */
 }
 .form-container .cancelbutton:hover {
   background-color: #c0392b;
   box-shadow: rgba(176, 61, 48, 0.5) 0 0 10px;
   text-decoration: none;
   list-style: none;
-  color: #fff;
+  color: #fff; /* Setting text color to white on hover */
 }
 .form-container .buttons {
   display: flex;
   justify-content: space-between;
   margin-top: 40px;
 }
-.form-container .buttons button {
+.form-container .buttons .loginbutton,
+.form-container .buttons .cancelbutton {
   flex-grow: 1;
-  margin: 20%;
+  margin: 0 5px;
 }/*# sourceMappingURL=Login.css.map */

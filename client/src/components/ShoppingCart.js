@@ -240,8 +240,18 @@ class ShoppingCart extends Component {
     const totalCost = subtotal + shippingCost;
 
     return (
-      <div>
-        <h2>Shopping Cart</h2>
+      
+      <div className='cart-content'>
+        <h2>Your Bag</h2>
+
+    
+        {cartItems.length === 0 ? (
+          <div className="empty-cart-message">
+            <h2>Oh no :(</h2>
+            <p>Your cart is empty.</p>
+          </div>
+        ) : (
+          <>
         <ul>
           {cartItems.map((item, index) => (
             <li key={index}>
@@ -265,12 +275,13 @@ class ShoppingCart extends Component {
                   </option>
                 ))}
               </select>
-              <button onClick={() => this.handleRemoveItem(index)}>
-                Remove
+              <button className="removebutton" onClick={() => this.handleRemoveItem(index)}>
+                x
               </button>
             </li>
           ))}
         </ul>
+        
         <div>
           <p>
             <strong>Subtotal:</strong> €{subtotal.toFixed(2)}
@@ -283,7 +294,8 @@ class ShoppingCart extends Component {
             {totalCost.toFixed(2)}
           </p>
         </div>
-        <button onClick={this.handleClearCart}>Clear Cart</button>
+        <button className="buttonclear" onClick={this.handleClearCart}>Clear Cart</button>
+        
 
         {localStorage.accessLevel > ACCESS_LEVEL_GUEST ||
         this.state.addressSubmitted ? (
@@ -421,7 +433,9 @@ class ShoppingCart extends Component {
               onChange={this.handleChange}
             />
             <button onClick={this.handleSubmit}>Submit</button>
-          </div>
+            </div>
+            )}
+          </>
         )}
       </div>
     );

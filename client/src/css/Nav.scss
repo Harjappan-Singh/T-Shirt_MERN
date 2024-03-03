@@ -110,6 +110,23 @@ h1 {
 //     box-shadow: none;
 // }
 
+.AdminFunc {
+    position: absolute;
+    top: 10px; /* Adjusted margin from the top */
+    right: 10px; /* Adjusted margin from the right */
+    display: flex;
+    align-items: center;
+  
+    .admin-button {
+      background-color: white;
+      color: black;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  }
+
 .admin-button,
 .admin-button1 {
     border: none;
@@ -120,15 +137,6 @@ h1 {
     transition: background-color 0.3s ease;
 }
 
-.admin-button {
-    background-color: $white-color;
-    color: $black-color;
-    margin-left: auto;
-
-    &:hover {
-        background-color: $main-color;
-    }
-}
 
 .admin-button1 {
     color: $white-color;
@@ -140,6 +148,63 @@ h1 {
     }
 }
 
+
+
+
 .AdminFunc a {
     padding: 8px 12px;
 }
+.dropdown {
+    padding-right: 20px;
+    position: relative;
+  
+
+
+    
+    &-toggle {
+      color: rgb(10, 30, 93);
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  
+    &-menu {
+      display: none;
+      position: absolute;
+      background-color: white;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      min-width: 160px;
+      border-radius: 5px;
+      padding: 10px 0;
+    }
+  
+    &-item {
+      color: black;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+  
+      &:hover {
+        background-color: #f9f9f9;
+      }
+    }
+  
+    &-toggle:focus + &-menu {
+      display: block;
+    }
+  
+    &-menu a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: black;
+  
+      &:hover {
+        background-color: #f9f9f9;
+      }
+    }
+  }
+
