@@ -98,9 +98,18 @@ body {
 }
 
 .search-bar {
-  margin: 1rem;
+  margin: 1rem auto;
+  width: 50%;
   position: relative;
+  margin-left: 25%;
+  padding: 8px;
+  border: 1px solid #1e6091;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: black;
+  outline: none;
 }
+
 .search-bar input {
   width: 100%;
   padding: 8px;
@@ -110,12 +119,15 @@ body {
   color: black;
   outline: none;
 }
+
 .search-bar input::-moz-placeholder {
   color: #aaa;
 }
+
 .search-bar input::placeholder {
   color: #aaa;
 }
+
 .search-bar button {
   position: absolute;
   right: 10px;
@@ -129,6 +141,22 @@ body {
   cursor: pointer;
 }
 
+@media (max-width: 768px) {
+  .search-bar {
+    margin: 1rem 0;
+  }
+  .products .product {
+    width: calc(50% - 10px);
+  }
+}
+@media (max-width: 480px) {
+  .search-bar {
+    margin: 1rem 0;
+  }
+  .products .product {
+    width: 100%;
+  }
+}
 .table-container {
   display: flex;
   flex-wrap: wrap;

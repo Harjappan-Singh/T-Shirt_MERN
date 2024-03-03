@@ -213,6 +213,7 @@ export default class DisplayTshirts extends Component {
               </div>
               <input
   type="text"
+  className='search-bar'
   placeholder="Search by Name"
   value={searchName}
   onChange={this.handleSearchByName}

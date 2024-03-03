@@ -120,38 +120,71 @@ $fff: #ffffff;
 }
 
 
+
 .search-bar {
-  margin: $margin-size;
+  margin: 1rem auto; // Set margin to auto on left and right to center the search bar horizontally
+  width: 50%;
   position: relative;
+  margin-left: 25%;
+  padding: 8px;
+  border: 1px solid #1e6091;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: black;
+  outline: none;
+}
 
-  input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid $bluecolor;
-    border-radius: 5px;
-    background-color: $fff;
-    color: black;
-    outline: none;
+.search-bar input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #1e6091;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: black;
+  outline: none;
+}
 
-    &::placeholder {
-      color: #aaa;
-    }
+.search-bar input::-moz-placeholder {
+  color: #aaa;
+}
+
+.search-bar input::placeholder {
+  color: #aaa;
+}
+
+.search-bar button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #1e6091;
+  color: #ffffff;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .search-bar {
+    margin: $margin-size 0;
   }
 
-  button {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: $bluecolor;
-    color: $fff;
-    border: none;
-    padding: 8px;
-    border-radius: 5px;
-    cursor: pointer;
+  .products .product {
+    width: calc(50% - 10px);
   }
 }
 
+@media (max-width: 480px) {
+  .search-bar {
+    margin: $margin-size 0;
+  }
+
+  .products .product {
+    width: 100%;
+  }
+}
 .table-container {
   display: flex;
   flex-wrap: wrap;
@@ -246,6 +279,8 @@ $fff: #ffffff;
     }
   }
 }
+
+
 
 
 
