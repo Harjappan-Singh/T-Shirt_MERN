@@ -48,13 +48,9 @@ class ProductScreen extends Component {
 
 
           <Rating rating={product.rating} numReviews={product.numReviews} />
-          <div className="product-price">€{product.price}</div>
-          <div>
-            {accessLevel === ACCESS_LEVEL_ADMIN && (
-              <Link className="blue-button" to={`/AddTshirt/${product._id}`}>
-                Add
-              </Link>
-            )}
+          <div className="product-price">€{product.price}
+        
+          
           {accessLevel >= ACCESS_LEVEL_ADMIN && (
               <Link className="red-button" to={`/DeleteTshirt/${product._id}`}>
                  Delete
